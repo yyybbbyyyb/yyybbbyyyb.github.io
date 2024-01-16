@@ -1,0 +1,1225 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>P7 - 耀&#39;s blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="P7 MIPS微系统设计草稿
+思考题：Q1：
+鼠标和键盘产生中断信号，进入中断处理程序，在中断处理程序中，鼠标和键盘输入信号
+
+Q2：
+若自定义入口地址，则很多软件将会不兼容，在程序员视角设计软件的,"> 
+    <meta name="author" content="耀"> 
+    <link rel="alternative" href="atom.xml" title="耀&#39;s blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/rainbow.ico"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="P7 - 耀&#39;s blog"/>
+    <meta name="twitter:description" content="P7 MIPS微系统设计草稿
+思考题：Q1：
+鼠标和键盘产生中断信号，进入中断处理程序，在中断处理程序中，鼠标和键盘输入信号
+
+Q2：
+若自定义入口地址，则很多软件将会不兼容，在程序员视角设计软件的,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="耀&#39;s blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="P7 - 耀&#39;s blog"/>
+    <meta property="og:description" content="P7 MIPS微系统设计草稿
+思考题：Q1：
+鼠标和键盘产生中断信号，进入中断处理程序，在中断处理程序中，鼠标和键盘输入信号
+
+Q2：
+若自定义入口地址，则很多软件将会不兼容，在程序员视角设计软件的,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">耀&#39;s blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">P7</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">P7</h1>
+        <div class="stuff">
+            <span>二月 22, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/X/" rel="tag">X</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="P7-MIPS微系统设计草稿"><a href="#P7-MIPS微系统设计草稿" class="headerlink" title="P7 MIPS微系统设计草稿"></a>P7 MIPS微系统设计草稿</h1><hr>
+<h3 id="思考题："><a href="#思考题：" class="headerlink" title="思考题："></a>思考题：</h3><h4 id="Q1："><a href="#Q1：" class="headerlink" title="Q1："></a>Q1：</h4><ul>
+<li>鼠标和键盘产生中断信号，进入中断处理程序，在中断处理程序中，鼠标和键盘输入信号</li>
+</ul>
+<h4 id="Q2："><a href="#Q2：" class="headerlink" title="Q2："></a>Q2：</h4><ul>
+<li>若自定义入口地址，则很多软件将会不兼容，在程序员视角设计软件的时候，中断处理的入口地址是不重要的，也就是说这是软件和硬件之间的协议。</li>
+</ul>
+<h4 id="Q3："><a href="#Q3：" class="headerlink" title="Q3："></a>Q3：</h4><ul>
+<li>Bridge 实际上是一个大型的多路选择器，其可以使 CPU 以相对固定的方式读取或写入不同的外设，并且在系统需要增添外设时，只需要添加相应的读写地址的映射，可拓展性良好。</li>
+</ul>
+<h4 id="Q4："><a href="#Q4：" class="headerlink" title="Q4："></a>Q4：</h4><ul>
+<li><p>模式0：<br>  当计数器倒计数为 0 后，计数器停止计数，此时控制寄存器中的使能 Enable 自动变为 0。当使能 Enable 被设置为 1 后，初值寄存器值再次被加载至计数器，计数器重新启动倒计数。通常用于产生定时中断。</p>
+</li>
+<li><p>模式1：<br>  当计数器倒计数为 0 后，初值寄存器值被自动加载至计数器，计数器继续倒计数。常用于产生周期性脉冲。</p>
+</li>
+<li><p>区别在于倒计时达到0之后的状态。</p>
+</li>
+</ul>
+<p><img src="/../../../../../Course/Term3/co/CO_exper/CO_Project/p7/TC%E6%A8%A1%E5%BC%8F%E5%8C%BA%E5%88%AB.jpg" alt="TC模式区别"></p>
+<h4 id="Q5："><a href="#Q5：" class="headerlink" title="Q5："></a>Q5：</h4><ul>
+<li>写入EPC会出错，延迟槽标记信号也会出错。</li>
+<li>如果是中断或者异常而清空流水线，应该保持原有的PC值，以保证宏观PC的正确。</li>
+<li>如果是阻塞而清空流水线，应该要保持原有的PC并且保持原有的BD标志信号。</li>
+</ul>
+<h4 id="Q6："><a href="#Q6：" class="headerlink" title="Q6："></a>Q6：</h4><ul>
+<li>这种操作具有二义性，不知道先跳转还是先链接</li>
+<li>指令集要求。寄存器说明符 rs 和 rd 不得相等，因为此类指令在重新执行时不具有相同的效果。执行此类指令的结果是不可预测的。此限制允许异常处理程序在分支延迟槽中发生异常时通过重新执行分支来恢复执行。</li>
+</ul>
+<hr>
+<h4 id="新增模块："><a href="#新增模块：" class="headerlink" title="新增模块："></a>新增模块：</h4><h6 id="TC："><a href="#TC：" class="headerlink" title="TC："></a>TC：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">clk</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">时钟信号</td>
+</tr>
+<tr>
+<td align="left">reset</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">同步复位信号</td>
+</tr>
+<tr>
+<td align="left">Addr[31:2]</td>
+<td align="left">I</td>
+<td align="left">30</td>
+<td align="left">TC写入地址</td>
+</tr>
+<tr>
+<td align="left">WE</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">TC写使能</td>
+</tr>
+<tr>
+<td align="left">Din[31:0]</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">TC写入数据</td>
+</tr>
+<tr>
+<td align="left">Dout[31:0]</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">TC读取的数据</td>
+</tr>
+<tr>
+<td align="left">IRQ</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">interupte require（中断请求）</td>
+</tr>
+</tbody></table>
+<h6 id="CP0："><a href="#CP0：" class="headerlink" title="CP0："></a>CP0：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">clk</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">时钟信号</td>
+</tr>
+<tr>
+<td align="left">reset</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">复位信号</td>
+</tr>
+<tr>
+<td align="left">EN_CP0_Write</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">写使能信号</td>
+</tr>
+<tr>
+<td align="left">ReadAddr</td>
+<td align="left">I</td>
+<td align="left">5</td>
+<td align="left">读CP0寄存器编号（rt）</td>
+</tr>
+<tr>
+<td align="left">WriteAddr</td>
+<td align="left">I</td>
+<td align="left">5</td>
+<td align="left">写CP0寄存器编号（rd）</td>
+</tr>
+<tr>
+<td align="left">WriteData</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">CP0 寄存器的写入数据</td>
+</tr>
+<tr>
+<td align="left">M_PC</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">宏观PC，根据is_BD去计算受害PC</td>
+</tr>
+<tr>
+<td align="left">ExcCode_op</td>
+<td align="left">I</td>
+<td align="left">5</td>
+<td align="left">中断&#x2F;异常的类型</td>
+</tr>
+<tr>
+<td align="left">is_Branch_Delay</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">是否是延迟槽指令（M_BD输入）</td>
+</tr>
+<tr>
+<td align="left">Exter_HW_Int</td>
+<td align="left">I</td>
+<td align="left">6</td>
+<td align="left">外部硬件中断信号</td>
+</tr>
+<tr>
+<td align="left">EXL_clr</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">用来复位 EXL（由<code>eret</code>控制信号输入）</td>
+</tr>
+<tr>
+<td align="left">CP0_req</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">异常&#x2F;中断请求（由 CP0 模块确认响应异常&#x2F;中断）</td>
+</tr>
+<tr>
+<td align="left">CP0_EPC_out</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">输出EPC 寄存器</td>
+</tr>
+<tr>
+<td align="left">CP0_Data_out</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">读CP0 寄存器的输出数据</td>
+</tr>
+</tbody></table>
+<h6 id="Bridge："><a href="#Bridge：" class="headerlink" title="Bridge："></a>Bridge：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">m_data_rdata</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">从外置DM直接读取的待选用的数据</td>
+</tr>
+<tr>
+<td align="left">m_data_addr</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">DM或TC的读写地址</td>
+</tr>
+<tr>
+<td align="left">m_data_wdata</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">写入DM或TC的数据</td>
+</tr>
+<tr>
+<td align="left">m_data_byteen</td>
+<td align="left">O</td>
+<td align="left">4</td>
+<td align="left">经处理的DM字节使能信号，若读写TC则置0</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">temp_m_data_addr</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">DM或TC的读写地址</td>
+</tr>
+<tr>
+<td align="left">temp_m_data_wdata</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">写入DM或TC的数据</td>
+</tr>
+<tr>
+<td align="left">temp_m_data_byteen</td>
+<td align="left">I</td>
+<td align="left">4</td>
+<td align="left">未经处理的DM字节使能信号</td>
+</tr>
+<tr>
+<td align="left">temp_m_data_rdata</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">经过选择从DM或TC中读出的数据</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">TC0_Dout</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">根据地址从TC0中直接读出的数据</td>
+</tr>
+<tr>
+<td align="left">TC0_Din</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">可能写入TC0的数据</td>
+</tr>
+<tr>
+<td align="left">TC0_Addr</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">TC0读写地址</td>
+</tr>
+<tr>
+<td align="left">TC0_WE</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">TC0写使能信号</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">TC1_Dout</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">根据地址从TC1中直接读出的数据</td>
+</tr>
+<tr>
+<td align="left">TC1_Din</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">可能写入TC1的数据</td>
+</tr>
+<tr>
+<td align="left">TC1_Addr</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">TC1读写地址</td>
+</tr>
+<tr>
+<td align="left">TC1_WE</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">TC1写使能信号</td>
+</tr>
+</tbody></table>
+<h6 id="CPU（p6的mips做修改）："><a href="#CPU（p6的mips做修改）：" class="headerlink" title="CPU（p6的mips做修改）："></a>CPU（p6的mips做修改）：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Exter_HW_Int</td>
+<td align="left">I</td>
+<td align="left">6</td>
+<td align="left">外部硬件中断信号</td>
+</tr>
+<tr>
+<td align="left">Macro_PC</td>
+<td align="left">O</td>
+<td align="left">32</td>
+<td align="left">宏观PC（M_PC）</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="修改模块（异常处理）："><a href="#修改模块（异常处理）：" class="headerlink" title="修改模块（异常处理）："></a>修改模块（异常处理）：</h4><h6 id="F-IFU："><a href="#F-IFU：" class="headerlink" title="F_IFU："></a>F_IFU：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">req</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">中断请求，置位PC为0x4180</td>
+</tr>
+</tbody></table>
+<h6 id="D-NPC："><a href="#D-NPC：" class="headerlink" title="D_NPC："></a>D_NPC：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">req</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">中断请求</td>
+</tr>
+<tr>
+<td align="left">EPC</td>
+<td align="left">I</td>
+<td align="left">32</td>
+<td align="left">eret时 NPC &#x3D; EPC + 4</td>
+</tr>
+</tbody></table>
+<h6 id="E-ALU："><a href="#E-ALU：" class="headerlink" title="E_ALU："></a>E_ALU：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">judge_calOv</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">计算类指令判断溢出</td>
+</tr>
+<tr>
+<td align="left">judge_addrOv</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">访存类指令判断溢出</td>
+</tr>
+<tr>
+<td align="left">E_is_calOv</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">E级计算类指令溢出信号</td>
+</tr>
+<tr>
+<td align="left">E_is_addrOv</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">E级访存类指令地址溢出信号</td>
+</tr>
+</tbody></table>
+<h6 id="E-MDU："><a href="#E-MDU：" class="headerlink" title="E_MDU："></a>E_MDU：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">req</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">中断请求</td>
+</tr>
+</tbody></table>
+<h6 id="M-DMIN："><a href="#M-DMIN：" class="headerlink" title="M_DMIN："></a>M_DMIN：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">is_store</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">是STORE类指令</td>
+</tr>
+<tr>
+<td align="left">is_addrOv</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">访存类指令地址溢出信号</td>
+</tr>
+<tr>
+<td align="left">req</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">中断请求</td>
+</tr>
+<tr>
+<td align="left">M_is_AdES</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">M_DMIN中判断是否有AdES异常</td>
+</tr>
+</tbody></table>
+<h6 id="M-DMOUT："><a href="#M-DMOUT：" class="headerlink" title="M_DMOUT："></a>M_DMOUT：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">is_load</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">是LOAD类指令</td>
+</tr>
+<tr>
+<td align="left">is_addrOv</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">访存类指令地址溢出信号</td>
+</tr>
+<tr>
+<td align="left">M_is_AdEL</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">M_DMOUT中判断是否有AdEL异常</td>
+</tr>
+</tbody></table>
+<h6 id="CPU（前顶层mips）："><a href="#CPU（前顶层mips）：" class="headerlink" title="CPU（前顶层mips）："></a>CPU（前顶层mips）：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">位宽</th>
+<th align="left">选择信号&#x2F;判断信号</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">real_F_PC</td>
+<td align="left">32</td>
+<td align="left">CU_is_eret_D</td>
+<td align="left">选择是F_PC or EPC</td>
+</tr>
+<tr>
+<td align="left">real_F_Instr</td>
+<td align="left">32</td>
+<td align="left">F_exc_AdEL</td>
+<td align="left">若取指异常择流水指令为<code>nop</code></td>
+</tr>
+<tr>
+<td align="left">F_is_BD</td>
+<td align="left">1</td>
+<td align="left">CU_is_beforeBD_D</td>
+<td align="left">F级判断该指令是否是延迟槽指令</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">F_exc_AdEL</td>
+<td align="left">1</td>
+<td align="left">—</td>
+<td align="left">F级AdEL</td>
+</tr>
+<tr>
+<td align="left">D_exc_RI</td>
+<td align="left">1</td>
+<td align="left">—</td>
+<td align="left">D级RI</td>
+</tr>
+<tr>
+<td align="left">D_exc_Syscall</td>
+<td align="left">1</td>
+<td align="left">—</td>
+<td align="left">D级Syscall</td>
+</tr>
+<tr>
+<td align="left">E_exc_Ov</td>
+<td align="left">1</td>
+<td align="left">—</td>
+<td align="left">E级Ov</td>
+</tr>
+<tr>
+<td align="left">E_exc_addrOv</td>
+<td align="left">1</td>
+<td align="left">—</td>
+<td align="left">往后流水判断AdEL或AdES</td>
+</tr>
+<tr>
+<td align="left">M_exc_AdES</td>
+<td align="left">1</td>
+<td align="left">—</td>
+<td align="left">M级AdES</td>
+</tr>
+<tr>
+<td align="left">M_exc_AdEL</td>
+<td align="left">1</td>
+<td align="left">—</td>
+<td align="left">M级AdEL</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">F_exc_code</td>
+<td align="left">5</td>
+<td align="left">F_exc_AdEL</td>
+<td align="left">F级ExcCode</td>
+</tr>
+<tr>
+<td align="left">D_new_exc_code</td>
+<td align="left">5</td>
+<td align="left">|D_exc_code、D_exc_RI、D_exc_Syscall</td>
+<td align="left">D级更新后的ExcCode</td>
+</tr>
+<tr>
+<td align="left">E_new_exc_code</td>
+<td align="left">5</td>
+<td align="left">|E_exc_code、E_exc_Ov</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">M_new_exc_code</td>
+<td align="left">5</td>
+<td align="left">|M_exc_code、M_exc_AdES、M_exc_AdES</td>
+<td align="left">M级更新后的ExcCode</td>
+</tr>
+</tbody></table>
+<h6 id="MCU"><a href="#MCU" class="headerlink" title="MCU:"></a>MCU:</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">rs</td>
+<td align="left">I</td>
+<td align="left">5</td>
+<td align="left">参与mfc0、mtc0的译码</td>
+</tr>
+<tr>
+<td align="left">CU_GRFWriteData_Sel_D</td>
+<td align="left">O</td>
+<td align="left">3</td>
+<td align="left">位宽做增加，需更改诸多模块</td>
+</tr>
+<tr>
+<td align="left">CU_is_eret_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">eret指令信号</td>
+</tr>
+<tr>
+<td align="left">CU_EN_CP0Write_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">CP0写使能信号</td>
+</tr>
+<tr>
+<td align="left">CU_is_mtc0_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">mtc0指令信号</td>
+</tr>
+<tr>
+<td align="left">CU_is_mfc0_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">mfc0指令信号</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">CU_exc_RI_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">MCU中判断是否有RI异常</td>
+</tr>
+<tr>
+<td align="left">CU_exc_Syscall_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">MCU中判断是否有Syscall异常</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">CU_is_judge_calOv_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">需要判断calOv的指令</td>
+</tr>
+<tr>
+<td align="left">CU_is_judge_addrOv_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">需要判断addrOv的指令</td>
+</tr>
+<tr>
+<td align="left">CU_is_store_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">STORE</td>
+</tr>
+<tr>
+<td align="left">CU_is_load_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">LOAD</td>
+</tr>
+<tr>
+<td align="left">CU_is_beforeBD_D</td>
+<td align="left">O</td>
+<td align="left">1</td>
+<td align="left">后接延迟槽的指令</td>
+</tr>
+</tbody></table>
+<h6 id="HCU："><a href="#HCU：" class="headerlink" title="HCU："></a>HCU：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">方向</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">D_is_eret</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">D级eret判断指令</td>
+</tr>
+<tr>
+<td align="left">E_is_mtc0</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">E级别mtc0判断指令</td>
+</tr>
+<tr>
+<td align="left">M_is_mtc0</td>
+<td align="left">I</td>
+<td align="left">1</td>
+<td align="left">M级别mtc0判断指令</td>
+</tr>
+</tbody></table>
+<h6 id="流水线寄存器（增加或修改流水信号）："><a href="#流水线寄存器（增加或修改流水信号）：" class="headerlink" title="流水线寄存器（增加或修改流水信号）："></a>流水线寄存器（增加或修改流水信号）：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">输出流水级</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">CU_GRFWriteData_Sel_D</td>
+<td align="left">E、M、W</td>
+<td align="left">3</td>
+<td align="left">写入GRF数据类型选择，位宽做增加</td>
+</tr>
+<tr>
+<td align="left">CU_is_mtc0_D</td>
+<td align="left">E、M</td>
+<td align="left">1</td>
+<td align="left">mtc0指令信号（判断阻塞）</td>
+</tr>
+<tr>
+<td align="left">CU_EN_CP0Write_D</td>
+<td align="left">E、M</td>
+<td align="left">1</td>
+<td align="left">CP0写使能信号</td>
+</tr>
+<tr>
+<td align="left">CU_is_mfc0_D</td>
+<td align="left">E、M</td>
+<td align="left">1</td>
+<td align="left">mfc0指令信号</td>
+</tr>
+<tr>
+<td align="left">CU_is_eret_D</td>
+<td align="left">E、M</td>
+<td align="left">1</td>
+<td align="left">eret指令信号</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">rd_D</td>
+<td align="left">E、M</td>
+<td align="left">5</td>
+<td align="left">供给CP0的readAddr</td>
+</tr>
+<tr>
+<td align="left">CP0_Data_out</td>
+<td align="left">W</td>
+<td align="left">32</td>
+<td align="left">流水CP0输出数据</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">CU_is_judge_calOv_D</td>
+<td align="left">E</td>
+<td align="left">1</td>
+<td align="left">需要判断calOv的指令</td>
+</tr>
+<tr>
+<td align="left">CU_is_judge_addrOv_D</td>
+<td align="left">E</td>
+<td align="left">1</td>
+<td align="left">需要判断addrOv的指令</td>
+</tr>
+<tr>
+<td align="left">E_exc_addrOv</td>
+<td align="left">M</td>
+<td align="left">1</td>
+<td align="left">访存类指令计算溢出</td>
+</tr>
+<tr>
+<td align="left">CU_is_store_D</td>
+<td align="left">E、M</td>
+<td align="left">1</td>
+<td align="left">STORE</td>
+</tr>
+<tr>
+<td align="left">CU_is_load_D</td>
+<td align="left">E、M</td>
+<td align="left">1</td>
+<td align="left">LOAD</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">F_exc_code</td>
+<td align="left">D</td>
+<td align="left">5</td>
+<td align="left">F级ExcCode</td>
+</tr>
+<tr>
+<td align="left">D_exc_code</td>
+<td align="left">E</td>
+<td align="left">5</td>
+<td align="left">D级ExcCode</td>
+</tr>
+<tr>
+<td align="left">E_exc_code</td>
+<td align="left">M</td>
+<td align="left">5</td>
+<td align="left">E级ExcCode</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">F_is_BD</td>
+<td align="left">D、E、M</td>
+<td align="left">1</td>
+<td align="left">延迟槽指令判断信号</td>
+</tr>
+</tbody></table>
+<h6 id="流水线寄存器（增加或修改控制信号）："><a href="#流水线寄存器（增加或修改控制信号）：" class="headerlink" title="流水线寄存器（增加或修改控制信号）："></a>流水线寄存器（增加或修改控制信号）：</h6><table>
+<thead>
+<tr>
+<th align="left">信号</th>
+<th align="left">增加流水线寄存器</th>
+<th align="left">位宽</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">req</td>
+<td align="left">F_D、D_E、E_M</td>
+<td align="left">1</td>
+<td align="left">中断请求，用于更改PC为0x4180</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="图表："><a href="#图表：" class="headerlink" title="图表："></a>图表：</h4><h5 id="老控制信号表："><a href="#老控制信号表：" class="headerlink" title="老控制信号表："></a>老控制信号表：</h5><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>NPC_op</th>
+<th>ALU_op</th>
+<th>EXT_op</th>
+<th>DM_op</th>
+<th>MDU_op</th>
+<th>CMP_op</th>
+<th>EN_Reg</th>
+<th>EN_DM</th>
+<th>MDU_start</th>
+<th>is_MDU</th>
+<th>WriteData</th>
+<th>WriteAddr</th>
+<th>ALUB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mfc0</td>
+<td>pc4</td>
+<td>add</td>
+<td>0</td>
+<td>word</td>
+<td>1111</td>
+<td>00</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>CP0out</td>
+<td>rt</td>
+<td>0</td>
+</tr>
+<tr>
+<td>mtc0</td>
+<td>pc4</td>
+<td>add</td>
+<td>0</td>
+<td>word</td>
+<td>1111</td>
+<td>00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>aluout</td>
+<td>zero</td>
+<td>0</td>
+</tr>
+<tr>
+<td>eret</td>
+<td>eret</td>
+<td>add</td>
+<td>0</td>
+<td>word</td>
+<td>1111</td>
+<td>00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>aluout</td>
+<td>zero</td>
+<td>0</td>
+</tr>
+<tr>
+<td>syscall</td>
+<td>pc4</td>
+<td>add</td>
+<td>0</td>
+<td>word</td>
+<td>1111</td>
+<td>00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>aluout</td>
+<td>zero</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<ul>
+<li>其中<strong>NPC_op</strong>、<strong>WriteData</strong> 多路选择有做增加。</li>
+</ul>
+<h5 id="新增控制信号："><a href="#新增控制信号：" class="headerlink" title="新增控制信号："></a>新增控制信号：</h5><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>is_eret</th>
+<th>is_mtc0</th>
+<th>is_mfc0</th>
+<th>EN_CP0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mfc0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>mtc0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>eret</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>syscall</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h5 id="AT法表："><a href="#AT法表：" class="headerlink" title="AT法表："></a>AT法表：</h5><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>T_use_rs</th>
+<th>T_use_rt</th>
+<th>T_new_D</th>
+<th>T_new_E</th>
+<th>T_new_M</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mfc0</td>
+<td>MAX</td>
+<td>MAX</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>mtc0</td>
+<td>MAX</td>
+<td>2</td>
+<td>ZERO</td>
+<td>ZERO</td>
+<td>ZERO</td>
+</tr>
+<tr>
+<td>eret</td>
+<td>MAX</td>
+<td>MAX</td>
+<td>ZERO</td>
+<td>ZERO</td>
+<td>ZERO</td>
+</tr>
+<tr>
+<td>syscall</td>
+<td>MAX</td>
+<td>MAX</td>
+<td>ZERO</td>
+<td>ZERO</td>
+<td>ZERO</td>
+</tr>
+</tbody></table>
+<hr>
+<p>4180在PC中呆了两个周期，没问题吗</p>
+<p>空泡的ExcCode保留不保留？</p>
+<p>当 ERET 有效时会将 EXL 置 0，即内部转发。（是流到M级再置0吗？怎么谈内部转发）</p>
+<p>CU_is_eret在d级就可以生效，是流水到M级还是立刻到</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://link.hhtjim.com/qq/011tVjdb20JJrn.mp4"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#P7-MIPS%E5%BE%AE%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E8%8D%89%E7%A8%BF"><span class="toc-number">1.</span> <span class="toc-text">P7 MIPS微系统设计草稿</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A"><span class="toc-number">1.0.1.</span> <span class="toc-text">思考题：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Q1%EF%BC%9A"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">Q1：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q2%EF%BC%9A"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">Q2：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q3%EF%BC%9A"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">Q3：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q4%EF%BC%9A"><span class="toc-number">1.0.1.4.</span> <span class="toc-text">Q4：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q5%EF%BC%9A"><span class="toc-number">1.0.1.5.</span> <span class="toc-text">Q5：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q6%EF%BC%9A"><span class="toc-number">1.0.1.6.</span> <span class="toc-text">Q6：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E6%A8%A1%E5%9D%97%EF%BC%9A"><span class="toc-number">1.0.1.7.</span> <span class="toc-text">新增模块：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#TC%EF%BC%9A"><span class="toc-number">1.0.1.7.0.1.</span> <span class="toc-text">TC：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#CP0%EF%BC%9A"><span class="toc-number">1.0.1.7.0.2.</span> <span class="toc-text">CP0：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Bridge%EF%BC%9A"><span class="toc-number">1.0.1.7.0.3.</span> <span class="toc-text">Bridge：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#CPU%EF%BC%88p6%E7%9A%84mips%E5%81%9A%E4%BF%AE%E6%94%B9%EF%BC%89%EF%BC%9A"><span class="toc-number">1.0.1.7.0.4.</span> <span class="toc-text">CPU（p6的mips做修改）：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%A8%A1%E5%9D%97%EF%BC%88%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%89%EF%BC%9A"><span class="toc-number">1.0.1.8.</span> <span class="toc-text">修改模块（异常处理）：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#F-IFU%EF%BC%9A"><span class="toc-number">1.0.1.8.0.1.</span> <span class="toc-text">F_IFU：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#D-NPC%EF%BC%9A"><span class="toc-number">1.0.1.8.0.2.</span> <span class="toc-text">D_NPC：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#E-ALU%EF%BC%9A"><span class="toc-number">1.0.1.8.0.3.</span> <span class="toc-text">E_ALU：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#E-MDU%EF%BC%9A"><span class="toc-number">1.0.1.8.0.4.</span> <span class="toc-text">E_MDU：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#M-DMIN%EF%BC%9A"><span class="toc-number">1.0.1.8.0.5.</span> <span class="toc-text">M_DMIN：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#M-DMOUT%EF%BC%9A"><span class="toc-number">1.0.1.8.0.6.</span> <span class="toc-text">M_DMOUT：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#CPU%EF%BC%88%E5%89%8D%E9%A1%B6%E5%B1%82mips%EF%BC%89%EF%BC%9A"><span class="toc-number">1.0.1.8.0.7.</span> <span class="toc-text">CPU（前顶层mips）：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#MCU"><span class="toc-number">1.0.1.8.0.8.</span> <span class="toc-text">MCU:</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#HCU%EF%BC%9A"><span class="toc-number">1.0.1.8.0.9.</span> <span class="toc-text">HCU：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88%E5%A2%9E%E5%8A%A0%E6%88%96%E4%BF%AE%E6%94%B9%E6%B5%81%E6%B0%B4%E4%BF%A1%E5%8F%B7%EF%BC%89%EF%BC%9A"><span class="toc-number">1.0.1.8.0.10.</span> <span class="toc-text">流水线寄存器（增加或修改流水信号）：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88%E5%A2%9E%E5%8A%A0%E6%88%96%E4%BF%AE%E6%94%B9%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7%EF%BC%89%EF%BC%9A"><span class="toc-number">1.0.1.8.0.11.</span> <span class="toc-text">流水线寄存器（增加或修改控制信号）：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E8%A1%A8%EF%BC%9A"><span class="toc-number">1.0.1.9.</span> <span class="toc-text">图表：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%80%81%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7%E8%A1%A8%EF%BC%9A"><span class="toc-number">1.0.1.9.1.</span> <span class="toc-text">老控制信号表：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7%EF%BC%9A"><span class="toc-number">1.0.1.9.2.</span> <span class="toc-text">新增控制信号：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AT%E6%B3%95%E8%A1%A8%EF%BC%9A"><span class="toc-number">1.0.1.9.3.</span> <span class="toc-text">AT法表：</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
