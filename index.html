@@ -541,7 +541,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
         <div class="label text-third-text-color text-sm">标签</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -549,7 +549,7 @@
         <div class="label text-third-text-color text-sm">分类</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
         <div class="label text-third-text-color text-sm">文章</div>
     </a>
 </div>
@@ -614,7 +614,7 @@
 </div>
                 <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
         <div class="label text-third-text-color text-sm">标签</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -622,7 +622,7 @@
         <div class="label text-third-text-color text-sm">分类</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
         <div class="label text-third-text-color text-sm">文章</div>
     </a>
 </div>
@@ -639,6 +639,316 @@
                 
                     <div class="home-content-container">
     <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                
+                    
+                
+
+                
+                    <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
+                        <a href="/2024/06/16/OS-lab4-%E6%80%9D%E8%80%83%E9%A2%98/">
+                            <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail7.jpg" alt="OS_lab4 思考题" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        </a>
+                    </div>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/16/OS-lab4-%E6%80%9D%E8%80%83%E9%A2%98/">
+                            OS_lab4 思考题
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            Thinking 4.1
+思考并回答下面的问题：
+内核在保存现场的时候是如何避免破坏通用寄存器的？
+系统陷入内核调用后可以直接从当时的 $a0-$a3 参数寄存器中得到用户调用 msyscall 留下的信息吗？
+我们是怎么做到让 sys 开头的函数“...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sun Jun 16 2024 20:23:55 GMT+0800">
+                
+                    2024-06-16
+                
+            </span>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/06/16/OS-lab4-%E6%80%9D%E8%80%83%E9%A2%98/">阅读全文<span class="seo-reader-text">OS_lab4 思考题</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+                    
+                
+
+                
+                    <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
+                        <a href="/2024/06/16/OS-lab6-%E6%80%9D%E8%80%83%E9%A2%98/">
+                            <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail3.jpg" alt="OS_lab6 思考题" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        </a>
+                    </div>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/16/OS-lab6-%E6%80%9D%E8%80%83%E9%A2%98/">
+                            OS_lab6 思考题
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            Thinking 6.1
+示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？ 
+
+操作相反即可：父进程关掉写端1，子进程关掉读端0
+123456789101112case 0: /* 子进程 -...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sun Jun 16 2024 20:18:24 GMT+0800">
+                
+                    2024-06-16
+                
+            </span>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/06/16/OS-lab6-%E6%80%9D%E8%80%83%E9%A2%98/">阅读全文<span class="seo-reader-text">OS_lab6 思考题</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+                    
+                
+
+                
+                    <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
+                        <a href="/2024/06/16/OS-lab5-%E6%80%9D%E8%80%83%E9%A2%98/">
+                            <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail4.jpg" alt="OS_lab5 思考题" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        </a>
+                    </div>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/16/OS-lab5-%E6%80%9D%E8%80%83%E9%A2%98/">
+                            OS_lab5 思考题
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            思考题Thinking 5.1
+如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。
+请思考：这么做这会引发什么问题？对于不同种类的设备（如我们提到的串口设备...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sun Jun 16 2024 20:16:39 GMT+0800">
+                
+                    2024-06-16
+                
+            </span>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/06/16/OS-lab5-%E6%80%9D%E8%80%83%E9%A2%98/">阅读全文<span class="seo-reader-text">OS_lab5 思考题</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+                    
+                
+
+                
+                    <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
+                        <a href="/2024/06/16/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-HTML5/">
+                            <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail6.jpg" alt="前端笔记_HTML5" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        </a>
+                    </div>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/16/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-HTML5/">
+                            前端笔记_HTML5
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            1. HTML5介绍
+HTML5是用来描述网页的一种语言，被称为超文本标记语言，后缀以.html结尾
+&lt;!DOCTYPE html&gt; 是H5的声明，位于文档的最前面（网页必备组成部分，避免浏览器的怪异模式）
+
+
+2. HTML基本骨架12...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sun Jun 16 2024 20:11:46 GMT+0800">
+                
+                    2024-06-16
+                
+            </span>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/06/16/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-HTML5/">阅读全文<span class="seo-reader-text">前端笔记_HTML5</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+                    
+                
+
+                
+                    <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
+                        <a href="/2024/06/16/BUAA-OO-%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%EF%BC%9A%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%EF%BC%88JML%EF%BC%89/">
+                            <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail5.jpg" alt="BUAA_OO 第三单元：社交网络（JML）" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        </a>
+                    </div>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/16/BUAA-OO-%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%EF%BC%9A%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%EF%BC%88JML%EF%BC%89/">
+                            BUAA_OO 第三单元：社交网络（JML）
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            前言第三单元主题是JML，但在我看来也是两个维度的考量，一是对JML的学习，这个我觉得更多体现在实验课需要我们写JML，以及通过读懂JML来知道我们三次迭代需要实现的函数的功能是什么；第二个维度就是依托于社交网络这么一个主题，在图论中的算法上做出了一...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sun Jun 16 2024 20:07:24 GMT+0800">
+                
+                    2024-06-16
+                
+            </span>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/OO/">OO</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/06/16/BUAA-OO-%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%EF%BC%9A%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%EF%BC%88JML%EF%BC%89/">阅读全文<span class="seo-reader-text">BUAA_OO 第三单元：社交网络（JML）</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
         
             <li class="home-article-item">
 
@@ -796,11 +1106,11 @@
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        共 2 篇文章
+                        共 7 篇文章
                     </span>
                     
                         <span>
-                            共 14.7k 字
+                            共 28.4k 字
                         </span>
                     
                 </p>

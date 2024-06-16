@@ -13,17 +13,22 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/archives/2024/06/"/>
+    <link rel="canonical" href="http://example.com/2024/06/16/os-lab4-思考题/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="rainbowYao&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/2024/06/index.html">
+        <meta name="description" content="Thinking 4.1 思考并回答下面的问题： 内核在保存现场的时候是如何避免破坏通用寄存器的？ 系统陷入内核调用后可以直接从当时的 $a0-$a3 参数寄存器中得到用户调用 msyscall 留下的信息吗？ 我们是怎么做到让 sys 开头的函数“认为”我们提供了和用户调用 msyscall 时同样的参数的？ 内核处理系统调用的过程对 Trapframe 做了哪些更改？这种修改对应的用户态的变化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS_lab4 思考题">
+<meta property="og:url" content="http://example.com/2024/06/16/OS-lab4-%E6%80%9D%E8%80%83%E9%A2%98/index.html">
 <meta property="og:site_name" content="rainbowYao&#39;s Blog">
+<meta property="og:description" content="Thinking 4.1 思考并回答下面的问题： 内核在保存现场的时候是如何避免破坏通用寄存器的？ 系统陷入内核调用后可以直接从当时的 $a0-$a3 参数寄存器中得到用户调用 msyscall 留下的信息吗？ 我们是怎么做到让 sys 开头的函数“认为”我们提供了和用户调用 msyscall 时同样的参数的？ 内核处理系统调用的过程对 Trapframe 做了哪些更改？这种修改对应的用户态的变化">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-16T12:23:55.000Z">
+<meta property="article:modified_time" content="2024-06-16T12:24:41.958Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
     
     
@@ -36,7 +41,7 @@
     
     <title>
         
-            归档: 2024/6 -
+            OS_lab4 思考题 -
         
         rainbowYao&#39;s Blog
     </title>
@@ -313,7 +318,7 @@
 
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active"
+                                <a class=""
                                    href="/archives"
                                         >
                                     <i class="fa-regular fa-archive fa-fw"></i>
@@ -384,7 +389,7 @@
 
                     <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
                         
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
                            href="/archives"
                         >
                             <span>
@@ -458,77 +463,306 @@
             <div class="main-content">
 
                 
-                    <div class="archive-container shadow-none hover:shadow-none sm:shadow-redefine sm:hover:shadow-redefine-hover">
-    
-<div class="archive-list-container">
-    
-        <section class="archive-item mb-spacing-unit last:mb-0">
-            <div class="archive-item-header flex flex-row items-center mb-2">
-                <span class="archive-year font-semibold text-3xl mr-2">2024</span>
-                <span class="archive-year-post-count text-xs md:text-sm font-bold rounded-small bg-third-background-color py-[2px] px-[10px] border border-border-color">7</span>
-            </div>
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
             
-            <ul class="article-list pl-0 md:pl-8 text-lg leading-[1.5]">
                 
-                    
-                    
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='06-16'>
-                    
-                    <a href="/2024/06/16/OS-lab4-%E6%80%9D%E8%80%83%E9%A2%98/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">OS_lab4 思考题</span>
-                    </a>
-                    
                 
-                    
-                    
-                    <a href="/2024/06/16/OS-lab6-%E6%80%9D%E8%80%83%E9%A2%98/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">OS_lab6 思考题</span>
-                    </a>
-                    
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail7.jpg" alt="OS_lab4 思考题" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
                 
-                    
-                    
-                    <a href="/2024/06/16/OS-lab5-%E6%80%9D%E8%80%83%E9%A2%98/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">OS_lab5 思考题</span>
-                    </a>
-                    
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">OS_lab4 思考题</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/shenwei.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">rainbowYao</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-06-16 20:23:55</span>
+        <span class="mobile">2024-06-16 20:23:55</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-06-16 20:24:41</span>
+            <span class="mobile">2024-06-16 20:24:41</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
                 
-                    
-                    
-                    <a href="/2024/06/16/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-HTML5/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">前端笔记_HTML5</span>
-                    </a>
-                    
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
                 
-                    
-                    
-                    <a href="/2024/06/16/BUAA-OO-%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%EF%BC%9A%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%EF%BC%88JML%EF%BC%89/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">BUAA_OO 第三单元：社交网络（JML）</span>
-                    </a>
-                    
-                
-                    
-                    
-                    <a href="/2024/06/16/BUAA-OO-%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%EF%BC%9A%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">BUAA_OO 第二单元：电梯调度</span>
-                    </a>
-                    
-                
-                    
-                    
-                    <a href="/2024/06/16/BUAA-OO-%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%EF%BC%9A%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">BUAA_OO 第一单元：表达式展开</span>
-                    </a>
-                    
-                
-                </li> <!-- Ensure the last item is properly closed -->
             </ul>
-        </section>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.5k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>9 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h4 id="Thinking-4-1"><a href="#Thinking-4-1" class="headerlink" title="Thinking 4.1"></a>Thinking 4.1</h4><blockquote>
+<p>思考并回答下面的问题：</p>
+<p>内核在保存现场的时候是如何避免破坏通用寄存器的？</p>
+<p>系统陷入内核调用后可以直接从当时的 $a0-$a3 参数寄存器中得到用户调用 msyscall 留下的信息吗？</p>
+<p>我们是怎么做到让 sys 开头的函数“认为”我们提供了和用户调用 msyscall 时同样的参数的？</p>
+<p>内核处理系统调用的过程对 Trapframe 做了哪些更改？这种修改对应的用户态的变化是什么？</p>
+</blockquote>
+<p>函数调用顺序：</p>
+<p>用户态：<code>msyscall(user/lib/syscall_lib.c)</code>——<code>syscall(user/lib/syscall_wrap.S)</code>——</p>
+<p>内核态：<code>exc_gen_entry(kern/entry.S)</code>——<code>exception_handlers(kern/genex.S)</code>——<code>do_syscall(kern/syscall_all.c</code></p>
+<ol>
+<li><p>保存现场是在<code>exc_gen_entry</code>中的<code>SAVE_ALL</code>宏方法，将通用寄存器保存。</p>
+<blockquote>
+<p> 至于<code>SAVE_ALL</code>宏方法：</p>
+<ul>
+<li><p>先用<code>move k0, sp</code>将通用寄存器的$sp复制到$k0（因为后面$sp就指向<code>KSTACKTOP</code>内核栈了）</p>
+</li>
+<li><p>然后处理$sp使其处于内核栈的正确位置<code>subu sp, sp, TF_SIZE</code></p>
+</li>
+<li><p>再之后调用<code>sw k0, TF_REG29(sp)</code>将现场的$sp（现在储存在$k0中）存储到<code>TF_REG29（sp）</code>中</p>
+</li>
+<li><p>后续是储存一些CP0协处理器，如：<code>mfc0 k0, CP0_STATUS sw k0, TF_STATUS(sp)</code></p>
+</li>
+<li><p>最后是对通用寄存器（除去$sp）的储存如：<code>sw $1, TF_REG1(sp)</code></p>
+</li>
+<li><p>至此通用寄存器以及CP0协处理器都被储存在了内核态的内核栈<code>KSTACKTOP</code>中了，在<code>env_run</code>等函数中调用的<code>*((struct Trapframe *)KSTACKTOP - 1</code>的由来正是上面的操作，值得一提的是其中的“-1”是因为栈帧的增长方向是从上到下（高地址到低地址），故为了得到<code>struct Trapframe</code>的起始地址（低地址），需要从高地址减掉一个结构体的内存大小（相当于<code>SAVE_ALL</code>中的<code>subu sp, sp, TF_SIZE</code>）</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>除去$a0，其他理论上可以。按照上面的函数调用顺序检查，只有$a0在从<code>handle_sys</code>到<code>do_syscall</code> 的过程中被设置成了$sp（也就是传递给<code>do_syscall</code>的参数<code>*tf</code>），而原始的$a0保存的信息是<code>msyscall</code>传递进去的系统调用号，这一值（即<code>sysno</code>）只在<code>do_syscall</code>索引<code>sys_*()</code>函数的时候使用，并未继续传入<code>sys_*()</code>，故在<code>sys_*()</code>中直接使用<code>$a1~$a3</code>没有问题。</p>
+<p> 但最好的获取用户调用时留下的$a0~$a3的方法是通过<code>tf-&gt;regs</code></p>
+</li>
+<li><p>根据上面对<code>SAVE_ALL</code>的解释，异常刚发生时进行了“保存现场”的操作，<code>msyscall</code>传递的参数中 $a0~$a3被保存在了内核栈中，可以通过<code>tf-&gt;regs[4|5|6|7]</code>来获得，而另外两个参数被压入了<code>msyscall</code>栈帧，可以通过<code>tf-&gt;regs[29] + 16|20</code>来获得</p>
+</li>
+<li><p>第一，将EPC寄存器加四，因为保证了<code>syscall</code>不在延迟槽内，结束系统调用要回到他的下一条指令</p>
+<p> 第二，将系统调用处理函数<code>sys_*()</code>的返回值写到$v0寄存器中</p>
+</li>
+</ol>
+<h4 id="Thinking-4-2"><a href="#Thinking-4-2" class="headerlink" title="Thinking 4.2"></a>Thinking 4.2</h4><blockquote>
+<p>思考 envid2env 函数: 为什么 envid2env 中需要判断 e-&gt;env_id !&#x3D; envid 的情况？如果没有这步判断会发生什么情况？ </p>
+</blockquote>
+<p>先看<code>mkenvid</code>这个函数：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//env.c</span></span><br><span class="line">u_int <span class="title function_">mkenvid</span><span class="params">(<span class="keyword">struct</span> Env *e)</span> &#123;</span><br><span class="line">	<span class="type">static</span> u_int i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> ((++i) &lt;&lt; (<span class="number">1</span> + LOG2NENV)) | (e - envs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//env.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOG2NENV 10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NENV (1 &lt;&lt; LOG2NENV)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ENVX(envid) ((envid) &amp; (NENV - 1))</span></span><br></pre></td></tr></table></figure></div>
+
+<p>我们可以得出一个<code>envid</code>由两部分组成：高位置表示该进程是第几个被申请的进程（不断自增），低位置表示该进程相对于数组<code>envs</code>的偏移。<code>ENVX</code>函数就是通过低位置索引到的进程控制块，但是一个进程控制块（地址意义上的）可能被申请、释放、再申请，所以两个<code>env_id</code>的低位置相等不代表是一个进程。</p>
+<p>如果不做这一步判断，可能索引到的是错误的或者本该被销毁的进程控制块</p>
+<h4 id="Thinking-4-3"><a href="#Thinking-4-3" class="headerlink" title="Thinking 4.3"></a>Thinking 4.3</h4><blockquote>
+<p>思考下面的问题，并对这个问题谈谈你的理解：请回顾 kern&#x2F;env.c 文件 中 mkenvid() 函数的实现，该函数不会返回 0，请结合系统调用和 IPC 部分的实现与 envid2env() 函数的行为进行解释</p>
+</blockquote>
+<p>上面给出过<code>mkenvid()</code>函数的实现方法，由于<code>++i</code>保证了<code>envid</code>不会是0，而内核方法<code>envid2env</code>中如果传递的<code>envid == 0</code>的话，返回的是<code>curenv</code>。</p>
+<p>由于<code>curenv</code>是内核态的变量，用户态无法感知<code>curenv</code>，但为了方便用户进程调用 <code>syscall_*()</code> 时把当前进程的<code>envid</code>作为参数传给内核函数，可以使用<code>envid == 0</code>的操作，比如<code>fork</code>函数调用<code>sys_set_tlb_mod_entry</code> 时就出现了<code>envid == 0</code>时直接返回当前进程的实现</p>
+<h4 id="Thinking-4-4"><a href="#Thinking-4-4" class="headerlink" title="Thinking 4.4"></a>Thinking 4.4</h4><blockquote>
+<p>关于 fork 函数的两个返回值，下面说法正确的是：</p>
+<p>A、fork 在父进程中被调用两次，产生两个返回值</p>
+<p>B、fork 在两个进程中分别被调用一次，产生两个不同的返回值 </p>
+<p>C、fork 只在父进程中被调用了一次，在两个进程中各产生一个返回值 </p>
+<p>D、fork 只在子进程中被调用了一次，在两个进程中各产生一个返回值</p>
+</blockquote>
+<p>选：C</p>
+<p>fork函数的调用只发生在父进程中，并通过调用<code>syscall_exofork</code>函数创建了进程。此时，内核给两个进程设置了不同的返回值，父进程中返回子进程的id，子进程返回0。</p>
+<h4 id="Thinking-4-5"><a href="#Thinking-4-5" class="headerlink" title="Thinking 4.5"></a>Thinking 4.5</h4><blockquote>
+<p>我们并不应该对所有的用户空间页都使用 duppage 进行映射。那么究竟哪 些用户空间页应该映射，哪些不应该呢？请结合 kern&#x2F;env.c 中 env_init 函数进行的页 面映射、include&#x2F;mmu.h 里的内存布局图以及本章的后续描述进行思考。</p>
+</blockquote>
+<ul>
+<li>在 0 ~ USTACKTOP范围的内存需要使用 duppage 进行映射;</li>
+<li>USTACKTOP ~ UTOP中<code>user exception stack</code> 进行页写入异常时所用</li>
+<li>UTOP以上则要么属于内核，要么是所有进程共享，用户模式下只读。</li>
+</ul>
+<h4 id="Thinking-4-6"><a href="#Thinking-4-6" class="headerlink" title="Thinking 4.6"></a>Thinking 4.6</h4><blockquote>
+<p>在遍历地址空间存取页表项时你需要使用到 vpd 和 vpt 这两个指针，请参 考 user&#x2F;include&#x2F;lib.h 中的相关定义，思考并回答这几个问题： </p>
+<ul>
+<li>vpt 和 vpd 的作用是什么？怎样使用它们？</li>
+<li>从实现的角度谈一下为什么进程能够通过这种方式来存取自身的页表？</li>
+<li>它们是如何体现自映射设计的？</li>
+<li>进程能够通过这种方式来修改自己的页表项吗？</li>
+</ul>
+</blockquote>
+<ul>
+<li>vpt和vpd分别是<strong>页表首地址</strong>和<strong>页目录首地址</strong>，通过虚拟地址偏移即可得到相应的页表项，他们可以直接当作数组来使用</li>
+<li>在user&#x2F;include&#x2F;lib.h的实现中：</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> vpt ((const volatile Pte *)UVPT)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> vpd ((const volatile Pde *)(UVPT + (PDX(UVPT) &lt;&lt; PGSHIFT)))</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>上面代码正是体现了自映射，vpd是vpt中的一页</li>
+<li>不能，这段区域位于UVPT以上，对于用户程序来说是只读的。若想修改，需要陷入内核进行操作</li>
+</ul>
+<h4 id="Thinking-4-7"><a href="#Thinking-4-7" class="headerlink" title="Thinking 4.7"></a>Thinking 4.7</h4><blockquote>
+<p>在 do_tlb_mod 函数中，你可能注意到了一个向异常处理栈复制 Trapframe 运行现场的过程，请思考并回答这几个问题：</p>
+<p>这里实现了一个支持类似于“异常重入”的机制，而在什么时候会出现这种“异常重入”？</p>
+<p>内核为什么需要将异常的现场 Trapframe 复制到用户空间</p>
+</blockquote>
+<ul>
+<li><p>首先我对于“异常重入”这个词的理解是不在内核态处理异常，而是下方到用户态，但是“用户态——异常——内核态——下方——用户态”这样子一个过程就需要保存两次<code>Trapframe</code>。<br>  因为<code>do_tlb_mod</code>函数并没有实际的处理页写入异常的函数段，而是通过<code>do_tlb_mod</code>函数下放回用户态来书写处理异常的函数段，所以处理<code>TLB Mod</code>异常的时候就需要<strong>异常重入</strong></p>
+</li>
+<li><p><strong>将现场的Trapframe复制到用户空间</strong>是因为<code>TLB Mod</code> 真正的异常处理过程书写在用户态，而用户态无法访问内核空间（也就是<code>KSTACKTOP</code>下方），但其中保存的异常现场信息是异常处理函数需要知道的，故将这部分内容拷贝到用户态的异常处理栈中（也就是<code>UXSTACKTOP</code>下），满足了用户态也可以访问的需求</p>
+</li>
+</ul>
+<h4 id="Thinking-4-8"><a href="#Thinking-4-8" class="headerlink" title="Thinking 4.8"></a>Thinking 4.8</h4><blockquote>
+<p>在用户态处理页写入异常，相比于在内核态处理有什么优势？</p>
+</blockquote>
+<ul>
+<li>解放内核，页面拷贝过程是还是很费时的，不让内核执行大量的拷贝工作</li>
+<li>减少了内核态出现失误的可能，防止整个系统崩溃</li>
+<li>用户态进行新页面的分配映射也更加灵活方便</li>
+</ul>
+<h4 id="Thinking-4-9"><a href="#Thinking-4-9" class="headerlink" title="Thinking 4.9"></a>Thinking 4.9</h4><blockquote>
+<p>请思考并回答以下几个问题：</p>
+<ul>
+<li><p>为什么需要将 syscall_set_tlb_mod_entry 的调用放置在 syscall_exofork 之前？</p>
+</li>
+<li><p>如果放置在写时复制保护机制完成之后会有怎样的效果？</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>保证在子进程创造出来之前就设置好写时复制机制异常处理函数的入口</p>
+  <div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">child = syscall_exofork();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (env-&gt;env_user_tlb_mod_entry != (u_int)cow_entry) &#123;</span><br><span class="line">	try(syscall_set_tlb_mod_entry(<span class="number">0</span>, cow_entry));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>  若是这么一个顺序，子进程被设置为<code>RUNNABLE</code>且返回之后（第一行代码执行结束），子进程的写时复制机制异常处理函数入口还未被设置，如果设置过程中写到了需要触发了TLB MOD，会找不到跳转的位置而出现错误。</p>
+<p>  更换顺序后，先设置入口再执行<code>suscall_exofork</code>可以让子进程延用父进程设置的入口从而无需再设置一次</p>
+</li>
+<li><p>如在再<strong>写时保护机制完成之后</strong>再设置<strong>异常处理函数入口</strong>问题就更大了，因为父进程在<code>duppage</code>的过程中更容易触发TLB MOD，相比于第一问的极小的触发TLB MOD的代码段，这个设计的问题更大</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> OS_lab4 思考题</li>
+        <li><strong>作者:</strong> rainbowYao</li>
+        <li><strong>创建于
+                :</strong> 2024-06-16 20:23:55</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2024-06-16 20:24:41
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://yyybbbyyyb.github.io/2024/06/16/OS-lab4-思考题/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
 </div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/06/16/OS-lab6-%E6%80%9D%E8%80%83%E9%A2%98/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">OS_lab6 思考题</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">OS_lab4 思考题</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
 
                 
 
@@ -614,6 +848,23 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">
