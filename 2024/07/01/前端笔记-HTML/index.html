@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="rainbowYao">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://yyybbbyyyb.github.io/2024/07/01/前端笔记-html/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="1. HTML5介绍 HTML5是用来描述网页的一种语言，被称为超文本标记语言，后缀以.html结尾 &lt;!DOCTYPE html&gt; 是H5的声明，位于文档的最前面（网页必备组成部分，避免浏览器的怪异模式）   2. HTML基本骨架123456789&lt;!DOCTYPE html&gt;     &lt;html&gt;    &lt;head&gt;        &lt;ti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端笔记 HTML">
+<meta property="og:url" content="https://yyybbbyyyb.github.io/2024/07/01/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-HTML/index.html">
+<meta property="og:site_name" content="rainbowYao&#39;s Blog">
+<meta property="og:description" content="1. HTML5介绍 HTML5是用来描述网页的一种语言，被称为超文本标记语言，后缀以.html结尾 &lt;!DOCTYPE html&gt; 是H5的声明，位于文档的最前面（网页必备组成部分，避免浏览器的怪异模式）   2. HTML基本骨架123456789&lt;!DOCTYPE html&gt;     &lt;html&gt;    &lt;head&gt;        &lt;ti">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-01T13:27:40.000Z">
+<meta property="article:modified_time" content="2024-08-01T10:11:52.128Z">
+<meta property="article:author" content="rainbowYao">
+<meta property="article:tag" content="前端笔记">
+<meta name="twitter:card" content="summary">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id="></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/rainbow.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/rainbow.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/rainbow.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            前端笔记 HTML -
+        
+        rainbowYao&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"yyybbbyyyb.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":true,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/flower.jpg","dark":"/images/flower.jpg"},"title":"This is rainbowYao's Blog","subtitle":{"text":["已老实, 求放过...","我真服了..."],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#000000","dark":"#000000"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"center","links":{"github":"https://github.com/yyybbbyyyb/","instagram":"https://www.instagram.com/yyb913665114/","zhihu":null,"twitter":null,"email":"22373393@buaa.edu.cn"},"qrs":{"weixin":"/images/wechat.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags/","icon":"fa-regular fa-tags"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"目前文章较少","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2024/1/1 00:00:00"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        rainbowYao&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/rainbow.ico">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                rainbowYao&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail8.jpg" alt="前端笔记 HTML" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">前端笔记 HTML</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">rainbowYao</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-07-01 21:27:40</span>
+        <span class="mobile">2024-07-01 21:27:40</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-08-01 18:11:52</span>
+            <span class="mobile">2024-08-01 18:11:52</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/">前端笔记</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="1-HTML5介绍"><a href="#1-HTML5介绍" class="headerlink" title="1. HTML5介绍"></a>1. HTML5介绍</h2><ul>
+<li>HTML5是用来描述网页的一种语言，被称为超文本标记语言，后缀以<code>.html</code>结尾</li>
+<li><code>&lt;!DOCTYPE html&gt;</code> 是H5的声明，位于文档的最前面（网页必备组成部分，避免浏览器的怪异模式）</li>
+</ul>
+<hr>
+<h2 id="2-HTML基本骨架"><a href="#2-HTML基本骨架" class="headerlink" title="2. HTML基本骨架"></a>2. HTML基本骨架</h2><div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>     </span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>html标签：</strong>定义HTML文档，标签限定了文档的开始和结束</li>
+<li><strong>head标签：</strong>文档的头部，描述文档的属性和信息，包括：文档的标题、在Web中的位置以及其他文档的关系。绝大多数内容不会显示给读者</li>
+<li><strong>body标签：</strong>定义文档主体（文本、超链接、图像、表格、列表等），展示给读者</li>
+<li><strong>title标签：</strong>定义文档的标题，显示在浏览器窗口的标题栏或状态栏上，是<code>&lt;head&gt;</code>标签中<strong>唯一必须</strong>包含的内容，有利于SEO优化（搜索引擎优化）</li>
+<li><strong>meta标签：</strong>描述HTML网页文档的属性、关键词等。例如：<code>charset=“UTF-8”</code>表示当前使用的是<code>UTF-8</code>的编码格式</li>
+</ul>
+<hr>
+<h2 id="3-标题标签"><a href="#3-标题标签" class="headerlink" title="3. 标题标签"></a>3. 标题标签</h2><ul>
+<li>标题通过 <code>&lt;h1&gt; ~ &lt;h6&gt;</code> 标签进行定义</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> 一级标题 <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span> 二级标题 <span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">……</span><br><span class="line"><span class="tag">&lt;<span class="name">h6</span>&gt;</span> 六级标题 <span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>生成h1~h6的快捷键：<code>h$*6</code> </li>
+<li>注意：请确保标题标签只用于标题（有益于SEO）</li>
+<li>标题标签位置摆放：在标签中添加属性：<code>align=&quot;left|center|right&quot;</code>，默认居左（align在代码中会变红，即不推荐这样使用，后续用css调整位置）</li>
+</ul>
+<hr>
+<h2 id="4-标签：段落、换行、水平线"><a href="#4-标签：段落、换行、水平线" class="headerlink" title="4. 标签：段落、换行、水平线"></a>4. 标签：段落、换行、水平线</h2><h4 id="段落："><a href="#段落：" class="headerlink" title="段落："></a>段落：</h4><p>​		通过<code>&lt;p&gt;</code>定义</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>段落1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>段落2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="换行："><a href="#换行：" class="headerlink" title="换行："></a>换行：</h4><p>​		通过<code>&lt;br&gt;</code>定义（单标签）</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">第一行<span class="tag">&lt;<span class="name">br</span>&gt;</span>第二行<span class="tag">&lt;<span class="name">br</span>&gt;</span>第三行</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="水平线："><a href="#水平线：" class="headerlink" title="水平线："></a>水平线：</h4><p>​		通过<code>&lt;hr&gt;</code>定义（单标签）</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">hr</span> <span class="attr">color</span>=<span class="string">&quot;&quot;</span> <span class="attr">width</span>=<span class="string">&quot;&quot;</span> <span class="attr">size</span>=<span class="string">&quot;&quot;</span> <span class="attr">align</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>属性：<code>color</code> 颜色； <code>width</code> 宽度 ； <code>size</code> 高度； <code>align</code> 对齐方式（默认居中，可取left | right）</li>
+</ul>
+<hr>
+<h2 id="5-图片标签"><a href="#5-图片标签" class="headerlink" title="5.图片标签"></a>5.图片标签</h2><ul>
+<li>图片标签通过<code>&lt;img&gt;</code>定义（单标签）</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;&quot;</span> <span class="attr">width</span>=<span class="string">&quot;&quot;</span> <span class="attr">height</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>属性：</p>
+<ul>
+<li>src：路径（可用绝对路径、相对路径、网络路径）</li>
+<li>alt：规定图片代替的文本</li>
+<li>width：宽度 </li>
+<li>height：高度（一般不用）</li>
+<li>title：鼠标悬停在图片上给予提示（一般不用）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="6-超链接标签"><a href="#6-超链接标签" class="headerlink" title="6. 超链接标签"></a>6. 超链接标签</h2><ul>
+<li>超链接标签通过<code>&lt;a&gt;</code>来设置</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;url&quot;</span>&gt;</span>链接文本|图片<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>默认情况下，链接将以以下形式出现在浏览器中（后期通过CSS修改这些效果）：<ul>
+<li>未访问过的链接显示为蓝色字体并带有下划线</li>
+<li>访问过的链接显示紫色并带有下划线</li>
+<li>点击连接时，链接显示红色并带有下划线</li>
+</ul>
+</li>
+<li>鼠标悬停在超链接上会有变化</li>
+</ul>
+<hr>
+<h2 id="7-文本标签"><a href="#7-文本标签" class="headerlink" title="7. 文本标签"></a>7. 文本标签</h2><p><strong>常用文本标签</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">标签</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&lt;em&gt;</td>
+<td align="center">定义着重文字</td>
+</tr>
+<tr>
+<td align="center">&lt;b&gt;</td>
+<td align="center">定义粗体文本</td>
+</tr>
+<tr>
+<td align="center">&lt;i&gt;</td>
+<td align="center">定义斜体字</td>
+</tr>
+<tr>
+<td align="center">&lt;strong&gt;</td>
+<td align="center">定义加重语气</td>
+</tr>
+<tr>
+<td align="center">&lt;del&gt;</td>
+<td align="center">定义删除字</td>
+</tr>
+<tr>
+<td align="center">&lt;span&gt;</td>
+<td align="center">元素没有特定的含义</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="8-列表标签"><a href="#8-列表标签" class="headerlink" title="8.	列表标签"></a>8.	列表标签</h2><h4 id="有序列表："><a href="#有序列表：" class="headerlink" title="有序列表："></a>有序列表：</h4><ul>
+<li>有序列表是一列项目，列表项目使用数字进行标记。有序列表始于<code>&lt;ol&gt;</code> 标签， 每个列表项始于<code>&lt;li&gt;</code> 标签</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ol</span> <span class="attr">type</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>第一项<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>第二项<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>属性type表示排序的标号：</p>
+<ul>
+<li><strong>1</strong> 表示数字标号（1，2，3……）（默认）</li>
+<li><strong>a</strong> 表示小写字母标号（a，b，c……）（大写用：<strong>A</strong>）</li>
+<li><strong>i</strong>  表示小写罗马数字标号（i，ii，iii……）（大写用： <strong>I</strong>）</li>
+</ul>
+</li>
+<li><p>有序列表可以嵌套</p>
+</li>
+</ul>
+<h4 id="无序列表："><a href="#无序列表：" class="headerlink" title="无序列表："></a>无序列表：</h4><ul>
+<li>无序列表使用粗体圆点进行标记。有序列表始于<code>&lt;ul&gt;</code> 标签， 每个列表项始于<code>&lt;li&gt;</code> 标签</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">type</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>第一项<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>第二项<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>属性type表示粗体圆点的形式：</p>
+<ul>
+<li><strong>disc</strong> 表示实心圆 （默认） </li>
+<li><strong>circle</strong> 表示空心圆</li>
+<li><strong>square</strong> 表示小方块</li>
+<li><strong>none</strong> 表示不显示</li>
+</ul>
+</li>
+<li><p>无序列表也可以嵌套 </p>
+</li>
+<li><p>常见应用场景：</p>
+<ul>
+<li>无序列表的效果</li>
+<li>导航效果（通过CSS可调整布局）</li>
+</ul>
+</li>
+<li><p>快捷键：<code>ul&gt;li*3</code> (数字根据自己的需求的li数量修改)</p>
+</li>
+</ul>
+<hr>
+<h2 id="9-表格标签"><a href="#9-表格标签" class="headerlink" title="9. 表格标签"></a>9. 表格标签</h2><h4 id="表格："><a href="#表格：" class="headerlink" title="表格："></a>表格：</h4><ul>
+<li>表格：<code>&lt;table&gt;</code> ；行：<code>&lt;tr&gt;</code> ；单元格(列)：<code>&lt;td&gt;</code></li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">align</span>=<span class="string">&quot;&quot;</span> <span class="attr">border</span>=<span class="string">&quot;1&quot;</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>（1，1）<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>（1，2）<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>（2，1）<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>（2，2）<span class="tag">&lt;/<span class="name">td</span>&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>快捷键：<code>table&gt;tr*3&gt;td*5&#123;单元格内容&#125;</code></p>
+</li>
+<li><p>属性：</p>
+<ul>
+<li><p>border：设置表格的边框（数字表示像素单位）</p>
+</li>
+<li><p>width：设置表格的宽度</p>
+</li>
+<li><p>height：设置表格的高度</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="表格单元格合并："><a href="#表格单元格合并：" class="headerlink" title="表格单元格合并："></a>表格单元格合并：</h4><ul>
+<li><p>水平合并：添加属性：<code>colspan=“合并格数”</code>（保留左边删除右边）</p>
+<ul>
+<li>垂直合并：添加属性：<code>rowspan=“合并格数”</code>（保留上边删除下边）</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">align</span>=<span class="string">&quot;&quot;</span> <span class="attr">border</span>=<span class="string">&quot;1&quot;</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">&quot;2&quot;</span> <span class="attr">rowspan</span>=<span class="string">&quot;2&quot;</span>&gt;</span>（1，1）、（1，2）、（2，1）、（2，2）<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">rowspan</span>=<span class="string">&quot;2&quot;</span>&gt;</span>（1，3）、（2，3）<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">&quot;3&quot;</span>&gt;</span>（3，1）、（3，2）、（3，3）<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="10-表单"><a href="#10-表单" class="headerlink" title="10. 表单"></a>10. 表单</h2><h4 id="表单："><a href="#表单：" class="headerlink" title="表单："></a>表单：</h4><ul>
+<li>表单是由容器和控件组成，一个表单一半应该包括用户填写信息的输入框、提交按钮等，这些输入框、按钮叫做控件，表单就是容器，它能容纳各种控件</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;url&quot;</span> <span class="attr">method</span>=<span class="string">&quot;get|post&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myform&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>属性：<ul>
+<li><p>action：后台服务器地址</p>
+</li>
+<li><p>name：表单名称</p>
+</li>
+<li><p>method中get和post的区别：</p>
+<ul>
+<li><p>数据提交方式，get提交的数据url可以看到，post看不到</p>
+</li>
+<li><p>get一般用于提交少量数据，post用来提交大量数据</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="表单元素："><a href="#表单元素：" class="headerlink" title="表单元素："></a>表单元素：</h4><ul>
+<li>表单元素：一个完整的表单包含三个基本组成部分：表单标签、表单域、表单按钮	<ul>
+<li>文本框：文本域通过 <code>&lt;input type=&quot;text&quot;&gt;</code>  标签来设定，当用户要在表单中键入字母、数字等内容时使用</li>
+<li>密码框：密码框通过 <code>&lt;input type=&quot;password&quot;&gt;</code> 来定义</li>
+<li>提交按钮：提交按钮通过 <code>&lt;input type=&quot;submit&quot;&gt;</code> 来定义</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--文本框--&gt;</span></span><br><span class="line">    First name: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;firstname&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    Last name: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;lastname&quot;</span>&gt;</span>    </span><br><span class="line">    <span class="comment">&lt;!--密码框--&gt;</span></span><br><span class="line">    Password: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;passord&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--提交按钮--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;登录&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span>	   </span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="11-块级元素与内联元素"><a href="#11-块级元素与内联元素" class="headerlink" title="11. 块级元素与内联元素"></a>11. 块级元素与内联元素</h2><blockquote>
+<p>HTML5出现之前，经常把元素按照块级元素和内联元素来区分。在HTML5中，元素不再按照这种方式来区分，而是按照内容模型来区分，分为元数据型(metadata content)、区块型(sectioning content)、标题型(heading content)、文档流型(flow content)、语句型phrasing content)、内嵌型(embedded content)、交互型interactive content)。元素不属于任何一个类别，被称为穿透的，元素可能属于不止一个类别，称为混合的</p>
+</blockquote>
+<blockquote>
+<p>详细参考：<a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Content_categories" >Web开发技术内容分类 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p><strong>块级元素与内联元素区别：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">块级元素</th>
+<th align="center">内联元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">块级元素会在页面中独占一行（自上向下垂直排列）</td>
+<td align="center">内联元素不会独占页面中的一行、只占自身的大小</td>
+</tr>
+<tr>
+<td align="center">可以设置width、height属性</td>
+<td align="center">内联元素设置width、height属性无效</td>
+</tr>
+<tr>
+<td align="center">一般块级元素可以包含内联元素和其他块级元素</td>
+<td align="center">一般内联元素包含内敛元素不包含块级元素</td>
+</tr>
+</tbody></table>
+<ul>
+<li>常见块级元素：<code>div、form、h1~h6、p、table、ul、ol</code> 等</li>
+<li>常见内联元素（行内元素）：<code>a、b、em、i、span、strong</code> 等</li>
+<li>常见行内块级元素（特点：不换行、能够识别宽高）：<code>button、img、input</code> 等</li>
+</ul>
+<hr>
+<h2 id="12-HTML5新增标签"><a href="#12-HTML5新增标签" class="headerlink" title="12. HTML5新增标签"></a>12. HTML5新增标签</h2><blockquote>
+<p>HTML5 是 HTML 最新的修订版本，2014年10月由万维网联盟 (w3c) 完成标准制定<br>在HTML5 出现之前，我们一般采用 DIV+Css 布局我们的页面。但是这样的布局方式不仅使我们的文档结构不够清晰，而且<strong>不利于搜索引擎爬虫对我们页面的爬取</strong>。为了解决上述缺点，HTML5 新增了很多新的语义化标签</p>
+</blockquote>
+<ul>
+<li><p>老版本中容器元素：<code>&lt;div&gt;&lt;/div&gt;</code>，用于为HTML文档内大块的内容提供结构和背景的元素</p>
+</li>
+<li><p>H5新标签：</p>
+<ul>
+<li><p><code>&lt;header&gt;&lt;/header&gt;</code> ：头部</p>
+</li>
+<li><p><code>&lt;nav&gt;&lt;/nav&gt;</code> ：导航</p>
+</li>
+<li><p><code>&lt;section&gt;&lt;/section&gt;</code> ：定义文章中的节，比如章节、页眉、页脚</p>
+</li>
+<li><p><code>&lt;aside&gt;&lt;/aside&gt;</code> ：侧边栏</p>
+</li>
+<li><p><code>&lt;footer&gt;&lt;/footer&gt;</code> ：脚部</p>
+</li>
+<li><p><code>&lt;article&gt;&lt;/article&gt;</code> ： 代表一个独立的、完整的相关内容快，例如一篇论坛帖子、一篇博客文章、一个用户评论等</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--div实现--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;header&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;nav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;article&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;section&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;aside&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;footer&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--H5新标签实现--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">nav</span>&gt;</span><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">section</span>&gt;</span><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aside</span>&gt;</span><span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> 前端笔记 HTML</li>
+        <li><strong>作者:</strong> rainbowYao</li>
+        <li><strong>创建于
+                :</strong> 2024-07-01 21:27:40</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2024-08-01 18:11:52
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/07/01/前端笔记-HTML/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/">#前端笔记</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/01/前端笔记-CSS/" title="前端笔记 CSS" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail10.jpg" alt="前端笔记 CSS" class="!max-w-none">
+  <span class="title">前端笔记 CSS</span>
+</a><a class="recommended-article-item" href="/2024/07/01/前端笔记-JavaScript/" title="前端笔记 JavaScript" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail9.jpg" alt="前端笔记 JavaScript" class="!max-w-none">
+  <span class="title">前端笔记 JavaScript</span>
+</a><a class="recommended-article-item" href="/2024/08/17/Django之ORM/" title="Django之ORM" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail13.jpg" alt="Django之ORM" class="!max-w-none">
+  <span class="title">Django之ORM</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/01/前端笔记-CSS/" title="前端笔记 CSS" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail10.jpg" alt="前端笔记 CSS" class="!max-w-none">
+  <span class="title">前端笔记 CSS</span>
+</a><a class="recommended-article-item" href="/2024/07/01/前端笔记-JavaScript/" title="前端笔记 JavaScript" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail9.jpg" alt="前端笔记 JavaScript" class="!max-w-none">
+  <span class="title">前端笔记 JavaScript</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/07/01/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-CSS/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">前端笔记 CSS</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">前端笔记 HTML</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HTML5%E4%BB%8B%E7%BB%8D"><span class="nav-text">1. HTML5介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HTML%E5%9F%BA%E6%9C%AC%E9%AA%A8%E6%9E%B6"><span class="nav-text">2. HTML基本骨架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%A0%87%E9%A2%98%E6%A0%87%E7%AD%BE"><span class="nav-text">3. 标题标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%A0%87%E7%AD%BE%EF%BC%9A%E6%AE%B5%E8%90%BD%E3%80%81%E6%8D%A2%E8%A1%8C%E3%80%81%E6%B0%B4%E5%B9%B3%E7%BA%BF"><span class="nav-text">4. 标签：段落、换行、水平线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%9B%BE%E7%89%87%E6%A0%87%E7%AD%BE"><span class="nav-text">5.图片标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%B6%85%E9%93%BE%E6%8E%A5%E6%A0%87%E7%AD%BE"><span class="nav-text">6. 超链接标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%96%87%E6%9C%AC%E6%A0%87%E7%AD%BE"><span class="nav-text">7. 文本标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%88%97%E8%A1%A8%E6%A0%87%E7%AD%BE"><span class="nav-text">8.	列表标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE"><span class="nav-text">9. 表格标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E8%A1%A8%E5%8D%95"><span class="nav-text">10. 表单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E4%B8%8E%E5%86%85%E8%81%94%E5%85%83%E7%B4%A0"><span class="nav-text">11. 块级元素与内联元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-HTML5%E6%96%B0%E5%A2%9E%E6%A0%87%E7%AD%BE"><span class="nav-text">12. HTML5新增标签</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">rainbowYao</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共 12 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

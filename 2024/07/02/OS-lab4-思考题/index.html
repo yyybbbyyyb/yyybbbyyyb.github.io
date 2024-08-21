@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="rainbowYao">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://yyybbbyyyb.github.io/2024/07/02/os-lab4-思考题/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Thinking 4.1 思考并回答下面的问题： 内核在保存现场的时候是如何避免破坏通用寄存器的？ 系统陷入内核调用后可以直接从当时的 $a0-$a3 参数寄存器中得到用户调用 msyscall 留下的信息吗？ 我们是怎么做到让 sys 开头的函数“认为”我们提供了和用户调用 msyscall 时同样的参数的？ 内核处理系统调用的过程对 Trapframe 做了哪些更改？这种修改对应的用户态的变化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS lab4 思考题">
+<meta property="og:url" content="https://yyybbbyyyb.github.io/2024/07/02/OS-lab4-%E6%80%9D%E8%80%83%E9%A2%98/index.html">
+<meta property="og:site_name" content="rainbowYao&#39;s Blog">
+<meta property="og:description" content="Thinking 4.1 思考并回答下面的问题： 内核在保存现场的时候是如何避免破坏通用寄存器的？ 系统陷入内核调用后可以直接从当时的 $a0-$a3 参数寄存器中得到用户调用 msyscall 留下的信息吗？ 我们是怎么做到让 sys 开头的函数“认为”我们提供了和用户调用 msyscall 时同样的参数的？ 内核处理系统调用的过程对 Trapframe 做了哪些更改？这种修改对应的用户态的变化">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-02T13:21:46.000Z">
+<meta property="article:modified_time" content="2024-08-01T10:09:54.606Z">
+<meta property="article:author" content="rainbowYao">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id="></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/rainbow.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/rainbow.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/rainbow.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            OS lab4 思考题 -
+        
+        rainbowYao&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"yyybbbyyyb.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":true,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/flower.jpg","dark":"/images/flower.jpg"},"title":"This is rainbowYao's Blog","subtitle":{"text":["已老实, 求放过...","我真服了..."],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#000000","dark":"#000000"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"center","links":{"github":"https://github.com/yyybbbyyyb/","instagram":"https://www.instagram.com/yyb913665114/","zhihu":null,"twitter":null,"email":"22373393@buaa.edu.cn"},"qrs":{"weixin":"/images/wechat.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags/","icon":"fa-regular fa-tags"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"目前文章较少","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2024/1/1 00:00:00"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        rainbowYao&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/rainbow.ico">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                rainbowYao&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail14.jpg" alt="OS lab4 思考题" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">OS lab4 思考题</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">rainbowYao</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-07-02 21:21:46</span>
+        <span class="mobile">2024-07-02 21:21:46</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-08-01 18:09:54</span>
+            <span class="mobile">2024-08-01 18:09:54</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h4 id="Thinking-4-1"><a href="#Thinking-4-1" class="headerlink" title="Thinking 4.1"></a>Thinking 4.1</h4><blockquote>
+<p>思考并回答下面的问题：</p>
+<p>内核在保存现场的时候是如何避免破坏通用寄存器的？</p>
+<p>系统陷入内核调用后可以直接从当时的 $a0-$a3 参数寄存器中得到用户调用 msyscall 留下的信息吗？</p>
+<p>我们是怎么做到让 sys 开头的函数“认为”我们提供了和用户调用 msyscall 时同样的参数的？</p>
+<p>内核处理系统调用的过程对 Trapframe 做了哪些更改？这种修改对应的用户态的变化是什么？</p>
+</blockquote>
+<p>函数调用顺序：</p>
+<p>用户态：<code>msyscall(user/lib/syscall_lib.c)</code>——<code>syscall(user/lib/syscall_wrap.S)</code>——</p>
+<p>内核态：<code>exc_gen_entry(kern/entry.S)</code>——<code>exception_handlers(kern/genex.S)</code>——<code>do_syscall(kern/syscall_all.c</code></p>
+<ol>
+<li><p>保存现场是在<code>exc_gen_entry</code>中的<code>SAVE_ALL</code>宏方法，将通用寄存器保存。</p>
+<blockquote>
+<p> 至于<code>SAVE_ALL</code>宏方法：</p>
+<ul>
+<li><p>先用<code>move k0, sp</code>将通用寄存器的$sp复制到$k0（因为后面$sp就指向<code>KSTACKTOP</code>内核栈了）</p>
+</li>
+<li><p>然后处理$sp使其处于内核栈的正确位置<code>subu sp, sp, TF_SIZE</code></p>
+</li>
+<li><p>再之后调用<code>sw k0, TF_REG29(sp)</code>将现场的$sp（现在储存在$k0中）存储到<code>TF_REG29（sp）</code>中</p>
+</li>
+<li><p>后续是储存一些CP0协处理器，如：<code>mfc0 k0, CP0_STATUS sw k0, TF_STATUS(sp)</code></p>
+</li>
+<li><p>最后是对通用寄存器（除去$sp）的储存如：<code>sw $1, TF_REG1(sp)</code></p>
+</li>
+<li><p>至此通用寄存器以及CP0协处理器都被储存在了内核态的内核栈<code>KSTACKTOP</code>中了，在<code>env_run</code>等函数中调用的<code>*((struct Trapframe *)KSTACKTOP - 1</code>的由来正是上面的操作，值得一提的是其中的“-1”是因为栈帧的增长方向是从上到下（高地址到低地址），故为了得到<code>struct Trapframe</code>的起始地址（低地址），需要从高地址减掉一个结构体的内存大小（相当于<code>SAVE_ALL</code>中的<code>subu sp, sp, TF_SIZE</code>）</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>除去$a0，其他理论上可以。按照上面的函数调用顺序检查，只有$a0在从<code>handle_sys</code>到<code>do_syscall</code> 的过程中被设置成了$sp（也就是传递给<code>do_syscall</code>的参数<code>*tf</code>），而原始的$a0保存的信息是<code>msyscall</code>传递进去的系统调用号，这一值（即<code>sysno</code>）只在<code>do_syscall</code>索引<code>sys_*()</code>函数的时候使用，并未继续传入<code>sys_*()</code>，故在<code>sys_*()</code>中直接使用<code>$a1~$a3</code>没有问题。</p>
+<p> 但最好的获取用户调用时留下的$a0~$a3的方法是通过<code>tf-&gt;regs</code></p>
+</li>
+<li><p>根据上面对<code>SAVE_ALL</code>的解释，异常刚发生时进行了“保存现场”的操作，<code>msyscall</code>传递的参数中 $a0~$a3被保存在了内核栈中，可以通过<code>tf-&gt;regs[4|5|6|7]</code>来获得，而另外两个参数被压入了<code>msyscall</code>栈帧，可以通过<code>tf-&gt;regs[29] + 16|20</code>来获得</p>
+</li>
+<li><p>第一，将EPC寄存器加四，因为保证了<code>syscall</code>不在延迟槽内，结束系统调用要回到他的下一条指令</p>
+<p> 第二，将系统调用处理函数<code>sys_*()</code>的返回值写到$v0寄存器中</p>
+</li>
+</ol>
+<h4 id="Thinking-4-2"><a href="#Thinking-4-2" class="headerlink" title="Thinking 4.2"></a>Thinking 4.2</h4><blockquote>
+<p>思考 envid2env 函数: 为什么 envid2env 中需要判断 e-&gt;env_id !&#x3D; envid 的情况？如果没有这步判断会发生什么情况？ </p>
+</blockquote>
+<p>先看<code>mkenvid</code>这个函数：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//env.c</span></span><br><span class="line">u_int <span class="title function_">mkenvid</span><span class="params">(<span class="keyword">struct</span> Env *e)</span> &#123;</span><br><span class="line">	<span class="type">static</span> u_int i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> ((++i) &lt;&lt; (<span class="number">1</span> + LOG2NENV)) | (e - envs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//env.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOG2NENV 10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NENV (1 &lt;&lt; LOG2NENV)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ENVX(envid) ((envid) &amp; (NENV - 1))</span></span><br></pre></td></tr></table></figure></div>
+
+<p>我们可以得出一个<code>envid</code>由两部分组成：高位置表示该进程是第几个被申请的进程（不断自增），低位置表示该进程相对于数组<code>envs</code>的偏移。<code>ENVX</code>函数就是通过低位置索引到的进程控制块，但是一个进程控制块（地址意义上的）可能被申请、释放、再申请，所以两个<code>env_id</code>的低位置相等不代表是一个进程。</p>
+<p>如果不做这一步判断，可能索引到的是错误的或者本该被销毁的进程控制块</p>
+<h4 id="Thinking-4-3"><a href="#Thinking-4-3" class="headerlink" title="Thinking 4.3"></a>Thinking 4.3</h4><blockquote>
+<p>思考下面的问题，并对这个问题谈谈你的理解：请回顾 kern&#x2F;env.c 文件 中 mkenvid() 函数的实现，该函数不会返回 0，请结合系统调用和 IPC 部分的实现与 envid2env() 函数的行为进行解释</p>
+</blockquote>
+<p>上面给出过<code>mkenvid()</code>函数的实现方法，由于<code>++i</code>保证了<code>envid</code>不会是0，而内核方法<code>envid2env</code>中如果传递的<code>envid == 0</code>的话，返回的是<code>curenv</code>。</p>
+<p>由于<code>curenv</code>是内核态的变量，用户态无法感知<code>curenv</code>，但为了方便用户进程调用 <code>syscall_*()</code> 时把当前进程的<code>envid</code>作为参数传给内核函数，可以使用<code>envid == 0</code>的操作，比如<code>fork</code>函数调用<code>sys_set_tlb_mod_entry</code> 时就出现了<code>envid == 0</code>时直接返回当前进程的实现</p>
+<h4 id="Thinking-4-4"><a href="#Thinking-4-4" class="headerlink" title="Thinking 4.4"></a>Thinking 4.4</h4><blockquote>
+<p>关于 fork 函数的两个返回值，下面说法正确的是：</p>
+<p>A、fork 在父进程中被调用两次，产生两个返回值</p>
+<p>B、fork 在两个进程中分别被调用一次，产生两个不同的返回值 </p>
+<p>C、fork 只在父进程中被调用了一次，在两个进程中各产生一个返回值 </p>
+<p>D、fork 只在子进程中被调用了一次，在两个进程中各产生一个返回值</p>
+</blockquote>
+<p>选：C</p>
+<p>fork函数的调用只发生在父进程中，并通过调用<code>syscall_exofork</code>函数创建了进程。此时，内核给两个进程设置了不同的返回值，父进程中返回子进程的id，子进程返回0。</p>
+<h4 id="Thinking-4-5"><a href="#Thinking-4-5" class="headerlink" title="Thinking 4.5"></a>Thinking 4.5</h4><blockquote>
+<p>我们并不应该对所有的用户空间页都使用 duppage 进行映射。那么究竟哪 些用户空间页应该映射，哪些不应该呢？请结合 kern&#x2F;env.c 中 env_init 函数进行的页 面映射、include&#x2F;mmu.h 里的内存布局图以及本章的后续描述进行思考。</p>
+</blockquote>
+<ul>
+<li>在 0 ~ USTACKTOP范围的内存需要使用 duppage 进行映射;</li>
+<li>USTACKTOP ~ UTOP中<code>user exception stack</code> 进行页写入异常时所用</li>
+<li>UTOP以上则要么属于内核，要么是所有进程共享，用户模式下只读。</li>
+</ul>
+<h4 id="Thinking-4-6"><a href="#Thinking-4-6" class="headerlink" title="Thinking 4.6"></a>Thinking 4.6</h4><blockquote>
+<p>在遍历地址空间存取页表项时你需要使用到 vpd 和 vpt 这两个指针，请参 考 user&#x2F;include&#x2F;lib.h 中的相关定义，思考并回答这几个问题： </p>
+<ul>
+<li>vpt 和 vpd 的作用是什么？怎样使用它们？</li>
+<li>从实现的角度谈一下为什么进程能够通过这种方式来存取自身的页表？</li>
+<li>它们是如何体现自映射设计的？</li>
+<li>进程能够通过这种方式来修改自己的页表项吗？</li>
+</ul>
+</blockquote>
+<ul>
+<li>vpt和vpd分别是<strong>页表首地址</strong>和<strong>页目录首地址</strong>，通过虚拟地址偏移即可得到相应的页表项，他们可以直接当作数组来使用</li>
+<li>在user&#x2F;include&#x2F;lib.h的实现中：</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> vpt ((const volatile Pte *)UVPT)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> vpd ((const volatile Pde *)(UVPT + (PDX(UVPT) &lt;&lt; PGSHIFT)))</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>上面代码正是体现了自映射，vpd是vpt中的一页</li>
+<li>不能，这段区域位于UVPT以上，对于用户程序来说是只读的。若想修改，需要陷入内核进行操作</li>
+</ul>
+<h4 id="Thinking-4-7"><a href="#Thinking-4-7" class="headerlink" title="Thinking 4.7"></a>Thinking 4.7</h4><blockquote>
+<p>在 do_tlb_mod 函数中，你可能注意到了一个向异常处理栈复制 Trapframe 运行现场的过程，请思考并回答这几个问题：</p>
+<p>这里实现了一个支持类似于“异常重入”的机制，而在什么时候会出现这种“异常重入”？</p>
+<p>内核为什么需要将异常的现场 Trapframe 复制到用户空间</p>
+</blockquote>
+<ul>
+<li><p>首先我对于“异常重入”这个词的理解是不在内核态处理异常，而是下方到用户态，但是“用户态——异常——内核态——下方——用户态”这样子一个过程就需要保存两次<code>Trapframe</code>。<br>  因为<code>do_tlb_mod</code>函数并没有实际的处理页写入异常的函数段，而是通过<code>do_tlb_mod</code>函数下放回用户态来书写处理异常的函数段，所以处理<code>TLB Mod</code>异常的时候就需要<strong>异常重入</strong></p>
+</li>
+<li><p><strong>将现场的Trapframe复制到用户空间</strong>是因为<code>TLB Mod</code> 真正的异常处理过程书写在用户态，而用户态无法访问内核空间（也就是<code>KSTACKTOP</code>下方），但其中保存的异常现场信息是异常处理函数需要知道的，故将这部分内容拷贝到用户态的异常处理栈中（也就是<code>UXSTACKTOP</code>下），满足了用户态也可以访问的需求</p>
+</li>
+</ul>
+<h4 id="Thinking-4-8"><a href="#Thinking-4-8" class="headerlink" title="Thinking 4.8"></a>Thinking 4.8</h4><blockquote>
+<p>在用户态处理页写入异常，相比于在内核态处理有什么优势？</p>
+</blockquote>
+<ul>
+<li>解放内核，页面拷贝过程是还是很费时的，不让内核执行大量的拷贝工作</li>
+<li>减少了内核态出现失误的可能，防止整个系统崩溃</li>
+<li>用户态进行新页面的分配映射也更加灵活方便</li>
+</ul>
+<h4 id="Thinking-4-9"><a href="#Thinking-4-9" class="headerlink" title="Thinking 4.9"></a>Thinking 4.9</h4><blockquote>
+<p>请思考并回答以下几个问题：</p>
+<ul>
+<li><p>为什么需要将 syscall_set_tlb_mod_entry 的调用放置在 syscall_exofork 之前？</p>
+</li>
+<li><p>如果放置在写时复制保护机制完成之后会有怎样的效果？</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>保证在子进程创造出来之前就设置好写时复制机制异常处理函数的入口</p>
+  <div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">child = syscall_exofork();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (env-&gt;env_user_tlb_mod_entry != (u_int)cow_entry) &#123;</span><br><span class="line">	try(syscall_set_tlb_mod_entry(<span class="number">0</span>, cow_entry));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>  若是这么一个顺序，子进程被设置为<code>RUNNABLE</code>且返回之后（第一行代码执行结束），子进程的写时复制机制异常处理函数入口还未被设置，如果设置过程中写到了需要触发了TLB MOD，会找不到跳转的位置而出现错误。</p>
+<p>  更换顺序后，先设置入口再执行<code>suscall_exofork</code>可以让子进程延用父进程设置的入口从而无需再设置一次</p>
+</li>
+<li><p>如在再<strong>写时保护机制完成之后</strong>再设置<strong>异常处理函数入口</strong>问题就更大了，因为父进程在<code>duppage</code>的过程中更容易触发TLB MOD，相比于第一问的极小的触发TLB MOD的代码段，这个设计的问题更大</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> OS lab4 思考题</li>
+        <li><strong>作者:</strong> rainbowYao</li>
+        <li><strong>创建于
+                :</strong> 2024-07-02 21:21:46</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2024-08-01 18:09:54
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/07/02/OS-lab4-思考题/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/02/OS-lab6-思考题/" title="OS lab6 思考题" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail11.jpg" alt="OS lab6 思考题" class="!max-w-none">
+  <span class="title">OS lab6 思考题</span>
+</a><a class="recommended-article-item" href="/2024/07/02/OS-Challenge/" title="OS Challenge" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail12.jpg" alt="OS Challenge" class="!max-w-none">
+  <span class="title">OS Challenge</span>
+</a><a class="recommended-article-item" href="/2024/07/02/OS-lab5-思考题/" title="OS lab5 思考题" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail5.jpg" alt="OS lab5 思考题" class="!max-w-none">
+  <span class="title">OS lab5 思考题</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/02/OS-lab6-思考题/" title="OS lab6 思考题" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail11.jpg" alt="OS lab6 思考题" class="!max-w-none">
+  <span class="title">OS lab6 思考题</span>
+</a><a class="recommended-article-item" href="/2024/07/02/OS-Challenge/" title="OS Challenge" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail12.jpg" alt="OS Challenge" class="!max-w-none">
+  <span class="title">OS Challenge</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/07/02/OS-lab5-%E6%80%9D%E8%80%83%E9%A2%98/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">OS lab5 思考题</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/07/01/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-JavaScript/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">前端笔记 JavaScript</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">OS lab4 思考题</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">rainbowYao</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共 12 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

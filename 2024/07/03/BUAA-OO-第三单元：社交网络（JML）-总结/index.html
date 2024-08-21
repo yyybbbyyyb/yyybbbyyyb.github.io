@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="rainbowYao">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://yyybbbyyyb.github.io/2024/07/03/buaa-oo-第三单元：社交网络（jml）-总结/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="前言第三单元主题是JML，但在我看来也是两个维度的考量，一是对JML的学习，这个我觉得更多体现在实验课需要我们写JML，以及通过读懂JML来知道我们三次迭代需要实现的函数的功能是什么；第二个维度就是依托于社交网络这么一个主题，在图论中的算法上做出了一些考察，如果不优化算法的话，大概率会在强测中就出问题 因此本人的第三单元总结分为两部分，第一部分是我对JML的认知理解，这一部分只是浅谈，因为真没什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA_OO 第三单元：社交网络（JML） 总结">
+<meta property="og:url" content="https://yyybbbyyyb.github.io/2024/07/03/BUAA-OO-%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%EF%BC%9A%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%EF%BC%88JML%EF%BC%89-%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="rainbowYao&#39;s Blog">
+<meta property="og:description" content="前言第三单元主题是JML，但在我看来也是两个维度的考量，一是对JML的学习，这个我觉得更多体现在实验课需要我们写JML，以及通过读懂JML来知道我们三次迭代需要实现的函数的功能是什么；第二个维度就是依托于社交网络这么一个主题，在图论中的算法上做出了一些考察，如果不优化算法的话，大概率会在强测中就出问题 因此本人的第三单元总结分为两部分，第一部分是我对JML的认知理解，这一部分只是浅谈，因为真没什么">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/TreeSet_bug.jpg">
+<meta property="article:published_time" content="2024-07-03T13:18:08.000Z">
+<meta property="article:modified_time" content="2024-08-01T10:12:04.858Z">
+<meta property="article:author" content="rainbowYao">
+<meta property="article:tag" content="OO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/TreeSet_bug.jpg">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id="></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/rainbow.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/rainbow.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/rainbow.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            BUAA_OO 第三单元：社交网络（JML） 总结 -
+        
+        rainbowYao&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"yyybbbyyyb.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":true,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/flower.jpg","dark":"/images/flower.jpg"},"title":"This is rainbowYao's Blog","subtitle":{"text":["已老实, 求放过...","我真服了..."],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#000000","dark":"#000000"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"center","links":{"github":"https://github.com/yyybbbyyyb/","instagram":"https://www.instagram.com/yyb913665114/","zhihu":null,"twitter":null,"email":"22373393@buaa.edu.cn"},"qrs":{"weixin":"/images/wechat.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags/","icon":"fa-regular fa-tags"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"目前文章较少","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2024/1/1 00:00:00"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        rainbowYao&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/rainbow.ico">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                rainbowYao&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail3.jpg" alt="BUAA_OO 第三单元：社交网络（JML） 总结" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">BUAA_OO 第三单元：社交网络（JML） 总结</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">rainbowYao</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-07-03 21:18:08</span>
+        <span class="mobile">2024-07-03 21:18:08</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-08-01 18:12:04</span>
+            <span class="mobile">2024-08-01 18:12:04</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OO/">OO</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>第三单元主题是JML，但在我看来也是两个维度的考量，一是对JML的学习，这个我觉得更多体现在实验课需要我们写JML，以及通过读懂JML来知道我们三次迭代需要实现的函数的功能是什么；第二个维度就是依托于社交网络这么一个主题，在图论中的算法上做出了一些考察，如果不优化算法的话，大概率会在强测中就出问题</p>
+<p>因此本人的第三单元总结分为两部分，第一部分是我对JML的认知理解，这一部分只是浅谈，<del>因为真没什么好谈的，老生常谈，陈词滥调</del>；第二部分是我三次迭代中一些好的设计，其中第二次迭代里<code>globalTags</code>的设计是我觉得最具有创新性的，也解决了我的燃眉之急</p>
+<p>其实这里就可以简单谈一谈U3算法层面的事，其实我有感知到课程组更多的希望我们在这一单元学会的是JML，因此都删除掉了性能分。但很多人卷的方向都是效率，可能是受限于10s的CPU运行时间，同时后面又发生了本地和测评机因环境不同导致的测评误差，我个人简单认为可以适当的放缓测评机的测评压力或者提供一个模拟测评机高并发测评时的环境供我们课下的时候进行测试，以及指导书中只是指出了CPU时间限制为10s，但并未表明CPU的具体参数或者说具体的环境，这一点我也是存疑的。</p>
+<p>但是但是，我的代码貌似并没有涉及到CTLE的问题，<del>对不起，确实是效率上卷的有点多</del>，不过整个U3除了让我知道了JML这个东西意外，巩固了图论中的一些算法，最大的收获是有了对于社交网络这个业务场景的一些考量。我很多的设计都遵顼：<strong>用空间换时间</strong>、<strong>动态维护做到o(1)的查询复杂度</strong>这样的原则，可能同样一个对象会存储在很多的容器中，满足不同方式的查找，所以后续迭代部分会具体讲解我的设计以及考量</p>
+<hr>
+<h2 id="第一次作业分析"><a href="#第一次作业分析" class="headerlink" title="第一次作业分析"></a>第一次作业分析</h2><h3 id="任务简析"><a href="#任务简析" class="headerlink" title="任务简析"></a>任务简析</h3><p>实现用户类<code>Person</code>、社交网络类<code>Network</code>和四个异常类，重点在于按照JML的规格实现方法。</p>
+<p>如果直接按照JML来翻译，不优化算法的话，大概率会在互测阶段被hack掉，所以后文依托于方法的实现来介绍本人的设计。</p>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><p>第一次作业的方法可以分为两类：<strong>创建形</strong>（add、modify等）、<strong>查询形</strong>（query等），本人的主要策略是动态维护network中的各种关系，使得查询时尽可能是 o(1) 的复杂度，这就会增加时间成本以及内存占用，需要注意不要堆溢出。</p>
+<h4 id="Person"><a href="#Person" class="headerlink" title="Person"></a>Person</h4><p>在network中的persons我使用<code>HashMap</code>来维护，<code>HashMap</code>在哈希冲突不严重的时候是靠链表来处理冲突，严重之后会自动转为红黑树，在我看来person的查询可以控制在 o(logn) 是可以接受的。故MyPerson类中的<code>acquaintance</code>与<code>value</code>容器也是使用<code>HashMap</code>来维护（第二次迭代中又增加了<code>acquaintanceSort</code>起到排序的作用）</p>
+<h4 id="Relation"><a href="#Relation" class="headerlink" title="Relation"></a>Relation</h4><p>最后三个查询性质的函数都与person之间的关系有关：<code>isCircle</code> 、<code>queryBlockSum</code> 、<code>queryTripleSum</code>，从图论的角度来翻译：<code>isCircle</code> 是两个点是否具有连通性；<code>queryBlockSum</code> 是图中极大连通子图（连通分量）的个数；<code>queryTripleSum</code> 是图中二度正则子图的个数。</p>
+<p>针对前两个函数，我使用的方法是改良的并查集：</p>
+<p>新建一个类<code>DisjointSet</code>来负责维护network中所有person的连通性：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DisjointSet</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;Integer, Integer&gt; parent = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;Integer, Integer&gt; rank = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> blockNum;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">makeSet</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!parent.containsKey(id)) &#123;</span><br><span class="line">            parent.put(id, id);</span><br><span class="line">            rank.put(id, <span class="number">0</span>);</span><br><span class="line">            blockNum++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">representation</span> <span class="operator">=</span> id;</span><br><span class="line">        <span class="keyword">while</span> (representation != parent.get(representation)) &#123;</span><br><span class="line">            representation = parent.get(representation);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">now</span> <span class="operator">=</span> id;</span><br><span class="line">        <span class="keyword">while</span> (now != representation) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">next</span> <span class="operator">=</span> parent.get(now);</span><br><span class="line">            parent.put(now, representation);</span><br><span class="line">            now = next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> representation;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">union</span><span class="params">(<span class="type">int</span> id1, <span class="type">int</span> id2)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">root1</span> <span class="operator">=</span> find(id1);</span><br><span class="line">        <span class="type">int</span> <span class="variable">root2</span> <span class="operator">=</span> find(id2);</span><br><span class="line">        <span class="keyword">if</span> (root1 == root2) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">rank1</span> <span class="operator">=</span> rank.get(root1);</span><br><span class="line">        <span class="type">int</span> <span class="variable">rank2</span> <span class="operator">=</span> rank.get(root2);</span><br><span class="line">        <span class="keyword">if</span> (rank1 &gt; rank2) &#123;</span><br><span class="line">            parent.put(root2, root1);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rank1 &lt; rank2) &#123;</span><br><span class="line">            parent.put(root1, root2);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            parent.put(root2, root1);</span><br><span class="line">            rank.put(root1, rank1 + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        blockNum--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>其中涉及到了并查集算法中的<strong>路径压缩</strong>以及<strong>按秩合并</strong>，同时维护了一个<code>blockNum</code>变量来记录连通分量数，这样前两个函数就迎刃而解了</p>
+<p>不过其中还涉及到一个问题就是 <code>modifyRelation</code> 方法可能会删除两个人的关系，我们知道朴素的并查集是不支持删除操作了，这里我的处理方法是在遇到需要删除边的时候重建并查集（本人是重建整个并查集，事实上只需要重建删除边的那一个连通子图就好了，本人懒得再去优化了，干脆一刀切），具体的实现方法如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DisjointSet.java 	</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;Integer, HashSet&lt;Integer&gt;&gt; edges = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">addEdge</span><span class="params">(<span class="type">int</span> id1, <span class="type">int</span> id2)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">removeEdge</span><span class="params">(<span class="type">int</span> id1, <span class="type">int</span> id2)</span>; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">initReset</span><span class="params">()</span> &#123;</span><br><span class="line">        parent.clear();</span><br><span class="line">        rank.clear();</span><br><span class="line">        blockNum = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">reset</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> id1 : edges.keySet()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> id2 : edges.get(id1)) &#123;</span><br><span class="line">                union(id1, id2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//MyNetwork.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="type">boolean</span> <span class="variable">disjointSetNeedReset</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">modifyRelation</span><span class="params">(<span class="type">int</span> id1, <span class="type">int</span> id2, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        DisjointSet.removeEdge(id1, id2);</span><br><span class="line">        disjointSetNeedReset = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isCircle</span><span class="params">(<span class="type">int</span> id1, <span class="type">int</span> id2)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (disjointSetNeedReset) &#123;</span><br><span class="line">            DisjointSet.initReset();</span><br><span class="line">            <span class="keyword">for</span> (Person person : persons.values()) &#123;</span><br><span class="line">                DisjointSet.makeSet(person.getId());</span><br><span class="line">            &#125;</span><br><span class="line">            DisjointSet.reset();</span><br><span class="line">            disjointSetNeedReset = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> DisjointSet.find(id1) == DisjointSet.find(id2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>其中还设置了一个脏位<code>disjointSetNeedReset</code>，在删除边且需要查询的时候再重建并查集</p>
+<p>至于最后一个函数<code>queryTripleSum</code>，我没有想到特别好的方法，比起需要查询的时候到persons数组中遍历，大概是o(n^2)甚至是o(n^3)的复杂度，我依旧选择动态维护<code>tripleSum</code>这一变量：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyNetwork.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="type">int</span> <span class="variable">tripleSum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getUpdateTripleNum</span><span class="params">(<span class="type">int</span> id1, <span class="type">int</span> id2)</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        HashMap&lt;Integer, Person&gt; acquaintance1 = ((MyPerson) person1).getAcquaintance();</span><br><span class="line">        <span class="keyword">for</span> (Person person : acquaintance1.values()) &#123; </span><br><span class="line">            <span class="keyword">if</span> (person.isLinked(person2)) &#123;</span><br><span class="line">                count++; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (acquaintance1.containsKey(id2)) &#123;</span><br><span class="line">            count--;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>因为新增一个三角形只会因为新增一条边（删除同理），故可以提取出person1的acquaintance，查询person2是否也与之相连，可以在o（m）的时间复杂度下判断新增三角形个数。</p>
+<p>以上的动态维护思维实际上是牺牲了维护的成本，比如上面的维护三角形个数，可能全局的查询三角形个数的指令只有一条，但是每当<code>addRelation</code>或<code>modifyRelation</code>时就需要更新一下<code>tripleSum</code>，这个问题在我看来关键是取舍，设计的问题本身就没有最优解，只有权衡。</p>
+<hr>
+<h2 id="第二次作业分析"><a href="#第二次作业分析" class="headerlink" title="第二次作业分析"></a>第二次作业分析</h2><h3 id="任务简析-1"><a href="#任务简析-1" class="headerlink" title="任务简析"></a>任务简析</h3><p>这次迭代的跨度应该是三次中最难的，增加了标签类<code>MyTag</code>，同时针对value这一属性增加了关系之间的查询</p>
+<p>故我将新增的需要实现的方法分两类：</p>
+<ul>
+<li>addTag、delTag、addPersonToTag、delPersonFromTag、queryTagValueSum、queryTagAgeVar</li>
+<li>queryBestAcquaintance、queryCoupleSum、queryShortestPath</li>
+</ul>
+<p>可以看出，第一类都是和Tag有关，而第二类更多的是依托于Acquaintance这一Person的属性</p>
+<h3 id="具体实现-1"><a href="#具体实现-1" class="headerlink" title="具体实现"></a>具体实现</h3><h4 id="Tag"><a href="#Tag" class="headerlink" title="Tag"></a>Tag</h4><p>我对tag的特殊处理有两处，第一处是针对于person1所拥有的所有Tag，我建立了一个<code>tagsCatch</code>的机制来快速判断另外一个person2是否属于person1的某些Tag中：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyPerson.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, Tag&gt; tags;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, HashSet&lt;Tag&gt;&gt; tagsCatch;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MyNetWork.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">removePersonFromTag</span><span class="params">(Person person1, Person person2)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (((MyPerson) person1).containsTagCatch(person2.getId())) &#123;</span><br><span class="line">            HashSet&lt;Tag&gt; tags = ((MyPerson) person1).getTagsCatch(person2.getId());</span><br><span class="line">            <span class="keyword">for</span> (Tag tag : tags) &#123;</span><br><span class="line">                ...</span><br></pre></td></tr></table></figure></div>
+
+<p>这个优化是一个很小的优化，甚至我现在看来维护成本可能都大于它带来的优化收益，其作用是在modifyRelation时如果要删除两人的关系，那么可以o（1）的时间复杂度下得到person1所有的Tag中哪些含有person2，进而再去删除关系。</p>
+<p>第二处我看来是<strong>特别好的一个优化</strong>，因为解决了我们想要<strong>动态维护ValueSum</strong>这一Tag中的属性的问题：</p>
+<p>首先对于Tag中的需要查询的属性：valueSum和ageVar，我起初的想法是加入或删除一个Person后就更改这两个属性的值，再查询的时候直接返回，可以做到 o(1) 的查询效率，但是后来发现<strong>value这一属性的可以通过modifyRelation来改变的，而找到person1和person2共同处于的Tag不是一件容易的事</strong>（因为我们存储Tag的结构是person所含有的Tag，而不是person所处于的Tag）</p>
+<p>故我反其道而行之，空间换时间的思想做到机制，在MyNetwork设置了<strong>globalTags</strong>这一容器记录<strong>person所处于的Tags</strong>这一信息：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyNetwork.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, HashSet&lt;Tag&gt;&gt; globalTags;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> HashSet&lt;Tag&gt; <span class="title function_">getCommonTags</span><span class="params">(HashSet&lt;Tag&gt; tags1, HashSet&lt;Tag&gt; tags2)</span> &#123;</span><br><span class="line">        HashSet&lt;Tag&gt; result = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Tag tag : tags1) &#123; </span><br><span class="line">            <span class="keyword">if</span> (tags2.contains(tag)) &#123; </span><br><span class="line">                result.add(tag); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">changeTagValue</span><span class="params">(<span class="type">int</span> id1, <span class="type">int</span> id2, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">        HashSet&lt;Tag&gt; tags1 = globalTags.get(id1);</span><br><span class="line">        HashSet&lt;Tag&gt; tags2 = globalTags.get(id2);</span><br><span class="line">        HashSet&lt;Tag&gt; commonTags = getCommonTags(tags1, tags2);</span><br><span class="line">        <span class="keyword">if</span> (!commonTags.isEmpty()) &#123; </span><br><span class="line">            <span class="keyword">for</span> (Tag tag : commonTags) &#123;</span><br><span class="line">                ((MyTag) tag).changeValueSum(value);</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在<code>addRelation</code>和<code>modifyRelation</code>的时候调用<code>changeTagValue</code>改变person1和person2共同所处的Tags的valueSum，<code>addPersonToTag</code>等维护方法保持不变。</p>
+<p>这么做要注意<code>globalTags</code>的维护，<code>addPersonToTag</code>、<code>delPersonFromTag</code>、<code>delTag</code>、<code>addTag</code> 、<code>addPerson</code>、 <code>modifyRelation</code>都需要对<code>globalTags</code> 做维护，这样子的处理下，维护一次valueSum的时间复杂度应该是 o(m)，当然，相较于现查询现计算valueSum的o(n^2)，是我能接受的程度。</p>
+<p>根据后期和其他同学比较时间，我的代码虽然做不到最快，但和最快的同学也相差不多，这源自于指令的侧重点，如果全文都是关系的维护指令，那我这种维护成本很高的设计模式就会败下阵来；但如果查询指令居多的话，我的代码还是很占据优势的。不过思考下来，可以设置脏位来平衡维护和查询的关系，靠脏位来判断，需要维护且需要查询后再去维护（我懒啦）。</p>
+<h4 id="Acquaintance"><a href="#Acquaintance" class="headerlink" title="Acquaintance"></a>Acquaintance</h4><p><code>queryBestAcquaintance</code>、<code>queryCoupleSum</code>这两个指令关联性比较强，coupleSum可以依托于bestAcquaintance来计算。<code>queryBestAcquaintance</code>的处理是在Person类里维护Acquaintance数组的顺序：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyPerson.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, Person&gt; acquaintance;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, Integer&gt; value;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> TreeSet&lt;Person&gt; acquaintanceSort;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">this</span>.acquaintanceSort = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;((p1, p2) -&gt; comparePersons((MyPerson) p1, (MyPerson) p2, <span class="built_in">this</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="type">int</span> <span class="title function_">comparePersons</span><span class="params">(MyPerson p1, MyPerson p2, MyPerson owner)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (p1.equals(p2)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">valueCompare</span> <span class="operator">=</span> owner.queryValue(p2) - owner.queryValue(p1);</span><br><span class="line">        <span class="keyword">if</span> (valueCompare != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> valueCompare;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Integer.compare(p1.getId(), p2.getId());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getBestId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> acquaintanceSort.first().getId();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>利用TreeSet的排序的特性，只需要更改比较回调函数，就可以完成排序的行为。为什么是新增<code>acquaintanceSort</code>而不是对原来的<code>HashMap</code>做更改？其实也是空间换时间的考量，不想舍弃最优 o(1) 的查询速率（也可以用TreeSet的contains，但不如HashMap效率好）</p>
+<p>不过这样子也是增加了维护成本，给person增加一个acquaintance需要维护两个容器，同时这里我还犯了一个重大的、经典的bug，先放一张图，在后面bug分析里再做赘述：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/TreeSet_bug.jpg"
+                      alt="500d6a28ed9e700d92ffc9a5e227f63"
+                ></p>
+<p>TreeSet中出现了两个地址一摸一样的对象？（并没有更改equals方法）</p>
+<p>至于<code>queryCoupleSum</code>则是采取 o(n) 复杂度的现查现算，因为o(n)我还是能接受的（其实就是懒了，懒得再去维护啦哈哈）。遍历persons，查看person1的bestId（person2）的bestId是不是person1，记得result要除以2呀</p>
+<p>最后<code>queryShortestPath</code>这个函数只是使用了一个简单的BFS做处理，因为前面用来维护的容器大都是一维的，但是最短路径维护需要二维，而且处理起来依托于算法，我认为BFS就够用，而且可以结合并查集，先判断连通性，这里就不赘述BFS的写法了，很板子</p>
+<hr>
+<h2 id="第三次作业分析"><a href="#第三次作业分析" class="headerlink" title="第三次作业分析"></a>第三次作业分析</h2><h3 id="任务简析-2"><a href="#任务简析-2" class="headerlink" title="任务简析"></a>任务简析</h3><p>实现Message有关的操作，Message具有三个继承于他的子类，Message存在于network和person中</p>
+<p>总体来感知第三次迭代的难度很低，相比于第一次作业的并查集、第二次作业很多动态维护的处理、第三次迭代并未有值得提及的设计，基本都是朴素的翻译JML实现，不过第三次作业的JML确实难读，需要有很好的耐心，故下面就未有<strong>具体实现</strong>啦</p>
+<hr>
+<h2 id="bug分析"><a href="#bug分析" class="headerlink" title="bug分析"></a>bug分析</h2><h3 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h3><p>针对上面那个TreeSet出现两个相同的对象的问题，这里做解释：</p>
+<p>当时我的<code>acquaintanceSort</code>的维护是这么处理的：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyPerson.java</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addAcquaintance</span><span class="params">(Person person, <span class="type">int</span> value)</span> &#123;       </span><br><span class="line">        acquaintance.put(person.getId(), person);</span><br><span class="line">        <span class="built_in">this</span>.value.put(person.getId(), value);</span><br><span class="line">        acquaintanceSort.add(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeAcquaintance</span><span class="params">(Person person)</span> &#123;           </span><br><span class="line">        acquaintanceSort.remove(person);</span><br><span class="line">        acquaintance.remove(person.getId());</span><br><span class="line">        <span class="built_in">this</span>.value.remove(person.getId());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">modifyValue</span><span class="params">(Person person, <span class="type">int</span> value)</span> &#123;         </span><br><span class="line">        <span class="built_in">this</span>.value.put(person.getId(), value);       <span class="comment">//！！！！！正确的写法是15、16行互换</span></span><br><span class="line">        acquaintanceSort.remove(person);             <span class="comment">//！！！！！</span></span><br><span class="line">        acquaintanceSort.add(person);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>我已经标出了问题行数，因为当一个acquaintance的value发生改变，他在TreeSet里的顺序也该发生改变，我处理的方法是将它remove掉后再add，但是这样子就犯了一个很经典的问题，我们不妨就利用上面的<code>MyPerson@845</code>为例子，例如原本845位于<code>MyPerson@867</code>的左子节点（即845在我的比较算法下小于867），我们现在先更改845的属性，使得845大于了867，那么TreeSet的<code>remove</code>函数就只会去867的右分支上去寻找845，显然是找不到的，然后再add845也是添加到右分支上，这时867的左右子节点就都是845了，两者是一个对象，究其根本是不应该直接更改树结构对象的属性。</p>
+<p>我后续的补救措施就是将15、16行代码更换顺序，先找到要更改属性的对象，将它从TreeSet中删除，再去更改属性，再去加入到树中，这样子可以规避上面的问题，是安全的（当然我不确定，TreeSet中可能有更好的内置处理方法），总之这个bug很经典，值得引以为戒</p>
+<h3 id="改写compare"><a href="#改写compare" class="headerlink" title="改写compare"></a>改写compare</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyPerson.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="type">int</span> <span class="title function_">comparePersons</span><span class="params">(MyPerson p1, MyPerson p2, MyPerson owner)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (p1.equals(p2)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">valueCompare</span> <span class="operator">=</span> owner.queryValue(p2) - owner.queryValue(p1);</span><br><span class="line">        <span class="keyword">if</span> (valueCompare != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> valueCompare;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> p1.getId() - p2.getId();          <span class="comment">//！！！！！</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这是我原本的改写compare方法的写法，10行犯了很经典很严重的错误，就是会爆int，即可能发生**int_max - (int_min)**这种情况， 其实归根结底是书写习惯不好造成的，这种改写比较回调函数，应该不嫌麻烦，用if-else然后return 0、1、-1，或者像我上面一样调用java.Integer自带的compare方法（一样的），总之这个问题也很致命，一般的测评还真测不出来，但架不住强测里有助教ggjj们造出来的极端数据</p>
+<hr>
+<h2 id="浅谈JML"><a href="#浅谈JML" class="headerlink" title="浅谈JML"></a>浅谈JML</h2><p>到目前为止我对JML的感觉还是：<del>无感</del>。</p>
+<p>硬要为它正名的话，他比自然语言更具有完备性，能够更准确的表述某个方法或某个类需要满足的要求与功能，同时更利于junit测试代码的书写。但同时它也会带来很大的学习成本，以及读懂一个JML并不难，因为我们三次迭代的需求都是读懂官方给的JML，但是如果让我来写一个方法的JML，我不敢保证我写的规格是完备的。</p>
+<p>所以不能说是完全没有收获</p>
+<hr>
+<h2 id="Junit测试"><a href="#Junit测试" class="headerlink" title="Junit测试"></a>Junit测试</h2><h4 id="黑箱测试与白箱测试"><a href="#黑箱测试与白箱测试" class="headerlink" title="黑箱测试与白箱测试"></a>黑箱测试与白箱测试</h4><ul>
+<li>黑箱测试：黑箱测试强调输入和输出之间的关系，而不关注内部实现。对于我们自己搭建的测评机，采用对拍来判断正确性，即是黑箱测试</li>
+<li>白箱测试：白箱测试则更注重代码的覆盖率。可通过分析代码，利用IDEA中已有的覆盖率分析来进行测试</li>
+</ul>
+<h4 id="单元测试、功能测试、集成测试、压力测试、回归测试"><a href="#单元测试、功能测试、集成测试、压力测试、回归测试" class="headerlink" title="单元测试、功能测试、集成测试、压力测试、回归测试"></a>单元测试、功能测试、集成测试、压力测试、回归测试</h4><ul>
+<li>单元测试：单元测试是最基础的测试方法，针对每个类和方法进行了独立的验证。通过JUnit框架，课程组三次作业中要求我们对三次作业中的三个函数进行单元测试</li>
+<li>功能测试：功能测试注重整个系统的功能性，通过模拟实际使用场景来验证系统的完整性。例如，第二次迭代中Tag部分的功能和BestAcquaintance部分的功能无关，可以选择只针对其中一方面做高强度的测试。</li>
+<li>集成测试：集成测试旨在验证各模块之间的协作性。在本单元中，特别是社交网络和用户类之间的交互，需要进行集成测试。</li>
+<li>压力测试：为了验证系统在高负载情况下的表现，可以设计了压力测试。例如在本地模拟了大量用户和关系的数据，通过JVM监控工具观察内存和CPU的使用情况。重点测试了在大量关系和频繁修改情况下，系统的响应时间和稳定性。</li>
+<li>回归测试：回归测试用于验证修改后的代码没有引入新的错误。在每次提交新的代码后，运行之前的所有测试用例，确保新功能的添加或Bug的修复不会破坏现有功能。</li>
+</ul>
+<h4 id="数据构造策略"><a href="#数据构造策略" class="headerlink" title="数据构造策略"></a>数据构造策略</h4><ul>
+<li>随机数据生成：通过编写随机数据生成器，模拟实际使用中的各种情况。</li>
+<li>边界数据测试：设计极端情况的数据，例如最大和最小值，以验证系统的稳定性，这个在第二次作业中由于我的懒惰疏忽了这种测试数据的引入，导致compare改写出错。</li>
+<li>预定义数据集：手动编写一些特定场景下的数据，确保特殊情况下系统能正确处理。</li>
+</ul>
+<h4 id="JUnit与规格"><a href="#JUnit与规格" class="headerlink" title="JUnit与规格"></a>JUnit与规格</h4><p>在设计JUnit测试时，充分利用JML规格信息。通过对JML的详细解读，确定每个方法的前置条件和后置条件，编写相应的测试用例。例如，在测试<code>deleteColdEmoji</code>方法时，在测试代码调用完这个方法后，重点验证所有的后置条件是否满足，而不可只关注返回值是否正确。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体的体感还是不错的，并没有前两单元那么高压，同时也有这一单元的亮点。</p>
+<p>我觉得这一单元不止学习JML，而还需要涉及图论方面的算法，以及降低时间复杂度的考量，这点是很棒的，算是这一单元的难点与挑战，我认为这一层次的考量甚至可以大大方方的写入指导书中</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> BUAA_OO 第三单元：社交网络（JML） 总结</li>
+        <li><strong>作者:</strong> rainbowYao</li>
+        <li><strong>创建于
+                :</strong> 2024-07-03 21:18:08</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2024-08-01 18:12:04
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/07/03/BUAA-OO-第三单元：社交网络（JML）-总结/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OO/">#OO</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第一单元：表达式展开-总结/" title="BUAA_OO 第一单元：表达式展开 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail1.jpg" alt="BUAA_OO 第一单元：表达式展开 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第一单元：表达式展开 总结</span>
+</a><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第二单元：电梯调度-总结/" title="BUAA_OO 第二单元：电梯调度 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail2.jpg" alt="BUAA_OO 第二单元：电梯调度 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第二单元：电梯调度 总结</span>
+</a><a class="recommended-article-item" href="/2024/08/21/Django之DRF/" title="Django之DRF" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail15.jpg" alt="Django之DRF" class="!max-w-none">
+  <span class="title">Django之DRF</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第一单元：表达式展开-总结/" title="BUAA_OO 第一单元：表达式展开 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail1.jpg" alt="BUAA_OO 第一单元：表达式展开 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第一单元：表达式展开 总结</span>
+</a><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第二单元：电梯调度-总结/" title="BUAA_OO 第二单元：电梯调度 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail2.jpg" alt="BUAA_OO 第二单元：电梯调度 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第二单元：电梯调度 总结</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/08/17/Django%E4%B9%8BORM/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Django之ORM</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/07/03/BUAA-OO-%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%EF%BC%9A%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6-%E6%80%BB%E7%BB%93/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">BUAA_OO 第二单元：电梯调度 总结</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">BUAA_OO 第三单元：社交网络（JML） 总结</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A%E5%88%86%E6%9E%90"><span class="nav-text">第一次作业分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%9E%90"><span class="nav-text">任务简析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BD%9C%E4%B8%9A%E5%88%86%E6%9E%90"><span class="nav-text">第二次作业分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%9E%90-1"><span class="nav-text">任务简析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0-1"><span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A%E5%88%86%E6%9E%90"><span class="nav-text">第三次作业分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%9E%90-2"><span class="nav-text">任务简析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bug%E5%88%86%E6%9E%90"><span class="nav-text">bug分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeSet"><span class="nav-text">TreeSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%86%99compare"><span class="nav-text">改写compare</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%85%E8%B0%88JML"><span class="nav-text">浅谈JML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Junit%E6%B5%8B%E8%AF%95"><span class="nav-text">Junit测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">rainbowYao</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共 12 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

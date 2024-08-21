@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="rainbowYao">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://yyybbbyyyb.github.io/2024/07/03/buaa-oo-第一单元：表达式展开-总结/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="前言OO正课第一单元的主题是表达式展开，主要训练层次化设计，本单元经历了三次迭代，层层增加难度，目的是让我们可以设计出好的架构，应对新增要求时可以尽量少的做更改以维持架构的不变。 本文分别介绍三次迭代分析，每部分包括任务简析、代码UML类图、架构分析、具体实现过程、其他方面、自动化测评，然后是最终版本的复杂度分析，最后是包含三次迭代中的bug分析 以下代码仅为部分示例代码，全部代码（程序源码、测评">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA_OO 第一单元：表达式展开 总结">
+<meta property="og:url" content="https://yyybbbyyyb.github.io/2024/07/03/BUAA-OO-%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%EF%BC%9A%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80-%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="rainbowYao&#39;s Blog">
+<meta property="og:description" content="前言OO正课第一单元的主题是表达式展开，主要训练层次化设计，本单元经历了三次迭代，层层增加难度，目的是让我们可以设计出好的架构，应对新增要求时可以尽量少的做更改以维持架构的不变。 本文分别介绍三次迭代分析，每部分包括任务简析、代码UML类图、架构分析、具体实现过程、其他方面、自动化测评，然后是最终版本的复杂度分析，最后是包含三次迭代中的bug分析 以下代码仅为部分示例代码，全部代码（程序源码、测评">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_src1.drawio.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_dabaogongzuo.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_src2.drawio.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_src3.drawio.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_ltc.png">
+<meta property="article:published_time" content="2024-07-03T13:06:00.000Z">
+<meta property="article:modified_time" content="2024-08-01T10:12:16.959Z">
+<meta property="article:author" content="rainbowYao">
+<meta property="article:tag" content="OO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_src1.drawio.png">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id="></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/rainbow.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/rainbow.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/rainbow.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            BUAA_OO 第一单元：表达式展开 总结 -
+        
+        rainbowYao&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"yyybbbyyyb.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":true,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/flower.jpg","dark":"/images/flower.jpg"},"title":"This is rainbowYao's Blog","subtitle":{"text":["已老实, 求放过...","我真服了..."],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#000000","dark":"#000000"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"center","links":{"github":"https://github.com/yyybbbyyyb/","instagram":"https://www.instagram.com/yyb913665114/","zhihu":null,"twitter":null,"email":"22373393@buaa.edu.cn"},"qrs":{"weixin":"/images/wechat.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags/","icon":"fa-regular fa-tags"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"目前文章较少","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2024/1/1 00:00:00"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        rainbowYao&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/rainbow.ico">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                rainbowYao&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail1.jpg" alt="BUAA_OO 第一单元：表达式展开 总结" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">BUAA_OO 第一单元：表达式展开 总结</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">rainbowYao</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-07-03 21:06</span>
+        <span class="mobile">2024-07-03 21:06</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-08-01 18:12:16</span>
+            <span class="mobile">2024-08-01 18:12:16</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OO/">OO</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>OO正课第一单元的主题是表达式展开，主要训练层次化设计，本单元经历了三次迭代，层层增加难度，目的是让我们可以设计出好的架构，应对新增要求时可以尽量少的做更改以维持架构的不变。</p>
+<p>本文分别介绍三次迭代分析，每部分包括任务简析、代码UML类图、架构分析、具体实现过程、其他方面、自动化测评，然后是最终版本的复杂度分析，最后是包含三次迭代中的bug分析</p>
+<p>以下代码仅为部分示例代码，全部代码（程序源码、测评机）已上传<a class="link"   target="_blank" rel="noopener" href="https://github.com/yyybbbyyyb/BUAA_OO_Unit1" >github个人仓库 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+<h2 id="第一次作业分析"><a href="#第一次作业分析" class="headerlink" title="第一次作业分析"></a>第一次作业分析</h2><h3 id="任务简析"><a href="#任务简析" class="headerlink" title="任务简析"></a>任务简析</h3><p>本次作业是展开一个最多嵌套一层括号的单变量多项式，多项式中项的因子只能是常数因子、幂函数因子、表达式因子，最后在正确展开的前提下再比较表达式的长度。</p>
+<p>主线任务：</p>
+<ul>
+<li><strong>解析</strong>字符串</li>
+<li><strong>展开</strong>有括号的表达式，得到一个多项式</li>
+<li><strong>化简</strong>多项式并输出</li>
+</ul>
+<h3 id="代码UML类图"><a href="#代码UML类图" class="headerlink" title="代码UML类图"></a>代码UML类图</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_src1.drawio.png"
+                      alt="src1.drawio"
+                ></p>
+<h3 id="架构分析"><a href="#架构分析" class="headerlink" title="架构分析"></a>架构分析</h3><ul>
+<li>架构大致分为三个横向的组织：<strong>文法分析</strong>(Parser, Lexer)，<strong>表达式结构</strong>(Expr, Term, Factor)，<strong>多项式运算</strong>(Poly, Mono)</li>
+<li>大致步骤就是先用parser<strong>解析表达式</strong>，然后再在每一个元素中都加上<strong>转化成Poly类</strong>的方法。在Poly类中实现<strong>多项式相乘相加</strong>的方法。在Expr.toPloy()中，实现所包含的Term.Poly()的相加；在Term.toPoly()中实现所包含的Factor.toPloy()的相乘(也是一个递归的过程)。</li>
+</ul>
+<h3 id="具体实现过程"><a href="#具体实现过程" class="headerlink" title="具体实现过程"></a>具体实现过程</h3><p>分成三个主要步骤：表达式解析（递归下降法）、表达式展开和表达式输出</p>
+<h4 id="表达式解析：递归下降法"><a href="#表达式解析：递归下降法" class="headerlink" title="表达式解析：递归下降法"></a>表达式解析：递归下降法</h4><h5 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h5><p>在预处理阶段我主要做了两件事情：</p>
+<ul>
+<li>将输入字符串中的所有空白字符替换为空串。</li>
+<li>删除前导“+”，合并重复运算符（如<code>-+-</code>替换成<code>+</code>）。</li>
+</ul>
+<h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>具体的方法（递归下降法）在<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nkwF3Y-a-1nW5u1VZtiLHw"><code>oolens</code></a>的推送以及训练题中有详细介绍，在这里我仅提一下我的一些特殊的处理：</p>
+<ul>
+<li><p>在处理token流时去除数字前导0。这里就不给具体实现了，很好做</p>
+</li>
+<li><p>容错性输出。在一些程序不应该进入的部分设置一些特定输出，利于debug</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;	</span><br><span class="line">    System.out.println(<span class="string">&quot;Dont know what to do with &quot;</span> + input.charAt(i));</span><br><span class="line">  </span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;pos is more than token list&quot;</span>);</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>项之间可能是由<code>+</code>或者<code>-</code>号连接的，<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nkwF3Y-a-1nW5u1VZtiLHw"><code>oolens</code></a>给出的方法是在<code>Expr</code>类中存储这种排列的信息，但是我感觉这样做的话不太美观，在处理时也会变得更加复杂。所以我们不妨在这里认为项之间全都是相加的关系，而<code>-</code>的存储则由<code>Term</code>类和<code>Factor</code>类负责，设置为Term和Factor的一个属性。</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> Expr <span class="title function_">parserExpr</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">int</span> <span class="variable">signal</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span> (lexer.notEnd() &amp;&amp; lexer.getCurToken().getType() == TokenTypeEnum.SUB) &#123;</span><br><span class="line">          signal = -<span class="number">1</span>;</span><br><span class="line">          lexer.move();</span><br><span class="line">      &#125;</span><br><span class="line">      terms.add(parserTerm(signal));</span><br><span class="line">…………          </span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="表达式展开：处理多项式"><a href="#表达式展开：处理多项式" class="headerlink" title="表达式展开：处理多项式"></a>表达式展开：处理多项式</h4><h5 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h5><p>表达式展开的思路我主要是参考了一位<a class="link"   target="_blank" rel="noopener" href="https://hyggge.github.io/2022/03/24/oo/oo-di-yi-dan-yuan-zong-jie/" >学长的博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（<code>hyggge</code>学长），他是在<code>Expr</code>,<code>Term</code>,<code>Factor</code>中都实现了<code>toPoly()</code>方法，并在<code>Poly</code>类中实现了<code>addPoly()</code>,<code>multiPoly()</code>,<code>powerPoly()</code>方法。这里的<code>toPoly()</code> 方法：</p>
+<ul>
+<li><p>对于<code>NumFactor</code>与<code>VarFactor</code>，转化为仅含有一个<code>Mono</code>对象的<code>Poly</code></p>
+</li>
+<li><p>对于<code>ExprFactor</code>,我们假设此时已经实现了<code>expr.toPoly()</code>，那么可以先后使用<code>expr.toPoly()</code>与 <code>powerPoly</code></p>
+</li>
+<li><p>对于<code>Term</code>, 仅需使用<code>multiPoly</code>将<code>Factor</code>调用<code>toPoly()</code>的结果乘起来即可</p>
+</li>
+<li><p>对于<code>Expr</code>, 仅需使用<code>addPoly</code>将<code>Term</code>调用<code>toPoly()</code>的结果加起来即可</p>
+</li>
+<li><p>此处仅给出<code>Term</code> 的 <code>toPoly</code> 为示例：</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Poly <span class="title function_">toPloy</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">Poly</span> <span class="variable">poly</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">    poly.addMono(<span class="keyword">new</span> <span class="title class_">Mono</span>(BigInteger.ONE, <span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span> (Factor factor : factors) &#123;</span><br><span class="line">        poly = Poly.multiPoly(poly, factor.toPloy());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (signal == -<span class="number">1</span>) &#123;</span><br><span class="line">        Poly.negatePoly(poly);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> poly;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这个方法中，<code>hyggge</code>学长抓住了题目的核心需求（让我们输出由若干x的n次幂相加组成的多项式），有<strong>基本项</strong>的概念，此处的基本项是：$Poly &#x3D; \sum Mono, Mono &#x3D; a * x ^b$。这使得代码的可扩展性变得十分高，即使是以后新增其他东西（比如三角函数、指数函数、多变量、自定义函数）也是完全适用的。</p>
+<h5 id="细节处理"><a href="#细节处理" class="headerlink" title="细节处理"></a>细节处理</h5><ul>
+<li>多项式HashMap的键值映射我当时有两种选择：“指数——系数”、“指数——单项式”，虽然后者与前者功能完全相同且为了获得系数还需要调用<code>mono.getCoe()</code> 方法，但这么处理是为了以后迭代预留可扩展的空间，此处的Mono可看成基本项，这样提取键值即可得到基本项的全部属性</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, Mono&gt; monoMap;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>通过静态方法传两个参数进入<code>addPoly()</code>,<code>multiPoly()</code>,<code>powerPoly()</code>，规避深浅拷贝的问题，在静态方法里面新建一个Poly对象返回</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Poly <span class="title function_">addPoly</span><span class="params">(Poly poly1, Poly poly2)</span> &#123;</span><br><span class="line">    <span class="type">Poly</span> <span class="variable">poly</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (Integer exp: poly1.getMonoMap().keySet()) &#123;</span><br><span class="line">        poly.addMono(<span class="keyword">new</span> <span class="title class_">Mono</span>(poly1.getMonoMap().get(exp).getCoe(), exp));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="表达式输出：化简表达式"><a href="#表达式输出：化简表达式" class="headerlink" title="表达式输出：化简表达式"></a>表达式输出：化简表达式</h4><p>上述过程没有bug的话，我们会得到一个符合如下格式的多项式：$$\sum_1^ncoe<em>x^{exp}$$。其中的指数不会相同，因为在<code>addPoly</code>中就可以实现*<em>同类项合并</em></em></p>
+<p>优化有以下几点：</p>
+<ul>
+<li><p>指数为0、1，系数为-1、+1、0时可化简输出</p>
+</li>
+<li><p>删除coe为0的项，但当<code>Poly</code>中<code>monoMap</code>被删空时（即表达式本身是0的情况），向其中加入一个0，这里也别忘记用迭代器去删除</p>
+</li>
+<li><p>由于会出现<code>-x+1</code>比<code>1-x</code>长的情况，因此这一步需要改变输出顺序使得第一项尽可能为正</p>
+</li>
+</ul>
+<h3 id="其他方面"><a href="#其他方面" class="headerlink" title="其他方面"></a>其他方面</h3><h4 id="打包工作"><a href="#打包工作" class="headerlink" title="打包工作"></a>打包工作</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_dabaogongzuo.png"
+                      style="zoom: 50%;" 
+                >
+
+<p>本人代码习惯之一是会在编程开始前打包：utils、entity、constants、config四个基本的包</p>
+<p>utils：顾名思义就是工具类、其中类的方法大多为静态方法（从业务角度，我们不需要有两个Parser对象，或者说创造出两个Parser对象，他们处理的也是同一业务逻辑）。从目的来看，utils类能解决代码复用问题。</p>
+<p>entity：实体类，里面放置的一般是业务主体，也就是需要频繁创造出新对象的类</p>
+<p>constants：常量类，定义项目中的常量，如正则表达式、枚举类等</p>
+<p>config：全局配置类，对项目对象做到统一管理（<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/m0_74774220/article/details/134213915?spm=1001.2014.3001.5502" >OOp <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 中本人就设置了Adventurers类，将其静态化，使得全局都可以调用到”冒险者集合“，不过这种操作要考虑过度暴露的风险）</p>
+<h4 id="基于接口而非实现编程"><a href="#基于接口而非实现编程" class="headerlink" title="基于接口而非实现编程"></a>基于接口而非实现编程</h4><p>实际上，“基于接口而非实现编程”这条原则的另一个表述方式，是“基于抽象而非实现编程”。好的设计一定是：<strong>越抽象、越顶层、越脱离具体某一实现的设计，越能提高代码的灵活性，越能应对未来的需求变化</strong></p>
+<p>本人觉得接口的特性是面向对象编程最具优势的特性，它像是一种”协议“，规定了只暴露给上层哪些信息，不关心具体实现。</p>
+<p>factor接口暴露给上层一个方法：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Poly <span class="title function_">toPloy</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>即将Factor转化成Poly（后续我会讲基本项，此处的Poly可短暂的看成第一次作业的基本项），故无论有多少种类的因子，在上层（Poly、Mono）的眼中，只关注下层factor会传递给他一个什么样的Poly，而不关注其具体实现。故在后续增量迭代中，我们只需要考虑新增的factor要如何转化为Poly、而不影响上层代码的结构。</p>
+<p>“基于接口而非实现编程”这条原则，不仅仅可以指导非常细节的编程开发，还能指导更加上层的架构设计、系统设计等。（这是理论上讲的后话，本人也未曾实践）</p>
+<h4 id="Poly、Mono的引入，单一职责"><a href="#Poly、Mono的引入，单一职责" class="headerlink" title="Poly、Mono的引入，单一职责"></a>Poly、Mono的引入，单一职责</h4><p>这段主要讨论下第二部分的设计优势，由于有了基本项的概念，第二部分的代码逻辑（poly类、mono类）我个人觉得可以完全不涉及化简部分、只实现将递归下降解析出来的AST语法树转化为基本项集合，再将基本项集合传递给第三部分化简输出工序，这样设计的好处是以后的增量迭代中只需要关注：新增的要求满足什么样的基本项，而无需关注形式（即化简的部分），第二部分（Poly、Mono，以后可能就不这么命名了）中代码功能仅是转化为基本项集合， <code>SimplifyPrint</code> 的代码功能再去考虑基本集合中是否可以合并化简，满足SOLID原则中的单一职责原则。</p>
+<h4 id="改写toString方法"><a href="#改写toString方法" class="headerlink" title="改写toString方法"></a>改写toString方法</h4><p>虽然上文讲过第二部分仅处理基本项的转化，但我的Mono类中有改写toString方法：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (exp == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> coe.toString();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exp == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (coe.equals(BigInteger.ZERO)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (coe.equals(BigInteger.ONE)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;x&quot;</span>;</span><br><span class="line">…………</span><br></pre></td></tr></table></figure></div>
+
+<p>这时候就有问题，那这么做是不是违背了单一职责原则，我觉得并不然：设计的问题本身就没有最优解，只有权衡。为了使用方便，我们只能做一些妥协</p>
+<p>如果将toString方法放到SimplifyPrint类中只会加剧这个类的处理逻辑复杂度，而且归根结底SimplifyPrint是会与Mono类有耦合，相比将Mono传递进SimplifyPrint后再做处理，不如直接传递给SimplifyPrint Mono的最简输出，这样做反而会一定程度的降低Mono和SimplifyPrint的耦合度</p>
+<h3 id="自动化测评"><a href="#自动化测评" class="headerlink" title="自动化测评"></a>自动化测评</h3><p>相关python代码和操作可以看 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nkwF3Y-a-1nW5u1VZtiLHw"><code>oolens</code></a> 发的推送以及b站学长录制的视频，其中我的数据生成器主要是翻译题目的BNF，通过python中的random库控制数据难度，其中通过传入 <code>deepNum</code> 参数控制括号仅可嵌套一层</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">g_expr</span>(<span class="params">deepNum</span>):</span><br><span class="line">    termNum = random.randint(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">    result = g_whitespace() + g_add_sub() + g_term(deepNum) + g_whitespace()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(termNum - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> random.random() &lt; <span class="number">0.5</span>:</span><br><span class="line">            result = result + g_whitespace() + <span class="string">&#x27;+&#x27;</span> + g_whitespace() + g_term(deepNum)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            result = result + g_whitespace() + <span class="string">&#x27;-&#x27;</span> + g_whitespace() + g_term(deepNum)            </span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure></div>
+
+<p>测评器中是用python中的sympy库对数据生成器产生的样例和样例经过jar包运行输出的答案进行化简后比对，其中有两个小细节：</p>
+<ul>
+<li>sympy中的<code>simplify()</code> 方法无法处理前导0</li>
+<li>比对可以不从字符串相等层面上比对，sympy提供了许多方法来处理表达式之间的关系，如<code>equals(other)</code>：检查两个表达式是否在逻辑上相等。</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data_no_leading_zero = re.sub(<span class="string">r&#x27;\b0+(\d+)&#x27;</span>, <span class="string">r&#x27;\1&#x27;</span>, data).replace(<span class="string">&quot; &quot;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">expr1_simplified = simplify(sympify(data_no_leading_zero))</span><br><span class="line">expr2_simplified = simplify(sympify(result))</span><br><span class="line"></span><br><span class="line">expressions_equal = expr1_simplified.equals(expr2_simplified)</span><br></pre></td></tr></table></figure></div>
+
+
+
+<hr>
+<h2 id="第二次作业分析"><a href="#第二次作业分析" class="headerlink" title="第二次作业分析"></a>第二次作业分析</h2><h3 id="任务简析-1"><a href="#任务简析-1" class="headerlink" title="任务简析"></a>任务简析</h3><p>本次作业新增难度分两点：自定义函数、指数函数（exp）</p>
+<p>主线任务：</p>
+<ul>
+<li><strong>解析</strong>支持自定义函数（比较重要）和指数函数</li>
+<li><strong>展开</strong>计算中考量基本项是什么</li>
+<li><strong>化简</strong>方法如何增加</li>
+</ul>
+<h3 id="代码UML类图-1"><a href="#代码UML类图-1" class="headerlink" title="代码UML类图"></a>代码UML类图</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_src2.drawio.png"
+                      alt="src.drawio"
+                ></p>
+<h3 id="架构分析（只讨论新增）"><a href="#架构分析（只讨论新增）" class="headerlink" title="架构分析（只讨论新增）"></a>架构分析（只讨论新增）</h3><ul>
+<li>沿用之前架构，在<strong>文法分析</strong>中加入<code>DefFuncDeal</code>类去替换解析自定义函数，<strong>表达式结构</strong>中加入了<code>ExpFactor</code> <code>DefFuncFactor</code>实现Factor接口，<strong>多项式运算</strong>结构改变，新增<code>Item</code>类为基本项、<code>Item</code> 由 <code>Mono</code> 和<code>Exp</code> 组合</li>
+<li>解题顺序上不变，新增的步骤是在解析表达式<code>Expr expr = parser.parserExpr()</code> 的过程中 通过 <code>private Factor parserDefFuncFactor(int signal)</code>  解析自定义函数；<code>Poly</code> 的计算方法因<strong>基本项</strong>改变和指数函数的加入而做适当调整；输出化简类做调整。</li>
+</ul>
+<h3 id="具体实现过程-1"><a href="#具体实现过程-1" class="headerlink" title="具体实现过程"></a>具体实现过程</h3><p>只从三方面讨论：自定义函数替换策略、Poly基本项处理、可行化简方法</p>
+<h4 id="自定义函数替换策略"><a href="#自定义函数替换策略" class="headerlink" title="自定义函数替换策略"></a>自定义函数替换策略</h4><p>本人当前自定义函数的处理采用的是字符串层面的替换（思路也来自于<a class="link"   target="_blank" rel="noopener" href="https://hyggge.github.io/2022/03/24/oo/oo-di-yi-dan-yuan-zong-jie/" >hyggge学长的博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>），即递归调用<code>toString</code>方法（后续其他细节上会讲到还可以从AST语法树的层面做替换，即递归调用<code>toPoly</code>方法，需要者可提前前往）。</p>
+<p>首先是自定义函数因子类 <code>DefFuncFactor</code> 的处理，部分代码如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DefFuncFactor.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String calledFunc;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Expr expr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DefFuncFactor</span><span class="params">(String name, ArrayList&lt;Factor&gt; actualParas)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.calledFunc = DefFuncDeal.callDefFunc(name, actualParas);</span><br><span class="line">        <span class="built_in">this</span>.expr = dealExpr();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Expr <span class="title function_">dealToExpr</span><span class="params">()</span> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//DefFuncDeal.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HashMap&lt;String, String&gt; funcMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HashMap&lt;String, ArrayList&lt;String&gt;&gt; formalParasMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">addDefFunc</span><span class="params">(String input)</span> <span class="comment">//函数名与形式化表达式存在funcMap中</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">callDefFunc</span><span class="params">(String name,  ArrayList&lt;Factor&gt; actualParas)</span> &#123;</span><br><span class="line">				...<span class="comment">//形参实参对应</span></span><br><span class="line">				...<span class="comment">//调用lexer解析形式化表达式为token流</span></span><br><span class="line">        <span class="keyword">while</span> (lexer.notEnd()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (lexer.getCurToken().getType() == TokenTypeEnum.Var) &#123;</span><br><span class="line">                <span class="type">Factor</span> <span class="variable">factor</span> <span class="operator">=</span> parasMap.get(lexer.getCurToken().getContent());</span><br><span class="line">                sb.append(factor.toString());     <span class="comment">//toString方法实现字符串层面上的替换</span></span><br><span class="line">            &#125; <span class="keyword">else</span> ……</span><br></pre></td></tr></table></figure></div>
+
+<p>属性上：<code>calledFunc</code> 顾名思义是被调用后的函数表达式（字符串形式），其实它算是一个中间变量，亦可不设置属性存储它；<code>expr</code> 则是将替换后的函数表达式解析成AST语法树的形式，存在expr中，此时<code>DefFuncFactor</code> 某种程度上等价于指数是1的 <code>ExprFactor</code></p>
+<p>方法上：函数调用通过工具类 <code>DefFuncDeal</code> 实现，该工具类中两个静态方法 <code>addDefFunc</code> 在终端将函数名与形式化表达式之间建立映射；<code>callDefFunc</code> 先建立形参实参的映射，然后进行替换（这里建议用token流处理，后面会讲）替换则是直接调用<code>factor</code>的 <code>toString</code> 方法，之后返回字符串层面的已经替换好了的表达式，回到<code>DefFuncFactor</code> 中再通过 <code>dealToExpr</code> 实现<code>calledFunc</code> 转化成 <code>expr</code>，实际上也只是在此调用parser、lexer解析表达式</p>
+<p>细节处理：</p>
+<ul>
+<li>为了规避<code>exp</code>中的<code>x</code> 被理解成形式参数替换为实参，本人不采用遍历字符串的方法，而是将形式表达式通过lexer分析成token流（这说明我的lexer中将x、y、z都设定成了<code>TokenTypeEnum.Var</code>），可见上面代码</li>
+<li>递归调用<code>toString</code>时注意加括号保护。想这么一个例子，$f(x) &#x3D; 3<em>x, f(f((x+1)))$ ，如果<code>DefFuncFactor</code> 的<code>toString</code> 方法没有给转化出来的表达式外层套括号，会转化成$3</em>3*(x+1)$，而正确的转化应该是$3*(3*(x+1))$，本人实现factor接口的类中还有符号<code>signal</code>这一属性，为了规避字符串替换后曲解语义或违背词法的情况，我大都添加了括号（后续讲到AST语法树层面的替换时可很好的规避这些问题）</li>
+</ul>
+<h4 id="Poly基本项处理"><a href="#Poly基本项处理" class="headerlink" title="Poly基本项处理"></a>Poly基本项处理</h4><p>很多人都想到了本次作业合并同类项化简的点在于如何判断exp的指数相同，我当时有两种选择， 一个是将exp的指数看成表达式<code>expr</code>，可这样就要改写所有AST语法树类的<code>equals、HashCode</code> 方法且很容易犯错（如误判x+1和1+x不相等）；第二个方法是将exp的指数算成基本项的形式，递归定义基本项，因为基本项经过自己的程序计算后应该有唯一形式、这样也可以边比较exp的指数是否相同边计算，如下：</p>
+<p>本人本次作业定义的基本项如下形式：$Item &#x3D; coe * x^{exp} *e^{Poly}$ , $Poly &#x3D; \sum Item$,其中<code>Poly</code> 类的属性是一个HashMap的嵌套，通过两个指数<code>exp</code>和<code>Poly</code>二维索引到coe（也可以索引整个Item，目的是合并同类项）；<code>Item</code> 的属性则是<code>coe</code>、<code>Mono</code> 、<code>Exp</code>，即它的系数和两个指数（两个指数我封装成了两个类，Exp是指数函数，exp是变量x的指数，目的是后续可以分层次书写<code>toString</code>方法）</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Poly.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, HashMap&lt;Poly, Item&gt;&gt; itemMap;</span><br><span class="line"><span class="comment">//Item.java</span></span><br><span class="line">    <span class="keyword">private</span> BigInteger coe;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Mono mono;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Exp exp;</span><br><span class="line"><span class="comment">//Exp.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Poly poly;</span><br><span class="line"><span class="comment">//Mono.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> exp;</span><br></pre></td></tr></table></figure></div>
+
+<p>故关注点在于AST语法树类如何实现<code>toPoly</code>方法和<code>Poly</code> 中 <code>add</code>、<code>multi</code>等计算方法如何更改。</p>
+<ul>
+<li>首先我想第一个难点是如何定义0，对于Poly，当<code>itemMap.isEmpty()</code> 时我规定他是0，定义了函数<code>public boolean isZero()</code>，后续化简输出的时候先调用这个函数。而后续新建Item类时，如果没有exp部分，则其exp中的Poly传递一个新创造的Poly即可，这样子递归定义的Poly基本项形式就有了递归终点。</li>
+<li>其次计算方法上的更改有许多细节上与hw_1不同，如<code>addItem</code> 函数中，通过两层索引找到两个指数都相同的项，若系数相加合并后为0，则要去除这一hash键值对，而不是简单将系数设为0，如果mono的指数索引不到任何exp的指数（前面定义的0也包含），也要删除这一键值对，原因是我们前面定义的0是不含任何项的<code>itemMap</code></li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//public void addItem(Item item)</span></span><br><span class="line">	<span class="keyword">if</span> (newCoe.equals(BigInteger.ZERO)) &#123;</span><br><span class="line">		itemMap.get(exp).remove(poly);</span><br><span class="line">		<span class="keyword">if</span> (itemMap.get(exp).isEmpty()) &#123;</span><br><span class="line">			itemMap.remove(exp);</span><br><span class="line">		&#125; </span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	existingItem.setCoe(newCoe);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>基本项乘法<code>multiPoly</code>中要实现两个指数函数系数的相加，即：<code>Poly newPoly = Poly.addPoly(item1.getExp().getPoly(),item2.getExp().getPoly());</code>，这里调用了<code>addPoly</code> 此处的addPoly一定要深克隆出<code>item1</code>和<code>item2</code>的poly，即：</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//addPoly        </span></span><br><span class="line">        <span class="keyword">for</span> (Integer exp: srcPoly.getItemMap().keySet()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (Poly tempPoly : srcPoly.getItemMap().get(exp).keySet()) &#123;</span><br><span class="line">                <span class="type">Item</span> <span class="variable">item</span> <span class="operator">=</span> srcPoly.getItemMap().get(exp).get(tempPoly);</span><br><span class="line">                <span class="type">Item</span> <span class="variable">newItem</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Item</span>(item.getCoe(), item.getMono(), item.getExp());</span><br><span class="line">                destPoly.addItem(newItem);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>否则返回<code>newPoly</code>中<code>item</code>的<code>Poly</code>的地址是<code>item1</code>或<code>item2</code>的<code>Poly</code> (此处会在最后bug分析时再次赘述)</p>
+<ul>
+<li>既然有了<code>Poly</code>类中的计算方法，只需依次实现AST语法树类的<code>toPoly</code> 方法就可以实现将<code>expr</code>转化成上面递归定义的基本项，此处仅给出一个：</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//expr.java    </span></span><br><span class="line">    <span class="keyword">public</span> Poly <span class="title function_">toPoly</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Poly</span> <span class="variable">poly</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>(); <span class="comment">//这就是0啊！！！</span></span><br><span class="line">        <span class="keyword">for</span> (Term term : terms) &#123;</span><br><span class="line">            poly = Poly.addPoly(poly, term.toPoly());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> poly;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="可行化简方法"><a href="#可行化简方法" class="headerlink" title="可行化简方法"></a>可行化简方法</h4><p>本人将可以想到的化简方法一次列举下：</p>
+<ul>
+<li><p>指数0、1，系数0，1，-1的输出化简：这部分的话我写在了<code>Poly</code>、<code>Item</code> 等基本项类中，通过改写他们的<code>toString</code> 方法化简输出，如：</p>
+</li>
+<li><p>依旧沿用hw_1的思路，多项式相加时放一个正项在前面（我写在了<code>SimplifyPrint</code>类中，我的<code>Poly</code> 的<code>toString</code> 方法就是调用了 <code>SimplifyPrint</code>类中的方法，所以exp指数部分的<code>Poly</code>转化输出时是最简形式，这也是递归调用）</p>
+</li>
+<li><p>针对指数函数的特殊处理，如<code>exp((2*x))</code> 要比 <code>exp(x)^2</code> 多一个字符，提取公因数放到指数部分会更短，甚至一个exp可以拆成两个exp相乘（这部分可见其他分享贴子的陈述，本人只做到对于多项式提取相同的系数放在指数上，如<code>exp(3*x^2+(x+2)^2)</code> 结果会是<code>exp((x^2+x+1))^4</code>，会比标准形式 <code>exp((4*x^2+4*x+4))</code>短）</p>
+</li>
+</ul>
+<p>​	</p>
+<h3 id="其他方面-1"><a href="#其他方面-1" class="headerlink" title="其他方面"></a>其他方面</h3><h4 id="清洗代码"><a href="#清洗代码" class="headerlink" title="清洗代码"></a>清洗代码</h4><p>既然都开始迭代了，有的代码段要增量，不防从头到尾给自己的代码来一遍清洗，改掉之前代码风格或编程方式不好的地方。</p>
+<h5 id="手动清洗"><a href="#手动清洗" class="headerlink" title="手动清洗"></a>手动清洗</h5><ul>
+<li>如将功能逻辑平行的代码拆成内部的静态函数，下面是在解析因子时（我第一次是写在一个大的函数里）</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//parser.java中的parserFactor()</span></span><br><span class="line">				<span class="keyword">if</span> (lexer.notEnd() &amp;&amp; lexer.getCurToken().getType() == TokenTypeEnum.NUM) &#123;</span><br><span class="line">            <span class="keyword">return</span> parserNumFactor(signal);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (lexer.notEnd() &amp;&amp; lexer.getCurToken().getType() == TokenTypeEnum.Var) &#123;</span><br><span class="line">            <span class="keyword">return</span> parserVarFactor(signal);</span><br><span class="line">        &#125;………………</span><br><span class="line"></span><br><span class="line">    		<span class="keyword">private</span> Factor <span class="title function_">parserNumFactor</span><span class="params">(<span class="type">int</span> signal)</span></span><br><span class="line">    		<span class="keyword">private</span> Factor <span class="title function_">parserVarFactor</span><span class="params">(<span class="type">int</span> signal)</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>重复操作建立映射，如我第一次作业处理token流的时候读到“()+-*”等的处理逻辑是一样的，但我写了5个类似的if，这次又增加了新的元素，不妨建立一个映射，这样子可以只写一个if。</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lexer.java</span></span><br><span class="line">		tokenList.add(<span class="keyword">new</span> <span class="title class_">Token</span>(content, TokenMap.TOKEN_MAP.get(content)));</span><br><span class="line"></span><br><span class="line"><span class="comment">//TokenMap.java  </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, TokenTypeEnum&gt; TOKEN_MAP =</span><br><span class="line">        Map.of(<span class="string">&quot;(&quot;</span>, TokenTypeEnum.LP,</span><br><span class="line">                   <span class="string">&quot;)&quot;</span>, TokenTypeEnum.RP,</span><br><span class="line">                   <span class="string">&quot;+&quot;</span>, TokenTypeEnum.ADD,</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>相同或类似功能的代码段提取出来封装成一个函数，类似功能是指功能有一点点差异，可以通过传入参数做选择，如下</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasOneItemOfType</span><span class="params">(<span class="type">boolean</span> baseItem)</span> &#123;</span><br><span class="line">……</span><br><span class="line">     <span class="keyword">for</span> (Integer exp : itemMap.keySet()) &#123;</span><br><span class="line">         <span class="keyword">for</span> (Poly tempPoly : itemMap.get(exp).keySet()) &#123;</span><br><span class="line">             <span class="keyword">if</span> (baseItem &amp;&amp; itemMap.get(exp).get(tempPoly).isBaseItem()) &#123;  <span class="comment">//此处是base</span></span><br><span class="line">……								</span><br><span class="line">             &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!baseItem &amp;&amp; itemMap.get(exp).get(tempPoly).isNormalItem()) &#123;  <span class="comment">//此处是Normal</span></span><br><span class="line">……	</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="chatgpt清洗"><a href="#chatgpt清洗" class="headerlink" title="chatgpt清洗"></a>chatgpt清洗</h5><p>这个工作完全是可以交给chatgpt来处理的，当然他不一定能满足你的要求，我们只取其精华，取其糟粕，如我它提示我可以做如下替换：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> (c == <span class="string">&quot;(&quot;</span> || c == <span class="string">&quot;)&quot;</span> || ………………)</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isBaseToken</span><span class="params">(<span class="type">char</span> ch)</span> &#123;</span><br><span class="line">      <span class="type">String</span> <span class="variable">baseTokens</span> <span class="operator">=</span> <span class="string">&quot;()+-*^xyz,&quot;</span>;</span><br><span class="line">      <span class="keyword">return</span> baseTokens.indexOf(ch) != -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="AST语法树层面的自定义函数解析方法"><a href="#AST语法树层面的自定义函数解析方法" class="headerlink" title="AST语法树层面的自定义函数解析方法"></a>AST语法树层面的自定义函数解析方法</h4><p>本人未使用这种方法，但经过思考觉得是一种可行解，而且比字符串层面的替换更具优点，故此处只提供思路：</p>
+<ul>
+<li><p>同样是建立自变量因子类 <code>DefFuncFactor</code> ，其中存的也是一课语法树，即expr，但其中的形参与实参不做替换，只做对应映射关系的存储（这就要求语法解析部分可以解析y、z）</p>
+</li>
+<li><p>在<code>DefFuncFactor</code> 的 <code>toPoly</code>的方法中做特殊处理，即算到形参的时候不调用形参的<code>toPoly</code>方法，而是实参的<code>toPoly</code>方法（这也要求形参是一个实现了Factor接口的类）</p>
+</li>
+<li><p>这样做就将字符串层面的替换转化成了<code>Poly</code>值的替换，好处是不需要在乎字符串层面的特殊处理，性能上也会更有，再有就是更符合结构化，这样做的考量才是真正将自定义函数看成一个因子，而字符串层面的替换本质上是将自定义函数看成另外四种因子的组合。</p>
+</li>
+<li><p>这段文字书写于撰写以上文字的后一天，这一天间隔里都在干嘛？debug！总结出来的结论就是字符串层面的替换真的是一不小心就会出错，而学过<a class="link"   target="_blank" rel="noopener" href="http://volcaxiao.top/" >编译的某人 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>讲说“AST语法树层面的替换是gcc最佳实践”，我深有所感</p>
+</li>
+<li><p>第三次作业重构了使用了这种方法、其中再做赘述</p>
+</li>
+</ul>
+<h3 id="自动化测评-1"><a href="#自动化测评-1" class="headerlink" title="自动化测评"></a>自动化测评</h3><p>整体框架没有变，因为需要解析自定义函数，所以选取了讨论区的一种方式：<a class="link"   target="_blank" rel="noopener" href="http://oo.buaa.edu.cn/assignment/504/discussion/1484" >exec()方法 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>测评机代码也已上传github</p>
+<hr>
+<h2 id="第三次作业分析"><a href="#第三次作业分析" class="headerlink" title="第三次作业分析"></a>第三次作业分析</h2><blockquote>
+<p>前情提要：hw_2结束后更改了解析自定义函数的方法，看过我上次经验分享的人应该知道有字符串层面的替换和语法树层面的替换，这次更改成语法树层面替换的考量后续会赘述</p>
+</blockquote>
+<h3 id="任务简析-2"><a href="#任务简析-2" class="headerlink" title="任务简析"></a>任务简析</h3><p>本次作业新增要求仅为：求导因子</p>
+<p>主线任务：</p>
+<ul>
+<li>解析求导因子</li>
+<li>支持求导计算</li>
+</ul>
+<h3 id="代码UML类图-2"><a href="#代码UML类图-2" class="headerlink" title="代码UML类图"></a>代码UML类图</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_src3.drawio.png"
+                      alt="src.drawio"
+                ></p>
+<h3 id="架构分析（只讨论新增）-1"><a href="#架构分析（只讨论新增）-1" class="headerlink" title="架构分析（只讨论新增）"></a>架构分析（只讨论新增）</h3><ul>
+<li>因为解析表达式的原因，本人新增ast接口，让语法树解析类全部实现此接口，实现<code>formalParaReplace</code> 和 <code>toPoly</code> 两个函数（主要是统一了toPoly方法）</li>
+<li>新增DxFactor，相当于是存储了一个表达式的因子，只是后续其<code>toPoly</code> 方法要做求导处理</li>
+<li><code>PreProcess</code> 预处理单独提取成一个工具类，血的教训</li>
+</ul>
+<h3 id="具体实现过程-2"><a href="#具体实现过程-2" class="headerlink" title="具体实现过程"></a>具体实现过程</h3><p>这里只讲求导的处理，自定义函数处理方法的更改写在其他细节里</p>
+<h4 id="求导处理"><a href="#求导处理" class="headerlink" title="求导处理"></a>求导处理</h4><p>本人在预判了第三次新增功能是求导的前提下，认为第二次的架构是十分合理的，相比对表达式求导，我们回看对基本项的求导就有很公式化的做法:</p>
+<p>$$dx(Poly) &#x3D; dx(\sum Item) &#x3D; dx(\sum a<em>x^{b}<em>e^{Poly}) &#x3D; \sum (a</em>b</em>x^{b-1}<em>e^{Poly} + dx(Poly)<em>a</em>x^b</em>e^{Poly})$$</p>
+<p>可以看出来只要实现了<code>Poly</code>的求导算法（类似于<code>addPoly</code> 、<code>multiPoly</code> 等），就可以实现将求导因子展开，且算出的结果也是基本项<code>Poly</code>的形式</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DxFactor.java</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Expr expr;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> signal;</span><br><span class="line">	<span class="keyword">public</span> Poly <span class="title function_">toPoly</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Poly</span> <span class="variable">oriPoly</span> <span class="operator">=</span> expr.toPoly();</span><br><span class="line">		<span class="keyword">if</span> (signal == -<span class="number">1</span>) &#123;</span><br><span class="line">			Poly.negatePoly(oriPoly);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> Poly.derivatePoly(oriPoly);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Poly.java</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Poly <span class="title function_">derivatePoly</span><span class="params">(Poly poly)</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> (BigInteger exp : poly.itemMap.keySet()) &#123;</span><br><span class="line">			<span class="keyword">for</span> (Poly tempPoly : poly.itemMap.get(exp).keySet()) &#123;</span><br><span class="line">         <span class="type">Poly</span> <span class="variable">derItem</span> <span class="operator">=</span> item.derivateItem();    <span class="comment">//递归调用Item的求导，Item求导后的Poly相加即可</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">    …………</span><br><span class="line">      </span><br><span class="line"><span class="comment">//Item.java</span></span><br><span class="line">	<span class="keyword">public</span> Poly <span class="title function_">derivateItem</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Poly</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">			<span class="keyword">if</span> (exp.getPoly().isZero() &amp;&amp; mono.getExp().equals(BigInteger.ZERO)) </span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (exp.getPoly().isZero()) </span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (mono.getExp().equals(BigInteger.ZERO)) </span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">………………   </span><br></pre></td></tr></table></figure></div>
+
+<p>求导因子作为ast解析语法树时的存储单位，其属性为一个<code>expr</code> 和 <code>signal </code>, 转化为<code>poly</code> 的时候，只需要将<code>expr</code> 转化为<code>poly</code> 再去调用 <code>poly</code> 求导方法，返回的仍是 <code>poly</code></p>
+<p><code>poly</code> 求导就是基于求导法则，<code>poly</code> 相当于很多项<code>item</code> 的和，只需要调用<code>item</code>的求导，<code>item</code> 求导我又分为了只有系数、系数*x、系数*e、系数*x*e四种</p>
+<h3 id="其他方面-2"><a href="#其他方面-2" class="headerlink" title="其他方面"></a>其他方面</h3><h4 id="自定义函数替换策略更改"><a href="#自定义函数替换策略更改" class="headerlink" title="自定义函数替换策略更改"></a>自定义函数替换策略更改</h4><p>因为本次求导运算的处理是将表达式转换为poly再去运算，其实函数表达式的替换也可以看成是一种运算，而都通过<code>toPoly</code>来处理可以达到行为上的统一（这样做终于不用考虑字符串层面替换中嵌套括号做保护的“丑陋处理“了）</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//FuncDeal.java    </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Expr <span class="title function_">callDefFunc</span><span class="params">(String name,  ArrayList&lt;Factor&gt; actualParas)</span> &#123;</span><br><span class="line">        <span class="type">Expr</span> <span class="variable">expr</span> <span class="operator">=</span> parser.parserExpr();</span><br><span class="line">        expr.formalParaReplace(parasMap);</span><br><span class="line"></span><br><span class="line"><span class="comment">//ast.java</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ast</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> <span class="title function_">formalParaReplace</span><span class="params">(Map&lt;String, Factor&gt; map)</span>;</span><br><span class="line">        Poly <span class="title function_">toPoly</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//VarFactor.java</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">VarFactor</span><span class="params">(String powerNum, <span class="type">int</span> signal, <span class="type">boolean</span> isFormalPara, String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.isFormalPara = isFormalPara;</span><br><span class="line">        <span class="built_in">this</span>.factor = <span class="literal">null</span>;</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">public</span> Poly <span class="title function_">toPoly</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isFormalPara) &#123;</span><br><span class="line">            <span class="type">Poly</span> <span class="variable">factorPoly</span> <span class="operator">=</span> factor.toPoly();</span><br><span class="line">					 …………</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">formalParaReplace</span><span class="params">(Map&lt;String, Factor&gt; map)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isFormalPara) &#123;</span><br><span class="line">            <span class="built_in">this</span>.factor = map.get(name);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Parser.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">boolean</span> isDealFunc;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>首先 <code>VarFactor</code> 变量因子增加了<code>isFormalPara</code> 、<code>name</code>、 <code>factor </code> 三个属性，将其扩展成了形参x、y、z和实际计算中的x可公用的ast语法树存储结构，如果 <code>isFormalPara</code> 为真，则<code>factor</code> 存储他对应的实参，在 <code>toPoly</code> 的时候实现替换</p>
+</li>
+<li><p>那解析时就要区分是不是在解析函数表达式，故我为 <code>Parser</code> 增加了一个判断是不是在解析函数表达式的参数，为<code>VarFactor</code> 传递参数</p>
+</li>
+<li><p>同时我考虑到实参替换的时候需要遍历 <code>Expr</code>寻找<code>VarFactor</code> ，故实现 <code>ast</code> 接口的语法树类都实现其中的<code>formalParaReplace</code> 方法，深度遍历去寻找形参将其 <code>factor</code> 属性替换成实参</p>
+</li>
+<li><p>这样处理之后可以删除所有ast语法树类的<code>toString</code> 方法， 做到行为上的统一</p>
+</li>
+</ul>
+<h4 id="预处理方法封装出来"><a href="#预处理方法封装出来" class="headerlink" title="预处理方法封装出来"></a>预处理方法封装出来</h4><p>预处理操作原本是放在Lexer里的静态方法，但由于解析函数定义式（此处发生了特别愚蠢的bug，后面会赘述）时也需要用到，则将这一方法提出为一个单独的类的静态方法，这样更满足单一职责原则</p>
+<h3 id="自动化测评-2"><a href="#自动化测评-2" class="headerlink" title="自动化测评"></a>自动化测评</h3><p>测评正确性时不用sympy方法，而是使用对拍的方法，思路也来源于一篇<a class="link"   target="_blank" rel="noopener" href="http://oo.buaa.edu.cn/assignment/504/discussion/1496" >讨论贴 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+<h2 id="debug总结"><a href="#debug总结" class="headerlink" title="debug总结"></a>debug总结</h2><blockquote>
+<p>我的室友<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_73675971/article/details/136888669" >zyt <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>永远的神</p>
+</blockquote>
+<p>此处按照时间顺序反省三次迭代中几个重要的大bug</p>
+<h3 id="深浅克隆"><a href="#深浅克隆" class="headerlink" title="深浅克隆"></a>深浅克隆</h3><p>第一个大bug发生在第二次迭代，当时的Poly中的addPoly是将两个Poly的哈希表合并返回（使用的是put方法），这导致poly1和poly2相加完之后得到newPoly，三者哈希表中存的元素是相同的，一个改动，另外的两个也会被改动，导致bug，前面已经给出了更改后的代码。</p>
+<h3 id="忘记预处理"><a href="#忘记预处理" class="headerlink" title="忘记预处理"></a>忘记预处理</h3><p>这是最微不足道但造成后果最严重的bug，导致我第二次作业强测寄掉，即没有对函数定义式做预处理，我函数定义式使用的是正则表达式匹配，其中并没有处理空格以及制表符，所以千里之堤、毁于蚁穴，故我将预处理提封装一个单独的工具类，因为它不只受用于 <code>Lexer</code> 。</p>
+<h3 id="依旧是深浅克隆，以及对AST语法树替换的预想"><a href="#依旧是深浅克隆，以及对AST语法树替换的预想" class="headerlink" title="依旧是深浅克隆，以及对AST语法树替换的预想"></a>依旧是深浅克隆，以及对AST语法树替换的预想</h3><p>这里的深浅克隆指的是第三次迭代中AST语法树替换部分，在我为形参赋值实参的时候，所有实参都是直接从hashMap中取出来的，但由于第三次作业允许函数定义式中使用已经定义好的函数，就出现了形参的实参是形参的情况（想一下，虽然这么说很抽象），这导致赋值工作会出现很多问题，比如我的变量因子赋值实参的方法就很欠妥，类似于打补丁：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">formalParaReplace</span><span class="params">(Map&lt;String, Factor&gt; map)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!isFormalPara) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (factor <span class="keyword">instanceof</span> VarFactor) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!((VarFactor) factor).isFormalPara()) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (factor == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.factor = map.get(name).deepClone();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        factor.formalParaReplace(map);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>其中如果不调用<code>deepClone</code> 的话就会出现问题（<code>value_data</code> 中含有有价值的样例，同步测评机上传github了），所以如果有人不用字符串替换而也选择这种方法的话，欢迎进行更好的优化</p>
+<h3 id="TLE优化"><a href="#TLE优化" class="headerlink" title="TLE优化"></a>TLE优化</h3><p>这个针对<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62007203/article/details/136900425" >ltc <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>同学的神仙样例：<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/oo_u1_ltc.png"
+                      alt="image-20240616022405391"
+                ></p>
+<p>他巧妙地利用exp的代价函数不大的特性构造出了这么个嵌套了十多层exp的样例，我的代码跑这个样例5min都跑不出结果，我就利用了idea中自带的分析工具 <code>IntelliJ Profiler</code> 发现 <code>hashcode</code> 费时过大，因为我为了哈希表可以将两个内容一样的poly判定为相等，故改写了<code>hashcode</code> ，这个样例应该是会频繁的计算hashcode导致TLE，故我采用“缓存哈希码”的方法 (zyt用的ArrayList，靠他的一些手段也使得效率很高，可以研究下)：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="variable">cachedHashCode</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (cachedHashCode == <span class="number">0</span>) &#123;</span><br><span class="line">        cachedHashCode = Objects.hash(poly);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cachedHashCode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>将5min都跑不出来的bug控制到了0.2s跑出（所以要善用性能分析工具）</p>
+<blockquote>
+<p>这段话写于和<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62007203/article/details/136900425" >ltc <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>同学交流，我想明白了使用HashMap改写hashCode等价于使用ArrayList改写equals方法（都是为了合并同类项时候判等地址不同、内容相同的poly），而要注意如果自己的设计会导致已经计算hashCode的poly会改变，那么要重新计算hashCode（我的架构规避了这个问题，当我需要计算得出一个新的poly时，我不会对已有poly做修改，而是新建一个poly，这样子可以保证hashCode是唯一的）</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> BUAA_OO 第一单元：表达式展开 总结</li>
+        <li><strong>作者:</strong> rainbowYao</li>
+        <li><strong>创建于
+                :</strong> 2024-07-03 21:06:00</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2024-08-01 18:12:16
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/07/03/BUAA-OO-第一单元：表达式展开-总结/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OO/">#OO</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第三单元：社交网络（JML）-总结/" title="BUAA_OO 第三单元：社交网络（JML） 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail3.jpg" alt="BUAA_OO 第三单元：社交网络（JML） 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第三单元：社交网络（JML） 总结</span>
+</a><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第二单元：电梯调度-总结/" title="BUAA_OO 第二单元：电梯调度 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail2.jpg" alt="BUAA_OO 第二单元：电梯调度 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第二单元：电梯调度 总结</span>
+</a><a class="recommended-article-item" href="/2024/08/21/Django之DRF/" title="Django之DRF" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail15.jpg" alt="Django之DRF" class="!max-w-none">
+  <span class="title">Django之DRF</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第三单元：社交网络（JML）-总结/" title="BUAA_OO 第三单元：社交网络（JML） 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail3.jpg" alt="BUAA_OO 第三单元：社交网络（JML） 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第三单元：社交网络（JML） 总结</span>
+</a><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第二单元：电梯调度-总结/" title="BUAA_OO 第二单元：电梯调度 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail2.jpg" alt="BUAA_OO 第二单元：电梯调度 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第二单元：电梯调度 总结</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/07/03/BUAA-OO-%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%EF%BC%9A%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6-%E6%80%BB%E7%BB%93/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">BUAA_OO 第二单元：电梯调度 总结</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/07/02/OS-Challenge/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">OS Challenge</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">BUAA_OO 第一单元：表达式展开 总结</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A%E5%88%86%E6%9E%90"><span class="nav-text">第一次作业分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%9E%90"><span class="nav-text">任务简析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81UML%E7%B1%BB%E5%9B%BE"><span class="nav-text">代码UML类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90"><span class="nav-text">架构分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="nav-text">具体实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E9%9D%A2"><span class="nav-text">其他方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%84"><span class="nav-text">自动化测评</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BD%9C%E4%B8%9A%E5%88%86%E6%9E%90"><span class="nav-text">第二次作业分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%9E%90-1"><span class="nav-text">任务简析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81UML%E7%B1%BB%E5%9B%BE-1"><span class="nav-text">代码UML类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90%EF%BC%88%E5%8F%AA%E8%AE%A8%E8%AE%BA%E6%96%B0%E5%A2%9E%EF%BC%89"><span class="nav-text">架构分析（只讨论新增）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B-1"><span class="nav-text">具体实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E9%9D%A2-1"><span class="nav-text">其他方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%84-1"><span class="nav-text">自动化测评</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A%E5%88%86%E6%9E%90"><span class="nav-text">第三次作业分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%9E%90-2"><span class="nav-text">任务简析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81UML%E7%B1%BB%E5%9B%BE-2"><span class="nav-text">代码UML类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90%EF%BC%88%E5%8F%AA%E8%AE%A8%E8%AE%BA%E6%96%B0%E5%A2%9E%EF%BC%89-1"><span class="nav-text">架构分析（只讨论新增）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B-2"><span class="nav-text">具体实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E9%9D%A2-2"><span class="nav-text">其他方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%84-2"><span class="nav-text">自动化测评</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug%E6%80%BB%E7%BB%93"><span class="nav-text">debug总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E6%B5%85%E5%85%8B%E9%9A%86"><span class="nav-text">深浅克隆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%98%E8%AE%B0%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-text">忘记预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E6%97%A7%E6%98%AF%E6%B7%B1%E6%B5%85%E5%85%8B%E9%9A%86%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%AF%B9AST%E8%AF%AD%E6%B3%95%E6%A0%91%E6%9B%BF%E6%8D%A2%E7%9A%84%E9%A2%84%E6%83%B3"><span class="nav-text">依旧是深浅克隆，以及对AST语法树替换的预想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TLE%E4%BC%98%E5%8C%96"><span class="nav-text">TLE优化</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">rainbowYao</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共 12 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

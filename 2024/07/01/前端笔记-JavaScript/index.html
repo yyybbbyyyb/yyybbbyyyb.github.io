@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="rainbowYao">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://yyybbbyyyb.github.io/2024/07/01/前端笔记-javascript/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="JavaScript简介介绍JavaScript是一种轻量级的脚本语言，是一种嵌入式（embedded）语言。 为什么学习JavaScript操控浏览器的能力、广泛的使用领域、易学性 JavaScript与ECMAScript的关系ECMAScript是JavaScript的规格，JavaScript是ECMAScript的实现，日常场合二者可互换  语法语句JavaScript程序的单位是行，一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端笔记 JavaScript">
+<meta property="og:url" content="https://yyybbbyyyb.github.io/2024/07/01/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-JavaScript/index.html">
+<meta property="og:site_name" content="rainbowYao&#39;s Blog">
+<meta property="og:description" content="JavaScript简介介绍JavaScript是一种轻量级的脚本语言，是一种嵌入式（embedded）语言。 为什么学习JavaScript操控浏览器的能力、广泛的使用领域、易学性 JavaScript与ECMAScript的关系ECMAScript是JavaScript的规格，JavaScript是ECMAScript的实现，日常场合二者可互换  语法语句JavaScript程序的单位是行，一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-01T13:27:53.000Z">
+<meta property="article:modified_time" content="2024-08-01T10:11:55.613Z">
+<meta property="article:author" content="rainbowYao">
+<meta property="article:tag" content="前端笔记">
+<meta name="twitter:card" content="summary">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id="></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/rainbow.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/rainbow.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/rainbow.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            前端笔记 JavaScript -
+        
+        rainbowYao&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"yyybbbyyyb.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":true,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/flower.jpg","dark":"/images/flower.jpg"},"title":"This is rainbowYao's Blog","subtitle":{"text":["已老实, 求放过...","我真服了..."],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#000000","dark":"#000000"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"center","links":{"github":"https://github.com/yyybbbyyyb/","instagram":"https://www.instagram.com/yyb913665114/","zhihu":null,"twitter":null,"email":"22373393@buaa.edu.cn"},"qrs":{"weixin":"/images/wechat.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags/","icon":"fa-regular fa-tags"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"目前文章较少","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2024/1/1 00:00:00"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        rainbowYao&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/rainbow.ico">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                rainbowYao&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail9.jpg" alt="前端笔记 JavaScript" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">前端笔记 JavaScript</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">rainbowYao</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-07-01 21:27:53</span>
+        <span class="mobile">2024-07-01 21:27:53</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-08-01 18:11:55</span>
+            <span class="mobile">2024-08-01 18:11:55</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/">前端笔记</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="JavaScript简介"><a href="#JavaScript简介" class="headerlink" title="JavaScript简介"></a>JavaScript简介</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>JavaScript是一种轻量级的脚本语言，是一种嵌入式（embedded）语言。</p>
+<h3 id="为什么学习JavaScript"><a href="#为什么学习JavaScript" class="headerlink" title="为什么学习JavaScript"></a>为什么学习JavaScript</h3><p>操控浏览器的能力、广泛的使用领域、易学性</p>
+<h3 id="JavaScript与ECMAScript的关系"><a href="#JavaScript与ECMAScript的关系" class="headerlink" title="JavaScript与ECMAScript的关系"></a>JavaScript与ECMAScript的关系</h3><p>ECMAScript是JavaScript的规格，JavaScript是ECMAScript的实现，日常场合二者可互换</p>
+<hr>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h3><p>JavaScript程序的单位是行，一般情况下每一行是一个语句。语句以分号结尾，一个分号就表示一个语句结束</p>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p>最常见的标识符就是变量名，标识符是由：字母、美元符号（$)、下划线（_）、和数字组成，其中数字不能开头</p>
+<h3 id="JavaScript保留关键字"><a href="#JavaScript保留关键字" class="headerlink" title="JavaScript保留关键字"></a>JavaScript保留关键字</h3><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量重新赋值、变量提升</p>
+<h3 id="JavaScript引入到文件"><a href="#JavaScript引入到文件" class="headerlink" title="JavaScript引入到文件"></a>JavaScript引入到文件</h3><h4 id="嵌入到HTML文件中"><a href="#嵌入到HTML文件中" class="headerlink" title="嵌入到HTML文件中"></a>嵌入到HTML文件中</h4><div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    	<span class="keyword">var</span> age = <span class="number">20</span></span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="引入本地独立JS文件"><a href="#引入本地独立JS文件" class="headerlink" title="引入本地独立JS文件"></a>引入本地独立JS文件</h4><div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;./aa.js&quot;</span>&gt;</span>	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="引入网络来源文件"><a href="#引入网络来源文件" class="headerlink" title="引入网络来源文件"></a>引入网络来源文件</h4><div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://code.jquery.com/aa.js&quot;</span>&gt;</span>	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>单行注释：<code>//</code>； 多行注释：<code>/* */</code></p>
+<h3 id="JavaScript输出方式"><a href="#JavaScript输出方式" class="headerlink" title="JavaScript输出方式"></a>JavaScript输出方式</h3><div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在浏览器中弹出一个对话框，然后把要输出的内容展示出来</span></span><br><span class="line"><span class="title function_">alert</span>(<span class="string">&quot;要输出的内容&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//直接输出到页面</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">&quot;要输出的内容&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//在控制台输出内容</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;要输出的内容&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>数值、字符串、布尔值、对象、undefined、null</p>
+<p><code>typeof</code>运算符可以返回number、string、boolean、object、undefined（null和undefined的区别是null是对象为空、undefined是数值为空）</p>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><p>算术运算符：<code>+ - * / % ++ -- </code></p>
+<p>赋值运算符：<code>= += -= *= /= %=</code></p>
+<p>比较运算符：<code>&lt; &gt; &lt;= &gt;= == ===(严格相等) != !==(严格不相等) </code>，严格比较：数值和类型都要求相同</p>
+<p>布尔运算符：<code>! &amp;&amp; ||</code></p>
+<h3 id="语句-1"><a href="#语句-1" class="headerlink" title="语句"></a>语句</h3><p>条件语句：<code>if if……else switch 三目运算符</code>，基本与C相同</p>
+<p>循环语句：<code>for while break continue</code>，基本与C相同</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p><code>\</code>换行（类似于C宏定义）、<code>length</code>属性、<code>charAt</code>、<code>concat</code>、<code>substring</code>、<code>substr</code>（第二个参数不是结束位置，而是长度）、<code>indexOf</code>（第一次出现的位置，可以接受第二个参数，是开始检索的位置）、<code>trim</code>（去除字符串两端的空格，返回新字符串）、<code>split</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p><code>[]</code>表示数组、<code>isArray</code>弥补<code>typeof</code>的不足、<code>push/pop</code>、<code>shift/unshift</code>（相比于push、pop，这两个是操作数组的第一个元素）、<code>join</code>（以指定参数作为分隔符，将所有数组成员连接为一个字符串返回，默认是<code>,</code>）、<code>concat</code>、<code>reverse</code>（颠倒数组元素，会改变原数组）、<code>indexof</code></p>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p><code>function</code>命令、函数名提升、函数参数、函数返回值</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象的链式调用</p>
+<h4 id="Math对象"><a href="#Math对象" class="headerlink" title="Math对象"></a>Math对象</h4><p>abs、max、min、floor、ceil、random</p>
+<h4 id="Date对象"><a href="#Date对象" class="headerlink" title="Date对象"></a>Date对象</h4><p>now、getTime、getDate、getDay、getYear……</p>
+<hr>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM是JavaScript操作网页的接口，全称为“文档对象模型”。它的作用是将网页转换为一个JavaScript对象，从而可以用脚本进行各样操作</p>
+<h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><p>DOM的最小组成单位叫做节点，文档的树形结构（DOM树），就是由各种不同类型的节点组成</p>
+<p>节点的类型有七种：</p>
+<ul>
+<li>Document：整个文档树的顶层节点</li>
+<li>DocumentType：doctype标签</li>
+<li>Element：网页的各种HTML标签</li>
+<li>Attribute：网页元素的属性（比如<code>class=&quot;right&quot;</code>）</li>
+<li>Text：标签之间或标签包含的文本</li>
+<li>Comment：注释</li>
+<li>DocumentFragment：文档的片段</li>
+</ul>
+<h3 id="节点树"><a href="#节点树" class="headerlink" title="节点树"></a>节点树</h3><p>浏览器原生提供document节点，代表整个文档</p>
+<p>Node.nodeType属性</p>
+<h3 id="document对象方法—获取元素"><a href="#document对象方法—获取元素" class="headerlink" title="document对象方法—获取元素"></a>document对象方法—获取元素</h3><ul>
+<li><p><code>document.getElementsByTagName()</code>方法搜索HTML标签名，返回符合条件的元素。它的返回值是一个类似数组对象（<code>HTMLCollection</code>实例）</p>
+</li>
+<li><p><code>document.getElementsByClassName()</code>读取所有<code>class</code>名字符合指定条件的元素</p>
+</li>
+<li><p><code>document.getElementsByName()</code></p>
+</li>
+<li><p><code>document.getElementById()</code>唯一标识</p>
+</li>
+<li><p><code>document.querySelector()</code>接受一个CSS选择器为参数，返回匹配该选择器的元素节点，只能返回第一个匹配的</p>
+</li>
+<li><p><code>document.querySelectorAll()</code></p>
+</li>
+</ul>
+<h3 id="document对象方法—创建元素"><a href="#document对象方法—创建元素" class="headerlink" title="document对象方法—创建元素"></a>document对象方法—创建元素</h3><ul>
+<li><code>document.createElement()</code>：生成元素节点，并返回该节点</li>
+<li><code>document.createTextNode()</code>：生成文本节点（<code>Text</code>实例），并返回该节点</li>
+<li><code>appendChild</code>：将内容或者子元素放到容器中</li>
+<li><code>document.createAttribute()</code>：生成一个新的属性节点（<code>Attr</code>实例），并返回</li>
+<li><code>setAttributeNode</code>：将属性添加到节点中，可以有两个参数，第一个参数是属性，第二个参数是值</li>
+</ul>
+<h3 id="Element对象—属性"><a href="#Element对象—属性" class="headerlink" title="Element对象—属性"></a>Element对象—属性</h3><p>Element对象对应网页的HTML元素。每个HTML元素，在DOM树上都会转化成一个Element节点对象</p>
+<ul>
+<li><code>Element.id</code> </li>
+<li><code>Element.className</code>：操作<code>class</code>属性，每个<code>class</code>属性用空格分割</li>
+<li><code>Element.classList</code>：<code>add()、remove()、contains()</code></li>
+<li><code>Element.innerHTML</code>：返回一个字符串，等同于该元素包含的所有HTML代码。可读写，用来设置某个节点的内同。他能改写所有元素节点的内容，包括<code>&lt;HTML&gt;、&lt;body&gt;</code>元素</li>
+<li><code>Element.innerText</code>：与<code>innerHTML</code>类似，不同的是无法识别元素，会直接渲染成字符串</li>
+</ul>
+<h3 id="Element获取元素位置"><a href="#Element获取元素位置" class="headerlink" title="Element获取元素位置"></a>Element获取元素位置</h3><ul>
+<li><code>ELement.clientHeight、Element.clientWidth</code>：获得元素高度、宽度包括<code>padding</code>部分，但不包括<code>border</code>、<code>margin</code>。<code>document.documentElement.clientHeight</code>返回视口高度（即浏览器窗口高度），<code>document.body.clientHeight</code>返回网页的实际高度</li>
+<li><code>Element.scrollHeight、Element.scrollWidth</code>：元素总高度、宽度，包括padding，但不包括<code>border</code>、<code>margin</code>，包括溢出的不可见内容，但基本和上面的一样</li>
+<li><code>Element.scrollTop、Element.scrollLeft</code>：垂直、水平滚动条滚动的像素数量</li>
+<li><code>Element.offsetHeight、Element.offsetWidth</code>：元素的CSS垂直高度、水平宽度，包括元素本身的高度、<code>padding</code>、<code>border</code>，主要是多了个<code>border</code></li>
+<li><code>Element.offsetLeft、Element.offsetRight</code>：到定位父级左边界、上边界的距离</li>
+</ul>
+<hr>
+<h2 id="CSS操作"><a href="#CSS操作" class="headerlink" title="CSS操作"></a>CSS操作</h2><h3 id="HTML元素的style属性"><a href="#HTML元素的style属性" class="headerlink" title="HTML元素的style属性"></a>HTML元素的style属性</h3><p>操作CSS样式最简单的方法，就是使用网页元素节点的<code>setAttribute</code>方法直接操作网页的<code>style</code>属性</p>
+<h3 id="元素节点的style属性"><a href="#元素节点的style属性" class="headerlink" title="元素节点的style属性"></a>元素节点的style属性</h3><p>直接操作style元素，如<code>box.style.width = &quot;300px&quot;;</code></p>
+<h3 id="cssText属性"><a href="#cssText属性" class="headerlink" title="cssText属性"></a>cssText属性</h3><p>利用元素的<code>cssText</code>属性，类似于第一种</p>
+<hr>
+<h2 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h2><h3 id="HTML事件"><a href="#HTML事件" class="headerlink" title="HTML事件"></a>HTML事件</h3><div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;clickHandle()&quot;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">clickHandle</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">alert</span>(<span class="string">&#x27;点击了按钮&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>缺点是HTML和JavaScript没有分离</p>
+<h3 id="DOM0级事件"><a href="#DOM0级事件" class="headerlink" title="DOM0级事件"></a>DOM0级事件</h3><div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;btn&quot;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">       <span class="keyword">var</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">       btn.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">           <span class="title function_">alert</span>(<span class="string">&#x27;hello&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">       &#125;</span></span><br><span class="line"><span class="language-javascript">   </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>优点是html和JavaScript是分离的，缺点是无法同时添加多个事件</p>
+<h3 id="DOM2级事件"><a href="#DOM2级事件" class="headerlink" title="DOM2级事件"></a>DOM2级事件</h3><div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;btn&quot;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    btn.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">alert</span>(<span class="string">&#x27;点击了按钮1&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    btn.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">alert</span>(<span class="string">&#x27;点击了按钮2&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>优点：时间不会被覆盖，缺点：写起来麻烦</p>
+<h3 id="事件类型之鼠标事件"><a href="#事件类型之鼠标事件" class="headerlink" title="事件类型之鼠标事件"></a>事件类型之鼠标事件</h3><p>鼠标事件指与鼠标相关的事件，具体有：</p>
+<ul>
+<li>click：按下鼠标时触发</li>
+<li>dblclick：在同一元素上双击鼠标时触发</li>
+<li>mousedown：按下鼠标键时触发</li>
+<li>mouseup：释放按下的鼠标键时触发</li>
+<li>mousemove：当鼠标在节点的内部移动时触发。当鼠标持续移动时，该事件会连续出发</li>
+<li>mouseenter：鼠标进入一个节点时触发，进入子节点不会触发</li>
+<li>mouseleave：鼠标离开一个节点时触发，离开父节点不会触发</li>
+<li>mouseover：鼠标进入一个节点时触发，进入子节点会再次触发</li>
+<li>mouseout：鼠标离开一个节点时触发，离开父节点也会触发</li>
+<li>wheel：滚动鼠标的滚轮时触发</li>
+</ul>
+<p>注意DOM0事件前面通常加上<code>on</code>，如<code>onclick</code></p>
+<h3 id="Event事件对象"><a href="#Event事件对象" class="headerlink" title="Event事件对象"></a>Event事件对象</h3><p>事件发生之后，会产生一个事件对象，作为参数传递给监听函数</p>
+<p>Event对象属性：</p>
+<ul>
+<li><code>Event.target</code>返回事件当前所在节点</li>
+<li><code>Event.type</code>返回一个字符串，表示当前事件类型</li>
+</ul>
+<p>Event对象方法：</p>
+<ul>
+<li><code>Event.preventDefault</code>取消浏览器对当前事件的默认行为 </li>
+<li><code>Event.stopPropagation</code>阻止事件在DOM中继续传播，防止再触发定义在别的节点上的监听函数，但是不包括在当前节点上其他的事件监听函数，即阻止事件冒泡</li>
+</ul>
+<h3 id="事件类型之键盘事件"><a href="#事件类型之键盘事件" class="headerlink" title="事件类型之键盘事件"></a>事件类型之键盘事件</h3><ul>
+<li><code>keydown</code>：按下键盘时触发</li>
+<li><code>keypress</code>：按下有值的键时触发，即按下Ctrl、Alt、Shift、Meta这样无值的键的时候不触发，对有值的键，按下时先触发keydown事件，再触发这个事件</li>
+<li><code>keyup</code>：松开键盘时触发该事件</li>
+</ul>
+<p>keyCode代表每个按键的唯一标识</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   &lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;input&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">       <span class="keyword">var</span> input = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;input&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">       input.<span class="property">onkeydown</span> = <span class="keyword">function</span>(<span class="params">e</span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">           <span class="keyword">if</span>(e.<span class="property">keyCode</span> == <span class="number">13</span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">               <span class="title function_">alert</span>(<span class="string">&#x27;回车键&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">           &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">       &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">   </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="事件类型之表单事件"><a href="#事件类型之表单事件" class="headerlink" title="事件类型之表单事件"></a>事件类型之表单事件</h3><ul>
+<li><code>input</code>事件：当<code>&lt;input&gt;、&lt;select&gt;、&lt;textarea&gt;</code>的值发生变化时触发，对于复选框（<code>input type=checkbox</code>）或单选框（<code>&lt;input type=radio</code>），用户改变选项时，也会触发这个事件</li>
+<li><code>select</code>事件：发生在<code>&lt;input&gt;、&lt;textarea&gt;</code>里面选中文本时触发</li>
+<li><code>change</code>事件：当<code>&lt;input&gt;、&lt;select&gt;、&lt;textarea&gt;</code>的值发生变化的时候触发，与input不同的是，不会连续触发，只是当全部修改完成时才会触发</li>
+<li><code>reset</code>事件、<code>submit</code>事件：这两个发生在表单对象<code>&lt;form&gt;</code>上，而不是发生在表单成员上。reset事件触发后表单重置，submit事件触发后表单数据向服务器提交，注意submit事件发生的对象是<code>&lt;form&gt;</code>表单元素，而不是<code>&lt;button</code>元素，提交的是表单而不是按钮</li>
+</ul>
+<h3 id="事件代理（事件委托）"><a href="#事件代理（事件委托）" class="headerlink" title="事件代理（事件委托）"></a>事件代理（事件委托）</h3><p>由于事件会在冒泡阶段向上传播到父节点，因此可以把子节点的监听函数定义在父节点上，由父节点的监听函数统一处理多个子元素的事件，这种方法叫做事件的代理</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>    </span><br><span class="line">       <span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">li</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">p</span>&gt;</span>hhh<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">       <span class="keyword">var</span> ul = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;ul&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">       ul.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">           <span class="keyword">if</span>(e.<span class="property">target</span>.<span class="property">tagName</span> == <span class="string">&#x27;LI&#x27;</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">               <span class="title function_">alert</span>(e.<span class="property">target</span>.<span class="property">innerHTML</span>);</span></span><br><span class="line"><span class="language-javascript">           &#125;</span></span><br><span class="line"><span class="language-javascript">       &#125;)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h3><h4 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout"></a>setTimeout</h4><p><code>setTimeout</code>函数接受两个参数，第一个参数是将要推迟执行的函数或代码，第二个参数是延迟多少毫秒，返回定时器编号，可以用这个编号取消定时器</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerId = <span class="built_in">setTimeout</span>(func|code, delay);</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p><strong>温馨提示</strong></p>
+<p>如果回调函数是对象的方法，那么<code>setTimeout</code>使得方法内部的<code>this</code>关键字指向全局环境，而不是定义时所在的那个对象，解决方法是再定义一个<code>that</code>变量承载<code>this</code></p>
+</blockquote>
+<p>定时器也可以取消，使用<code>clearTimeout(id)</code></p>
+<h4 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval"></a>setInterval</h4><p>写法与<code>setTimeout</code>一致，区别在于这个函数指定某个任务每间隔多少秒执行一次，也就是无限次的定时执行，同时也可以用<code>clearInterval</code>取消</p>
+<h3 id="防抖-debounce"><a href="#防抖-debounce" class="headerlink" title="防抖(debounce)"></a>防抖(debounce)</h3><p>效果：如果短时间内大量触发同一事件，只会执行一次函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">fn, delay</span>)&#123;</span><br><span class="line">	<span class="keyword">var</span> timer = <span class="literal">null</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(timer)&#123;</span><br><span class="line">			<span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">		&#125;</span><br><span class="line">		timer = <span class="built_in">setTimeout</span>(fn, delay);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="节流-throttle"><a href="#节流-throttle" class="headerlink" title="节流(throttle)"></a>节流(throttle)</h3><p>效果：如果一直拖着滚动条进行滚动，也会在一定的时间间隔后执行</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">throttle</span>(<span class="params">fn, delay</span>)&#123;</span><br><span class="line">   	<span class="keyword">var</span> flag = <span class="literal">true</span>;</span><br><span class="line">   	<span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">       	<span class="keyword">if</span>(!flag)&#123;</span><br><span class="line">           	<span class="keyword">return</span>;</span><br><span class="line">       	&#125;</span><br><span class="line">       	flag = <span class="literal">false</span>;</span><br><span class="line">       	<span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">           	<span class="title function_">fn</span>();</span><br><span class="line">           	flag = <span class="literal">true</span>;</span><br><span class="line">       	&#125;, delay);</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>业务场景：</p>
+<ul>
+<li>搜索框input事件，例如要支持输入实时搜索可以使用节流方案，或者实现输入间隔大于某个值，就当作用户输入完成，然后开始搜索</li>
+<li>页面resize事件，常见于需要做页面适配的时候，需要根据最终呈现的页面情况进行dom渲染，这种一般使用防抖</li>
+</ul>
+<hr>
+<h2 id="ES6新特性"><a href="#ES6新特性" class="headerlink" title="ES6新特性"></a>ES6新特性</h2><h3 id="let和const命令"><a href="#let和const命令" class="headerlink" title="let和const命令"></a>let和const命令</h3><p><code>let</code>用来声明变量，用法类似于<code>var</code>，但声明的变量只在<code>let</code>的代码块中有用</p>
+<p><code>let</code>块级作用域，适合用于for、<code>let</code>不存在变量提升、<code>let</code>不允许重复声明</p>
+<p><code>const</code>声明一个只读常量，一旦声明，常量的值就不能改变</p>
+<p><code>const</code>必须立刻初始化、作用域与<code>let</code>相同，只在声明的块级作用域内有效、也不提升、不允许重新赋值、不允许重复声明</p>
+<h3 id="对象解构赋值"><a href="#对象解构赋值" class="headerlink" title="对象解构赋值"></a>对象解构赋值</h3><p>解构可用于对象</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;name, age&#125; = &#123;<span class="attr">name</span>:<span class="string">&quot;aa&quot;</span>, <span class="attr">age</span>:<span class="number">20</span>&#125;</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p><strong>温馨提示</strong></p>
+<p>对象的属性没有次序，变量必须与属性同名，才能取到正确的值</p>
+</blockquote>
+<p>对象的解构赋值，可以很方便的将现有对象的方法，赋值到某个变量</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;random, floor&#125; = <span class="title class_">Math</span></span><br><span class="line"><span class="keyword">let</span> &#123;log&#125; = <span class="variable language_">console</span></span><br></pre></td></tr></table></figure></div>
+
+<p>注意事项，如果要将一个已经声明的变量用于解构赋值，必须非常小心</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hello = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> &#123; hello &#125; = &#123;<span class="attr">hello</span>:<span class="string">&quot;hello&quot;</span>&#125;; <span class="comment">//报错</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> hello = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">(&#123; hello &#125; = &#123;<span class="attr">hello</span>:<span class="string">&quot;hello&quot;</span>&#125;);  <span class="comment">//正确，但这样写也不好</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="字符串扩展"><a href="#字符串扩展" class="headerlink" title="字符串扩展"></a>字符串扩展</h3><ul>
+<li><p>字符串<code>Unicode</code>表示法</p>
+</li>
+<li><p>字符串遍历器接口：<code>for……of</code>，类似于java中的加强for</p>
+</li>
+<li><p>模板字符串：增强版的字符串，用反引号&#96;&#96;  &#96;标识。它可以当作普通的字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url = <span class="string">&quot;www.baidu.com&quot;</span></span><br><span class="line"><span class="keyword">let</span> h1 = <span class="string">&quot;&lt;a href=&#x27; &quot;</span> + url + <span class="string">&quot; &#x27;&gt;baidu&lt;/a&gt;&quot;</span></span><br><span class="line"><span class="keyword">let</span> h2 = <span class="string">`&lt;a href=&#x27;<span class="subst">$&#123;url&#125;</span>&#x27;&gt;baidu&lt;/a&gt;`</span> <span class="comment">//使用$&#123;&#125;来提取变量内容</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="字符串新增方法"><a href="#字符串新增方法" class="headerlink" title="字符串新增方法"></a>字符串新增方法</h3><ul>
+<li><code>includes()、startsWith()、endsWith()</code>，includes与indexof的区别在于可以返回布尔值，都支持第二个参数，即开始的位置</li>
+<li><code>repeat()</code>返回一个新的字符串，表示将原字符重复<code>n</code>次</li>
+<li><code>padStart()、padEnd()</code>：如果字符串不够指定长度，会在头部或尾部补全</li>
+<li><code>trimStart()，trimEnd()</code>：与<code>trim()</code>一致，消除头部或尾部空格</li>
+<li><code>at()</code>：接受一个整数作为参数，返回参数指定位置的字符，支持负索引(即倒数的位置)</li>
+</ul>
+<h3 id="数组扩展"><a href="#数组扩展" class="headerlink" title="数组扩展"></a>数组扩展</h3><ul>
+<li>扩展运算符：<code>...</code>将一个数组用逗号分隔的参数序列，代替apply方法，也可以合并数组</li>
+<li><code>Array.from()</code>：用于将类数组转为真正的数组</li>
+</ul>
+<blockquote>
+<p><strong>温馨提示</strong></p>
+<p>常见的类数组有：arguments（函数参数）、元素集合、类似数组的对象</p>
+</blockquote>
+<ul>
+<li><code>Array.of()</code>：用于将一组值转化为数组</li>
+</ul>
+<h3 id="对象扩展"><a href="#对象扩展" class="headerlink" title="对象扩展"></a>对象扩展</h3><ul>
+<li>属性名和属性值是相同的变量名称，可以省略，方法也可以简写，返回值也可以</li>
+<li>属性名表达式：用表达式作为对象的属性名，即把表达式放在方括号内</li>
+<li>对象也有扩展运算符：<code>...</code>，作用是展开数据</li>
+</ul>
+<h3 id="函数扩展"><a href="#函数扩展" class="headerlink" title="函数扩展"></a>函数扩展</h3><p>箭头函数：类似lambda表达式，常用于回调函数，箭头函数里面没有自己的this，而是引用外层的this</p>
+<h3 id="Set数据结构"><a href="#Set数据结构" class="headerlink" title="Set数据结构"></a>Set数据结构</h3><p>类似于数组，成员唯一，含有<code>size</code>属性，<code>add()、has()、clear()</code>方法等</p>
+<h3 id="Promise对象"><a href="#Promise对象" class="headerlink" title="Promise对象"></a>Promise对象</h3><h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p><code>promise</code>对象是一个构造函数，用来生成<code>promise</code>实例</p>
+<p><code>promise</code>构造函数接受一个函数作为参数，该函数的两个参数分别为<code>resolve</code>和<code>reject</code>，这两个函数由JavaScript引擎提供，不需要自己部署</p>
+<p><code>promise</code>实例产生后，可以用<code>then</code>方法分别指定<code>resolved</code>状态和<code>rejected</code>状态的回调函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">loadImageAsync</span>(<span class="params">url</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> image = <span class="keyword">new</span> <span class="title class_">Image</span>();</span><br><span class="line">            image.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="title function_">resolve</span>(image);</span><br><span class="line">            &#125;;</span><br><span class="line">            image.<span class="property">onerror</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Could not load image at &#x27;</span> + url));</span><br><span class="line">            &#125;;</span><br><span class="line">            image.<span class="property">src</span> = url;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> promise;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> promise = <span class="title function_">loadImageAsync</span>(<span class="string">&#x27;https://www.baidu.com/img/bd_logo1.png&#x27;</span>);</span><br><span class="line">    promise.<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">image</span>) &#123;</span><br><span class="line">        <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(image);</span><br><span class="line">    &#125;, <span class="keyword">function</span>(<span class="params">error</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="Async函数"><a href="#Async函数" class="headerlink" title="Async函数"></a>Async函数</h3><p>async函数可以将异步操作变成同步操作，类似于java多线程同步控制，利用<code>async</code>修饰函数，利用<code>await</code>修饰需要等待的步骤</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">url</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            $.<span class="title function_">getJSON</span>(url, <span class="keyword">function</span>(<span class="params">data</span>)&#123;</span><br><span class="line">                <span class="title function_">resolve</span>(data);</span><br><span class="line">            &#125;, <span class="keyword">function</span>(<span class="params">err</span>)&#123;</span><br><span class="line">                <span class="title function_">reject</span>(err);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getInfo</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> id = <span class="keyword">await</span> <span class="title function_">ajax</span>(<span class="string">&#x27;...&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> info = <span class="keyword">await</span> <span class="title function_">ajax</span>(<span class="string">&#x27;...&#x27;</span> + id);</span><br><span class="line">        <span class="keyword">var</span> result = <span class="keyword">await</span> <span class="title function_">ajax</span>(<span class="string">&#x27;...&#x27;</span> + info);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">getInfo</span>();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h3><p>类似于java，构造方法：<code>constructor()</code>，不存在提升，静态方法，静态属性</p>
+<h3 id="Module语法"><a href="#Module语法" class="headerlink" title="Module语法"></a>Module语法</h3><p>ES6模块通过<code>export</code>命令显式指定输出的代码，再通过<code>import</code>命令输入，导入时候的名字不能改，但可以通过<code>as</code>改名，也可以用<code>*</code>导入所有的内容，导入结果用<code>as</code>改名后封装成一个对象。<code>export default</code>可以使导入时无需同名，但一个文件里只能有一个</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> <span class="title class_">Hello</span> = <span class="string">&quot;hello&quot;</span> <span class="comment">//hello.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Hello</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./hello.js&quot;</span> <span class="comment">//index.js</span></span><br></pre></td></tr></table></figure></div>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> 前端笔记 JavaScript</li>
+        <li><strong>作者:</strong> rainbowYao</li>
+        <li><strong>创建于
+                :</strong> 2024-07-01 21:27:53</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2024-08-01 18:11:55
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/07/01/前端笔记-JavaScript/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/">#前端笔记</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/01/前端笔记-HTML/" title="前端笔记 HTML" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail8.jpg" alt="前端笔记 HTML" class="!max-w-none">
+  <span class="title">前端笔记 HTML</span>
+</a><a class="recommended-article-item" href="/2024/07/01/前端笔记-CSS/" title="前端笔记 CSS" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail10.jpg" alt="前端笔记 CSS" class="!max-w-none">
+  <span class="title">前端笔记 CSS</span>
+</a><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第一单元：表达式展开-总结/" title="BUAA_OO 第一单元：表达式展开 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail1.jpg" alt="BUAA_OO 第一单元：表达式展开 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第一单元：表达式展开 总结</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/01/前端笔记-HTML/" title="前端笔记 HTML" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail8.jpg" alt="前端笔记 HTML" class="!max-w-none">
+  <span class="title">前端笔记 HTML</span>
+</a><a class="recommended-article-item" href="/2024/07/01/前端笔记-CSS/" title="前端笔记 CSS" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail10.jpg" alt="前端笔记 CSS" class="!max-w-none">
+  <span class="title">前端笔记 CSS</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/07/02/OS-lab4-%E6%80%9D%E8%80%83%E9%A2%98/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">OS lab4 思考题</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/07/01/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0-CSS/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">前端笔记 CSS</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">前端笔记 JavaScript</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript%E7%AE%80%E4%BB%8B"><span class="nav-text">JavaScript简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0JavaScript"><span class="nav-text">为什么学习JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E4%B8%8EECMAScript%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">JavaScript与ECMAScript的关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E5%8F%A5"><span class="nav-text">语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="nav-text">标识符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E4%BF%9D%E7%95%99%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">JavaScript保留关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E5%BC%95%E5%85%A5%E5%88%B0%E6%96%87%E4%BB%B6"><span class="nav-text">JavaScript引入到文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-text">注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E8%BE%93%E5%87%BA%E6%96%B9%E5%BC%8F"><span class="nav-text">JavaScript输出方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E5%8F%A5-1"><span class="nav-text">语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-text">对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM"><span class="nav-text">DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9"><span class="nav-text">节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E6%A0%91"><span class="nav-text">节点树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#document%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E2%80%94%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0"><span class="nav-text">document对象方法—获取元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#document%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E2%80%94%E5%88%9B%E5%BB%BA%E5%85%83%E7%B4%A0"><span class="nav-text">document对象方法—创建元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Element%E5%AF%B9%E8%B1%A1%E2%80%94%E5%B1%9E%E6%80%A7"><span class="nav-text">Element对象—属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Element%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E4%BD%8D%E7%BD%AE"><span class="nav-text">Element获取元素位置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E6%93%8D%E4%BD%9C"><span class="nav-text">CSS操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML%E5%85%83%E7%B4%A0%E7%9A%84style%E5%B1%9E%E6%80%A7"><span class="nav-text">HTML元素的style属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E8%8A%82%E7%82%B9%E7%9A%84style%E5%B1%9E%E6%80%A7"><span class="nav-text">元素节点的style属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cssText%E5%B1%9E%E6%80%A7"><span class="nav-text">cssText属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="nav-text">事件处理程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML%E4%BA%8B%E4%BB%B6"><span class="nav-text">HTML事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM0%E7%BA%A7%E4%BA%8B%E4%BB%B6"><span class="nav-text">DOM0级事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM2%E7%BA%A7%E4%BA%8B%E4%BB%B6"><span class="nav-text">DOM2级事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6"><span class="nav-text">事件类型之鼠标事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="nav-text">Event事件对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="nav-text">事件类型之键盘事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%B9%8B%E8%A1%A8%E5%8D%95%E4%BA%8B%E4%BB%B6"><span class="nav-text">事件类型之表单事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86%EF%BC%88%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98%EF%BC%89"><span class="nav-text">事件代理（事件委托）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E6%8A%96-debounce"><span class="nav-text">防抖(debounce)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E6%B5%81-throttle"><span class="nav-text">节流(throttle)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-text">ES6新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#let%E5%92%8Cconst%E5%91%BD%E4%BB%A4"><span class="nav-text">let和const命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-text">对象解构赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%89%A9%E5%B1%95"><span class="nav-text">字符串扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%B0%E5%A2%9E%E6%96%B9%E6%B3%95"><span class="nav-text">字符串新增方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95"><span class="nav-text">数组扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E6%89%A9%E5%B1%95"><span class="nav-text">对象扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%89%A9%E5%B1%95"><span class="nav-text">函数扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">Set数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise%E5%AF%B9%E8%B1%A1"><span class="nav-text">Promise对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Async%E5%87%BD%E6%95%B0"><span class="nav-text">Async函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class"><span class="nav-text">Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module%E8%AF%AD%E6%B3%95"><span class="nav-text">Module语法</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">rainbowYao</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共 12 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
