@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="rainbowYao">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://yyybbbyyyb.github.io/2025/09/02/android-stetho/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="概述本文是对Facebook开源的Android调试工具Stetho的全面学习总结。Stetho是一个功能强大的Android应用调试桥梁，它可以通过Chrome浏览器的开发者工具来调试Android应用，提供了包括视图层级检查、数据库查看、网络抓包、文件系统管理等多种调试功能。 文章主要内容包括：  基础集成指南 - 详细介绍了Stetho的下载、集成方法，以及与新版Chrome的兼容性问题解决">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-stetho">
+<meta property="og:url" content="https://yyybbbyyyb.github.io/2025/09/02/Android-stetho/index.html">
+<meta property="og:site_name" content="rainbowYao&#39;s Blog">
+<meta property="og:description" content="概述本文是对Facebook开源的Android调试工具Stetho的全面学习总结。Stetho是一个功能强大的Android应用调试桥梁，它可以通过Chrome浏览器的开发者工具来调试Android应用，提供了包括视图层级检查、数据库查看、网络抓包、文件系统管理等多种调试功能。 文章主要内容包括：  基础集成指南 - 详细介绍了Stetho的下载、集成方法，以及与新版Chrome的兼容性问题解决">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho1.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho2.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho3.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho4.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho5.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho6.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho7.png">
+<meta property="article:published_time" content="2025-09-02T09:20:06.000Z">
+<meta property="article:modified_time" content="2025-09-02T09:21:39.937Z">
+<meta property="article:author" content="rainbowYao">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="stetho">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho1.png">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id="></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/rainbow.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/rainbow.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/rainbow.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Android-stetho -
+        
+        rainbowYao&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"yyybbbyyyb.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":true,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/flower.jpg","dark":"/images/flower.jpg"},"title":"This is rainbowYao's Blog","subtitle":{"text":["已老实, 求放过...","我真服了..."],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#000000","dark":"#000000"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"center","links":{"github":"https://github.com/yyybbbyyyb/","instagram":"https://www.instagram.com/yyb913665114/","zhihu":null,"twitter":null,"email":"22373393@buaa.edu.cn"},"qrs":{"weixin":"/images/wechat.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Categories":{"path":"/categories/","icon":"fa-regular fa-folder"},"Tags":{"path":"/tags/","icon":"fa-regular fa-tags"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"目前文章较少","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2024/1/1 00:00:00"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        rainbowYao&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/rainbow.ico">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                rainbowYao&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/"
+                                        >
+                                    <i class="fa-regular fa-folder fa-fw"></i>
+                                    分类
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/"
+                        >
+                            <span>
+                                分类
+                            </span>
+                            
+                                <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">17</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail20.jpg" alt="Android-stetho" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">Android-stetho</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">rainbowYao</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-09-02 17:20:06</span>
+        <span class="mobile">2025-09-02 17:20:06</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-09-02 17:21:39</span>
+            <span class="mobile">2025-09-02 17:21:39</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AE%89%E5%8D%93%E7%AC%94%E8%AE%B0/">安卓笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/android/">android</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/stetho/">stetho</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本文是对Facebook开源的Android调试工具Stetho的全面学习总结。Stetho是一个功能强大的Android应用调试桥梁，它可以通过Chrome浏览器的开发者工具来调试Android应用，提供了包括视图层级检查、数据库查看、网络抓包、文件系统管理等多种调试功能。</p>
+<p><strong>文章主要内容包括：</strong></p>
+<ol>
+<li><strong>基础集成指南</strong> - 详细介绍了Stetho的下载、集成方法，以及与新版Chrome的兼容性问题解决方案</li>
+<li><strong>核心功能展示</strong> - 通过截图演示了布局视图检查、SQLite数据库查看、网络抓包、DumpApp命令行工具等主要特性</li>
+<li><strong>源码深度解析</strong> - 对Stetho的核心模块进行了详细的代码分析，包括：<ul>
+<li>初始化流程和配置系统</li>
+<li>DumpApp插件机制实现</li>
+<li>数据库检查模块(inspector&#x2F;database)</li>
+<li>网络拦截模块(inspector&#x2F;network)</li>
+</ul>
+</li>
+<li><strong>DumpApp实战开发</strong> - 介绍了内置的四个DumpApp插件，并提供了自定义插件的实现思路，特别是MMKV数据管理插件的完整实现</li>
+<li><strong>通信机制深度剖析</strong> - 详细分析了dumpapp脚本与Android应用之间的通信原理，包括ADB连接建立、Unix域套接字通信、自定义协议设计等底层实现</li>
+</ol>
+<h2 id="学习网站来源"><a href="#学习网站来源" class="headerlink" title="学习网站来源"></a>学习网站来源</h2><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/facebook/stetho" >github <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://facebook.github.io/stetho/?utm_source=chatgpt.com" >官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> </li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_21118431/article/details/105981625?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~PaidSort-1-105981625-blog-121653005.235%5Ev43%5Epc_blog_bottom_relevance_base4&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~PaidSort-1-105981625-blog-121653005.235%5Ev43%5Epc_blog_bottom_relevance_base4&utm_relevant_index=1" >CSDN <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><ul>
+<li>在gradle中添加依赖<div class="highlight-container" data-rel="Gradle"><figure class="iseeu highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Gradle dependency on Stetho </span></span><br><span class="line"><span class="keyword">dependencies</span> &#123; </span><br><span class="line">    debugCompile <span class="string">&#x27;com.facebook.stetho:stetho:1.5.1&#x27;</span> </span><br><span class="line">    <span class="comment">//下面依赖是非必须的，只有在需要监控网络的时候需要添加</span></span><br><span class="line">    debugCompile <span class="string">&#x27;com.facebook.stetho:stetho-urlconnection:1.5.1&#x27;</span></span><br><span class="line">    debugCompile <span class="string">&#x27;com.facebook.stetho:stetho-okhttp3:1.5.1&#x27;</span></span><br><span class="line">    <span class="comment">//下面也非必须，在需要JS命令行的时候添加</span></span><br><span class="line">    debugCompile <span class="string">&#x27;com.facebook.stetho:stetho-js-rhino:1.6.0&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<blockquote>
+<p>上面是官网的做法，经本人测试，stetho与新版的chrome（130）联动有bug，官方仓库修复后并没有release，故建议导入模块或者使用MavenLocal</p>
+</blockquote>
+<h2 id="集成（来自官网）"><a href="#集成（来自官网）" class="headerlink" title="集成（来自官网）"></a>集成（来自官网）</h2><ul>
+<li><p>在application中注册</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyApplication</span> <span class="keyword">extends</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate();</span><br><span class="line">        <span class="comment">// 在调试模式下，启动stetho服务</span></span><br><span class="line">        <span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</span><br><span class="line">            Stetho.initializeWithDefaults(<span class="built_in">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;application</span><br><span class="line">    android:name=<span class="string">&quot;.MyApplication&quot;</span>  &lt;!-- 注册自定义 Application 类 --&gt;</span><br><span class="line">    &lt;!-- 其他组件声明 --&gt;</span><br><span class="line">&lt;/application&gt;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>启用网络检查</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient.<span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OkHttpClient</span>.Builder();</span><br><span class="line"><span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</span><br><span class="line">    builder.addInterceptor(<span class="keyword">new</span> <span class="title class_">StethoInterceptor</span>());</span><br><span class="line">&#125;</span><br><span class="line">instance = builder.build();</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>自定义 dumpapp 插件</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Stetho.initialize(Stetho.newInitializerBuilder(context)</span><br><span class="line">    .enableDumpapp(<span class="keyword">new</span> <span class="title class_">DumperPluginsProvider</span>() &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="keyword">public</span> Iterable&lt;DumperPlugin&gt; <span class="title function_">get</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Stetho</span>.DefaultDumperPluginsBuilder(context)</span><br><span class="line">            .provide(<span class="keyword">new</span> <span class="title class_">MyDumperPlugin</span>())</span><br><span class="line">            .finish();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))</span><br><span class="line">    .build());</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>自定义插件是扩展 dumpapp 系统的首选方式，可以在配置过程中轻松添加。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="stetho-sample"><a href="#stetho-sample" class="headerlink" title="stetho-sample"></a>stetho-sample</h3><p>官方的示例Demo，可以供学习DumpApp的写法或者测试Chrome功能</p>
+<ul>
+<li><code>git clone https://github.com/facebook/stetho.git</code></li>
+<li>记得使用低版本的JDK，比如1.8</li>
+<li>javaDoc报错，故注释掉这段代码即可暂时编译成功：<div class="highlight-container" data-rel="Gradle"><figure class="iseeu highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span> = android.<span class="keyword">sourceSets</span>.main.java.srcDirs</span><br><span class="line">   <span class="keyword">classpath</span> += files(android.bootClasspath)</span><br><span class="line">   <span class="keyword">if</span> (JavaVersion.current().isJava8Compatible()) &#123;</span><br><span class="line">       <span class="keyword">options</span>.addStringOption(<span class="string">&#x27;Xdoclint:none&#x27;</span>, <span class="string">&#x27;-quiet&#x27;</span>)</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>若发现stetho-sample可以在chrome中展示，但是自己集成的项目不行，一种可能的原因是stetho-1.6.0与新版Chrome有兼容性问题，建议将github代码仓库中的stetho上传到MavenLocal或者当作模块导入（stetho已经停止维护，且其后续有更改并没有release到maven中）</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><ul>
+<li>从chrome:&#x2F;&#x2F;inspect&#x2F;#devices点击inspect进入chrome调试界面<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho1.png"
+                      alt="1"
+                ></li>
+<li>布局视图，可以看view树，视图对应的style、properties<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho2.png"
+                      alt="2"
+                ></li>
+<li>可以查看设备的数据存储，包括SQLite<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho3.png"
+                      alt="3"
+                ></li>
+<li>可以抓包<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho4.png"
+                      alt="4"
+                ></li>
+<li>DumpApp的使用<ul>
+<li>使用自带的SharedPreferencesDumperPlugin，可以实现运行模式下SP的读写<br>  <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho5.png"
+                      alt="5"
+                ></li>
+<li>自行拓展DumpPlugin，如：MmkvDumperPlugin，实现MMKV的增删改查<br>  <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho6.png"
+                      alt="6"
+                ></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>值得注意得是需要在github将script文件夹下载下来，里面包含了用python3实现的命令dumpapp</p>
+</blockquote>
+<h2 id="核心代码解析"><a href="#核心代码解析" class="headerlink" title="核心代码解析"></a>核心代码解析</h2><h3 id="com-facebook-stetho-Stetho-java"><a href="#com-facebook-stetho-Stetho-java" class="headerlink" title="com&#x2F;facebook&#x2F;stetho&#x2F;Stetho.java"></a>com&#x2F;facebook&#x2F;stetho&#x2F;Stetho.java</h3><ul>
+<li>initialize、InitializerBuilder初始化</li>
+<li>enableDumpapp、enableWebKitInspector添加配置</li>
+<li>PluginBuilder 配置 Dumper 插件和 Inspector 模块</li>
+<li>DefaultInspectorModulesBuilder、defaultInspectorModulesProvider，finish中会自动把SqliteDatabaseDriver加进来，也可以自己继承或者exclude</li>
+<li>DefaultDumperPluginsBuilder、defaultDumperPluginsProvider，finish中会自动添加内置的四个插件：<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">provideIfDesired(<span class="keyword">new</span> <span class="title class_">HprofDumperPlugin</span>(mContext));</span><br><span class="line">provideIfDesired(<span class="keyword">new</span> <span class="title class_">SharedPreferencesDumperPlugin</span>(mContext));</span><br><span class="line">provideIfDesired(<span class="keyword">new</span> <span class="title class_">CrashDumperPlugin</span>());</span><br><span class="line">provideIfDesired(<span class="keyword">new</span> <span class="title class_">FilesDumperPlugin</span>(mContext));</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><ul>
+<li>dumpapp：主要脚本，负责解析命令行参数并连接到 Stetho 启用的应用程序<ul>
+<li>main：这段代码是主入口，处理命令行参数并建立连接</li>
+<li>read_frames：这个函数处理从 Stetho 服务器返回的帧。每个帧有不同的代码表示不同类型的数据</li>
+</ul>
+</li>
+<li>stetho_open.py：提供连接到 Android 设备上的 Stetho socket 的底层功能<ul>
+<li>stetho_open：这个函数建立到 Stetho 启用应用的连接。它首先连接到 ADB 服务器，然后使用 ADB 转发到设备上的 socket</li>
+<li>_find_only_stetho_socket：这个函数在设备上查找运行 Stetho 的进程，通过检查 &#x2F;proc&#x2F;net&#x2F;unix 的输出</li>
+<li>_connect_to_device：依托设备、端口以及 AdbSmartSocketClient 连接设备</li>
+<li>AdbSmartSocketClient：实现了 ADB 协议，用于与 Android Debug Bridge 服务器通信</li>
+</ul>
+</li>
+<li>hprof_dump.sh：用于生成和转换 HPROF 内存分析文件的辅助脚本</li>
+</ul>
+<h3 id="com-facebook-stetho-dumpapp"><a href="#com-facebook-stetho-dumpapp" class="headerlink" title="com&#x2F;facebook&#x2F;stetho&#x2F;dumpapp&#x2F;"></a>com&#x2F;facebook&#x2F;stetho&#x2F;dumpapp&#x2F;</h3><ul>
+<li>Dumper.java<ul>
+<li>Dumper 类是 Stetho 框架中的一个核心组件，主要负责处理来自命令行的转储请求并将其路由到相应的插件。它位于 Java 端，作为接收和执行命令的处理器。</li>
+</ul>
+</li>
+<li>GlobalOptions.java<ul>
+<li>配置命令行的选项</li>
+</ul>
+</li>
+<li>DumperContext.java<ul>
+<li>Dumper上下文：mStdin、mStdout、mStderr、mParser、mArgs</li>
+</ul>
+</li>
+<li>DumperPlugin.java<ul>
+<li>Dumper的插件接口，需要实现getName、dump(DumperContext dumpContext)方法</li>
+</ul>
+</li>
+<li>ArgsHelper.java<ul>
+<li>nextOptionalArg、nextArg、drainToArray等处理命令行参数的工具类</li>
+</ul>
+</li>
+<li>plugins&#x2F;SharedPreferencesDumperPlugin.java<ul>
+<li>实现具读写SP功能的plugin，需要实现接口DumperPlugin</li>
+</ul>
+</li>
+<li>DumpUsageException.class、DumpException.class等异常类</li>
+</ul>
+<blockquote>
+<p>Stetho 的 Dumper 类与 Python 脚本形成了一个完整的客户端-服务器系统：</p>
+<ul>
+<li>Python 脚本作为客户端，负责解析命令行参数、建立连接并发送请求</li>
+<li>Java 端的 Dumper 类作为服务器端处理程序，接收请求并路由到适当的插件</li>
+<li>通过一个自定义二进制协议，两者可以进行双向通信</li>
+</ul>
+</blockquote>
+<h3 id="com-facebook-stetho-inspector-database"><a href="#com-facebook-stetho-inspector-database" class="headerlink" title="com&#x2F;facebook&#x2F;stetho&#x2F;inspector&#x2F;database&#x2F;"></a>com&#x2F;facebook&#x2F;stetho&#x2F;inspector&#x2F;database&#x2F;</h3><ul>
+<li><p>DatabaseConnectionProvider.java、DatabaseFilesProvider.java</p>
+<ul>
+<li>提供数据库文件以及SQLite对象的接口</li>
+</ul>
+</li>
+<li><p>DefaultDatabaseFilesProvider.java</p>
+<ul>
+<li>实现DatabaseFilesProvider接口</li>
+<li>负责收集应用中的数据库文件，通过<code>mContext.databaseList()</code>获得应用中的所有数据库文件</li>
+</ul>
+</li>
+<li><p>DefaultDatabaseConnectionProvider.java</p>
+<ul>
+<li>实现DatabaseConnectionProvider接口</li>
+<li>负责创建 SQLite 数据库连接</li>
+</ul>
+</li>
+<li><p>SqliteDatabaseDriver.java</p>
+<ul>
+<li>数据库功能的核心实现类、处理SQLite数据库查询与展示</li>
+<li>getDatabaseNames获取数据库文件、排序、过滤临时文件，将每个文件包装为描述符返回</li>
+<li>getTableNames获得数据库中表和视图的名字</li>
+<li>executeSQL根据 SQL 类型分发到不同处理方法</li>
+</ul>
+</li>
+<li><p>SQLiteDatabaseCompat.java</p>
+<ul>
+<li>兼容性层，用于在不同的 Android 版本中管理 SQLite 数据库的特性，如写前日志（WAL）和外键约束</li>
+<li>这个文件和DefaultDatabaseConnectionProvider中处理打开数据库特性部分的设计挺好的，值得学习，也有一些我没见过的语法</li>
+</ul>
+</li>
+<li><p>Database.java</p>
+<ul>
+<li>实现 Chrome DevTools 协议中数据库功能的核心类</li>
+<li>处理来自 Chrome DevTools 的数据库相关请求</li>
+<li>管理数据库驱动和连接，执行 SQL 查询并格式化结果</li>
+</ul>
+</li>
+<li><p>BaseDatabaseDriver.java、DatabaseDriver2</p>
+<ul>
+<li>定义数据库驱动的核心接口</li>
+</ul>
+</li>
+</ul>
+<h3 id="com-facebook-stetho-inspector-network"><a href="#com-facebook-stetho-inspector-network" class="headerlink" title="com&#x2F;facebook&#x2F;stetho&#x2F;inspector&#x2F;network"></a>com&#x2F;facebook&#x2F;stetho&#x2F;inspector&#x2F;network</h3><ul>
+<li><p>StethoInterceptor.java</p>
+<ul>
+<li>核心作用: OkHttp3 的网络拦截器，是 Stetho 抓包功能的入口点和关键实现</li>
+<li>拦截流程:<ul>
+<li>intercept(): 主要拦截方法，完整的网络请求生命周期管理</li>
+<li>生成唯一 requestId 用于追踪单个请求</li>
+<li>创建 RequestBodyHelper 处理请求体数据</li>
+<li>调用 chain.proceed() 执行实际网络请求</li>
+<li>异常处理: 捕获 IOException 并通过 httpExchangeFailed() 报告</li>
+</ul>
+</li>
+<li>响应流拦截:<ul>
+<li>通过 interpretResponseStream() 拦截响应流</li>
+<li>使用 ForwardingResponseBody 包装响应体，替换原始 InputStream</li>
+<li>确保拦截后的流能正常传递给应用层</li>
+</ul>
+</li>
+<li>Connection 验证: 检查是否使用了正确的 addNetworkInterceptor，而非 addInterceptor</li>
+</ul>
+</li>
+<li><p>NetworkEventReporter.java</p>
+<ul>
+<li>网络事件报告的核心接口，定义了完整的网络监控生命周期</li>
+<li>requestWillBeSent(): 请求即将发送时调用</li>
+<li>responseHeadersReceived(): 接收到响应头时调用</li>
+<li>interpretResponseStream(): 关键方法 - 拦截响应流，实现数据捕获和流包装</li>
+<li>dataSent()&#x2F;dataReceived(): 报告实际传输的数据量（压缩前后）</li>
+<li>httpExchangeFailed(): 处理网络异常情况</li>
+<li>定义了 InspectorRequest、InspectorResponse、InspectorWebSocketFrame 等核心接口</li>
+</ul>
+</li>
+<li><p>NetworkEventReporterImpl.java</p>
+<ul>
+<li>实现具体的网络事件报告逻辑，单例模式管理全局网络监控</li>
+<li>将 Android 网络数据转换为 Chrome DevTools Protocol 格式</li>
+<li>使用 NetworkPeerManager 管理调试客户端连接状态</li>
+<li>通过 sendNotificationToPeers() 向所有连接的调试客户端发送事件</li>
+<li>支持请求体的自动解压缩和格式化显示，处理 JSON 序列化</li>
+</ul>
+</li>
+<li><p>NetworkPeerManager.java</p>
+<ul>
+<li>网络模块的核心管理器，继承自 ChromePeerManager</li>
+<li>响应体文件管理: 持有 ResponseBodyFileManager 实例，负责临时文件的生命周期</li>
+<li>美化打印器管理: 管理 AsyncPrettyPrinterRegistry，用于格式化不同类型的响应数据</li>
+<li>连接状态监听: 通过 PeersRegisteredListener 监听调试客户端的连接状态</li>
+<li>延迟初始化和自动清理机制</li>
+</ul>
+</li>
+<li><p>AsyncPrettyPrinter 系列</p>
+<ul>
+<li>AsyncPrettyPrinter.java: 异步美化打印器接口，支持不同数据格式</li>
+<li>AsyncPrettyPrinterRegistry.java: 管理不同类型数据的美化器注册表</li>
+<li>AsyncPrettyPrinterExecutorHolder.java: 线程池管理，避免阻塞主线程</li>
+<li>DownloadingAsyncPrettyPrinterFactory.java: 支持大文件的分块美化处理</li>
+</ul>
+</li>
+<li><p>Network.java (协议模块)</p>
+<ul>
+<li>定义了 Chrome DevTools Network 协议的所有数据结构</li>
+<li>Request、Response、Initiator 等核心类型定义</li>
+<li>支持 JSON 序列化注解，确保与调试客户端的协议兼容性</li>
+<li>包含请求&#x2F;响应的完整元数据：URL、方法、头部、时间戳等</li>
+</ul>
+</li>
+<li><p>ResponseBodyFileManager.java</p>
+<ul>
+<li>管理网络响应的临时文件存储，使用应用私有目录</li>
+<li>支持 Base64 编码标识和数据压缩</li>
+<li>集成异步美化打印器，支持 JSON&#x2F;XML 等格式的格式化显示</li>
+<li>自动文件清理机制，避免存储空间泄漏</li>
+</ul>
+</li>
+<li><p>ResponseHandlingInputStream.java</p>
+<ul>
+<li>抓包核心实现 - 装饰器模式包装原始 InputStream</li>
+<li>实现数据的双写机制：流向应用的同时写入临时存储</li>
+<li>支持数据解压缩计数和进度报告</li>
+<li>透明处理，对应用代码完全无感知</li>
+</ul>
+</li>
+<li><p>RequestBodyHelper.java &#x2F; DefaultResponseHandler.java</p>
+<ul>
+<li>RequestBodyHelper: 处理请求体的压缩、解压缩和数据统计</li>
+<li>DefaultResponseHandler: 响应数据读取的默认处理器，报告读取进度和完成状态</li>
+<li>支持 gzip&#x2F;deflate 等标准 HTTP 压缩格式</li>
+</ul>
+</li>
+<li><p>工具类组件</p>
+<ul>
+<li>CountingOutputStream.java: 统计输出流写入字节数的装饰器</li>
+<li>DecompressionHelper.java: HTTP 响应解压缩帮助类（gzip&#x2F;deflate）</li>
+<li>GunzippingOutputStream.java: 专门的 gzip 解压缩输出流</li>
+<li>ResourceTypeHelper.java: 根据 Content-Type 判断资源类型</li>
+<li>MimeMatcher.java: MIME 类型匹配和识别</li>
+</ul>
+</li>
+<li><p>WebSocket 支持</p>
+<ul>
+<li>SimpleBinaryInspectorWebSocketFrame.java: 二进制 WebSocket 帧封装</li>
+<li>SimpleTextInspectorWebSocketFrame.java: 文本 WebSocket 帧封装</li>
+<li>完整支持 WebSocket 握手、数据帧传输等生命周期监控</li>
+</ul>
+</li>
+</ul>
+<h2 id="DumpApp"><a href="#DumpApp" class="headerlink" title="DumpApp"></a>DumpApp</h2><h3 id="自带的四个DumpApp："><a href="#自带的四个DumpApp：" class="headerlink" title="自带的四个DumpApp："></a>自带的四个DumpApp：</h3><ul>
+<li>HprofDumperPlugin：用于导出应用的 Heap Dump (HPROF 文件)，即应用内存中的对象及其引用关系</li>
+<li>SharedPreferencesDumperPlugin：读写应用的 SharedPreferences 数据</li>
+<li>FilesDumperPlugin：导出应用的 文件系统 中的文件</li>
+<li>CrashDumperPlugin：用于导出 崩溃日志 (Crash logs)</li>
+</ul>
+<h3 id="自行实现几个DumpApp："><a href="#自行实现几个DumpApp：" class="headerlink" title="自行实现几个DumpApp："></a>自行实现几个DumpApp：</h3><ul>
+<li>根据sample实现HelloWorldDumperPlugin</li>
+<li>根据自己的Demo实现PosterMemoryDumperPlugin，实现内存海报数据的转储</li>
+<li>完成MmkvDumperPlugin，实现MMKV数据的增删改查</li>
+</ul>
+<blockquote>
+<p>实现DumpApp时需要实现DumperPlugin接口，只需改写getName、dump函数即可；可以使用DumperContext获得输入输出流、命令行传递来的参数等</p>
+</blockquote>
+<h2 id="MmkvDumperPlugin实现思路"><a href="#MmkvDumperPlugin实现思路" class="headerlink" title="MmkvDumperPlugin实现思路"></a>MmkvDumperPlugin实现思路</h2><h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><p>MmkvDumperPlugin 通过实现 DumperPlugin 接口来提供 MMKV 数据的增删改查操作。核心实现包括以下几点：</p>
+<ol>
+<li>插件构建：<ul>
+<li>实现 getName 和 dump 方法。dump 方法根据命令行传入的操作命令（如 list、get、write 等）执行对应的 MMKV 操作。</li>
+</ul>
+</li>
+<li>获取 MMKV 实例：<ul>
+<li>根据命令行参数动态选择 MMKV 实例。如果指定了 -t mmkvId，则使用指定的实例；否则，使用默认实例。</li>
+</ul>
+</li>
+<li>支持以下命令：<ul>
+<li>list：列出所有 MMKV 键值。</li>
+<li>get：获取指定键的值。</li>
+<li>write：写入数据到 MMKV。</li>
+<li>remove：删除指定键。</li>
+<li>clear：清空所有数据。</li>
+</ul>
+</li>
+<li>错误处理：<ul>
+<li>使用 DumpUsageException 处理错误，如参数缺失或 MMKV 实例获取失败。</li>
+</ul>
+</li>
+</ol>
+<h3 id="主要代码："><a href="#主要代码：" class="headerlink" title="主要代码："></a>主要代码：</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dump</span><span class="params">(DumperContext dumpContext)</span> <span class="keyword">throws</span> DumpUsageException &#123;</span><br><span class="line">    List&lt;String&gt; args = dumpContext.getArgsAsList();</span><br><span class="line">    <span class="type">String</span> <span class="variable">commandName</span> <span class="operator">=</span> args.isEmpty() ? <span class="string">&quot;&quot;</span> : args.remove(<span class="number">0</span>);</span><br><span class="line">    mMmkv = getMmkvFromParams(args);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mMmkv == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">DumpUsageException</span>(<span class="string">&quot;无法获取 MMKV 实例&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (commandName) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;list&quot;</span>: doList(dumpContext.getStdout(), args); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;get&quot;</span>: doGet(dumpContext.getStdout(), args); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;write&quot;</span>: doWrite(args, dumpContext.getStdout()); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;remove&quot;</span>: doRemove(args); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;clear&quot;</span>: doClear(); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: doUsage(dumpContext.getStdout());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="Stetho-通信机制深度解析"><a href="#Stetho-通信机制深度解析" class="headerlink" title="Stetho 通信机制深度解析"></a>Stetho 通信机制深度解析</h2><blockquote>
+<p>dumpapp 与安卓应用的连接原理</p>
+</blockquote>
+<h3 id="架构概览"><a href="#架构概览" class="headerlink" title="架构概览"></a>架构概览</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/stetho7.png"
+                      alt="7"
+                ></p>
+<h3 id="连接建立流程"><a href="#连接建立流程" class="headerlink" title="连接建立流程"></a>连接建立流程</h3><h4 id="PC端连接准备（dumpapp脚本）"><a href="#PC端连接准备（dumpapp脚本）" class="headerlink" title="PC端连接准备（dumpapp脚本）"></a>PC端连接准备（dumpapp脚本）</h4><h5 id="1-1-参数解析"><a href="#1-1-参数解析" class="headerlink" title="1.1 参数解析"></a>1.1 参数解析</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从命令行参数或环境变量获取进程名</span></span><br><span class="line">process = os.environ.get(<span class="string">&#x27;STETHO_PROCESS&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(args) &gt; <span class="number">0</span> <span class="keyword">and</span> (args[<span class="number">0</span>] == <span class="string">&#x27;-p&#x27;</span> <span class="keyword">or</span> args[<span class="number">0</span>] == <span class="string">&#x27;--process&#x27;</span>):</span><br><span class="line">    process = args[<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 获取设备序列号（可选）</span></span><br><span class="line">device = os.environ.get(<span class="string">&#x27;ANDROID_SERIAL&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取ADB服务器端口（默认5037）</span></span><br><span class="line">port = get_adb_server_port()</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="1-2-建立ADB连接"><a href="#1-2-建立ADB连接" class="headerlink" title="1.2 建立ADB连接"></a>1.2 建立ADB连接</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过stetho_open建立到设备的连接</span></span><br><span class="line">sock = stetho_open(device, process, port)</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="2-stetho-open连接机制详解"><a href="#2-stetho-open连接机制详解" class="headerlink" title="2. stetho_open连接机制详解"></a>2. stetho_open连接机制详解</h4><h5 id="2-1-ADB服务器连接"><a href="#2-1-ADB服务器连接" class="headerlink" title="2.1 ADB服务器连接"></a>2.1 ADB服务器连接</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">stetho_open</span>(<span class="params">device=<span class="literal">None</span>, process=<span class="literal">None</span>, port=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="comment"># 1. 连接到ADB服务器</span></span><br><span class="line">    adb = _connect_to_device(device, port)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 确定目标socket名称</span></span><br><span class="line">    <span class="keyword">if</span> process <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        socket_name = _find_only_stetho_socket(device, port)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        socket_name = _format_process_as_stetho_socket(process)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 3. 通过ADB转发连接到应用的Unix域套接字</span></span><br><span class="line">    adb.select_service(<span class="string">&#x27;localabstract:%s&#x27;</span> % socket_name)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> adb.sock</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="2-2-Socket名称格式化"><a href="#2-2-Socket名称格式化" class="headerlink" title="2.2 Socket名称格式化"></a>2.2 Socket名称格式化</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_format_process_as_stetho_socket</span>(<span class="params">process</span>):</span><br><span class="line">    <span class="comment"># 格式: stetho_&#123;package_name&#125;_devtools_remote</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;stetho_%s_devtools_remote&#x27;</span> % process</span><br></pre></td></tr></table></figure></div>
+<h5 id="2-3-自动发现Stetho进程"><a href="#2-3-自动发现Stetho进程" class="headerlink" title="2.3 自动发现Stetho进程"></a>2.3 自动发现Stetho进程</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_find_only_stetho_socket</span>(<span class="params">device, port</span>):</span><br><span class="line">    <span class="comment"># 1. 通过shell命令查看Unix域套接字</span></span><br><span class="line">    adb.select_service(<span class="string">&#x27;shell:cat /proc/net/unix&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2. 解析输出，查找@stetho_开头的套接字</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> adb.sock.makefile():</span><br><span class="line">        row = re.split(<span class="string">r&#x27;\s+&#x27;</span>, line.rstrip())</span><br><span class="line">        socket_name = row[<span class="number">7</span>]</span><br><span class="line">        <span class="keyword">if</span> socket_name.startswith(<span class="string">&#x27;@stetho_&#x27;</span>):</span><br><span class="line">            <span class="comment"># 3. 验证是服务器套接字</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">int</span>(row[<span class="number">3</span>], <span class="number">16</span>) == <span class="number">0x10000</span> <span class="keyword">and</span> <span class="built_in">int</span>(row[<span class="number">5</span>]) == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> socket_name[<span class="number">1</span>:]  <span class="comment"># 去掉@前缀</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="3-协议握手与通信"><a href="#3-协议握手与通信" class="headerlink" title="3. 协议握手与通信"></a>3. 协议握手与通信</h4><h5 id="3-1-协议握手"><a href="#3-1-协议握手" class="headerlink" title="3.1 协议握手"></a>3.1 协议握手</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 发送DUMP协议标识和版本号</span></span><br><span class="line">sock.send(<span class="string">b&#x27;DUMP&#x27;</span> + struct.pack(<span class="string">&#x27;!l&#x27;</span>, <span class="number">1</span>))</span><br></pre></td></tr></table></figure></div>
+<h5 id="3-2-命令参数传输"><a href="#3-2-命令参数传输" class="headerlink" title="3.2 命令参数传输"></a>3.2 命令参数传输</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造参数帧</span></span><br><span class="line">enter_frame = <span class="string">b&#x27;!&#x27;</span> + struct.pack(<span class="string">&#x27;!l&#x27;</span>, <span class="built_in">len</span>(args))</span><br><span class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> args:</span><br><span class="line">    argAsUTF8 = arg.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    enter_frame += struct.pack(<span class="string">&#x27;!H%ds&#x27;</span> % <span class="built_in">len</span>(argAsUTF8), <span class="built_in">len</span>(argAsUTF8), argAsUTF8)</span><br><span class="line">sock.send(enter_frame)</span><br></pre></td></tr></table></figure></div>
+<h5 id="3-3-数据帧解析"><a href="#3-3-数据帧解析" class="headerlink" title="3.3 数据帧解析"></a>3.3 数据帧解析</h5><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">read_frames</span>(<span class="params">sock</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 读取帧头：1字节代码 + 4字节长度</span></span><br><span class="line">        code = read_input(sock, <span class="number">1</span>, <span class="string">&#x27;code&#x27;</span>)</span><br><span class="line">        n = struct.unpack(<span class="string">&#x27;!l&#x27;</span>, read_input(sock, <span class="number">4</span>, <span class="string">&#x27;int4&#x27;</span>))[<span class="number">0</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> code == <span class="string">b&#x27;1&#x27;</span>:      <span class="comment"># 标准输出</span></span><br><span class="line">            sys.stdout.buffer.write(read_input(sock, n, <span class="string">&#x27;stdout blob&#x27;</span>))</span><br><span class="line">        <span class="keyword">elif</span> code == <span class="string">b&#x27;2&#x27;</span>:    <span class="comment"># 错误输出</span></span><br><span class="line">            sys.stderr.buffer.write(read_input(sock, n, <span class="string">&#x27;stderr blob&#x27;</span>))</span><br><span class="line">        <span class="keyword">elif</span> code == <span class="string">b&#x27;_&#x27;</span>:    <span class="comment"># 输入请求</span></span><br><span class="line">            data = sys.stdin.buffer.read(n)</span><br><span class="line">            sock.send(<span class="string">b&#x27;-&#x27;</span> + struct.pack(<span class="string">&#x27;!l&#x27;</span>, <span class="built_in">len</span>(data)) + data)</span><br><span class="line">        <span class="keyword">elif</span> code == <span class="string">b&#x27;x&#x27;</span>:    <span class="comment"># 退出码</span></span><br><span class="line">            sys.exit(n)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Android端实现分析"><a href="#Android端实现分析" class="headerlink" title="Android端实现分析"></a>Android端实现分析</h3><h4 id="1-服务器初始化"><a href="#1-服务器初始化" class="headerlink" title="1. 服务器初始化"></a>1. 服务器初始化</h4><h5 id="1-1-LocalSocketServer创建"><a href="#1-1-LocalSocketServer创建" class="headerlink" title="1.1 LocalSocketServer创建"></a>1.1 LocalSocketServer创建</h5><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LocalSocketServer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String mAddress;  <span class="comment">// Unix域套接字地址</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SocketHandler mSocketHandler;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        mServerSocket = bindToSocket(mAddress);</span><br><span class="line">        LogUtil.i(<span class="string">&quot;Listening on @&quot;</span> + mAddress);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><br><span class="line">            <span class="type">LocalSocket</span> <span class="variable">socket</span> <span class="operator">=</span> mServerSocket.accept();</span><br><span class="line">            <span class="comment">// 为每个连接创建工作线程</span></span><br><span class="line">            <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WorkerThread</span>(socket, mSocketHandler);</span><br><span class="line">            t.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h5 id="1-2-套接字地址生成"><a href="#1-2-套接字地址生成" class="headerlink" title="1.2 套接字地址生成"></a>1.2 套接字地址生成</h5><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在Stetho初始化时生成</span></span><br><span class="line"><span class="type">String</span> <span class="variable">socketName</span> <span class="operator">=</span> <span class="string">&quot;stetho_&quot;</span> + packageName + <span class="string">&quot;_devtools_remote&quot;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="2-协议处理"><a href="#2-协议处理" class="headerlink" title="2. 协议处理"></a>2. 协议处理</h4><h5 id="2-1-DumpappSocketLikeHandler"><a href="#2-1-DumpappSocketLikeHandler" class="headerlink" title="2.1 DumpappSocketLikeHandler"></a>2.1 DumpappSocketLikeHandler</h5><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DumpappSocketLikeHandler</span> <span class="keyword">implements</span> <span class="title class_">SocketLikeHandler</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] PROTOCOL_MAGIC = <span class="keyword">new</span> <span class="title class_">byte</span>[] &#123; <span class="string">&#x27;D&#x27;</span>, <span class="string">&#x27;U&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;P&#x27;</span> &#125;;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">PROTOCOL_VERSION</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onAccepted</span><span class="params">(SocketLike socket)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">DataInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataInputStream</span>(socket.getInput());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 1. 协议握手验证</span></span><br><span class="line">        establishConversation(in);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 2. 创建帧处理器</span></span><br><span class="line">        <span class="type">Framer</span> <span class="variable">framer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Framer</span>(in, socket.getOutput());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 3. 读取命令参数</span></span><br><span class="line">        String[] args = readArgs(framer);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 4. 执行dump命令</span></span><br><span class="line">        dump(mDumper, framer, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h5 id="2-2-协议验证"><a href="#2-2-协议验证" class="headerlink" title="2.2 协议验证"></a>2.2 协议验证</h5><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">establishConversation</span><span class="params">(DataInputStream in)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="comment">// 验证魔数</span></span><br><span class="line">    <span class="type">byte</span>[] magic = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">4</span>];</span><br><span class="line">    in.readFully(magic);</span><br><span class="line">    <span class="keyword">if</span> (!Arrays.equals(PROTOCOL_MAGIC, magic)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;Incompatible protocol&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 验证版本</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">version</span> <span class="operator">=</span> in.readInt();</span><br><span class="line">    <span class="keyword">if</span> (version != PROTOCOL_VERSION) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;Expected version=&quot;</span> + PROTOCOL_VERSION + <span class="string">&quot;; got=&quot;</span> + version);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4 id="3-命令执行框架"><a href="#3-命令执行框架" class="headerlink" title="3. 命令执行框架"></a>3. 命令执行框架</h4><h5 id="3-1-Dumper接口"><a href="#3-1-Dumper接口" class="headerlink" title="3.1 Dumper接口"></a>3.1 Dumper接口</h5><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Dumper</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">dump</span><span class="params">(InputStream stdin, PrintStream stdout, PrintStream stderr, String[] args)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h5 id="3-2-插件系统"><a href="#3-2-插件系统" class="headerlink" title="3.2 插件系统"></a>3.2 插件系统</h5><p>Stetho支持多种内置插件、也可自行实现插件</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Stetho的连接机制巧妙地利用了：</p>
+<ol>
+<li>ADB的端口转发功能：将TCP连接转发到Unix域套接字</li>
+<li>Android的LocalSocket API：提供高效的进程间通信</li>
+<li>自定义协议：支持双向数据流和命令执行</li>
+<li>插件化架构：可扩展的调试功能</li>
+</ol>
+<blockquote>
+<p>其他相关联源码，并未在这部分展示：</p>
+<ol>
+<li>Framer类: 负责协议帧的编码&#x2F;解码</li>
+<li>各种DumperPlugin: 具体功能实现</li>
+<li>ProtocolDetectingSocketHandler: 协议检测和路由</li>
+<li>Stetho初始化代码: 整个服务的启动过程</li>
+</ol>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> Android-stetho</li>
+        <li><strong>作者:</strong> rainbowYao</li>
+        <li><strong>创建于
+                :</strong> 2025-09-02 17:20:06</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2025-09-02 17:21:39
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2025/09/02/Android-stetho/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/android/">#android</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/stetho/">#stetho</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/09/02/Android-okhttp3源码学习/" title="Android-okhttp3源码学习" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail18.jpg" alt="Android-okhttp3源码学习" class="!max-w-none">
+  <span class="title">Android-okhttp3源码学习</span>
+</a><a class="recommended-article-item" href="/2024/08/21/Django之DRF/" title="Django之DRF" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail15.jpg" alt="Django之DRF" class="!max-w-none">
+  <span class="title">Django之DRF</span>
+</a><a class="recommended-article-item" href="/2025/09/02/Android-文件系统/" title="Android-文件系统" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail19.jpg" alt="Android-文件系统" class="!max-w-none">
+  <span class="title">Android-文件系统</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/09/02/Android-okhttp3源码学习/" title="Android-okhttp3源码学习" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail18.jpg" alt="Android-okhttp3源码学习" class="!max-w-none">
+  <span class="title">Android-okhttp3源码学习</span>
+</a><a class="recommended-article-item" href="/2024/08/21/Django之DRF/" title="Django之DRF" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail15.jpg" alt="Django之DRF" class="!max-w-none">
+  <span class="title">Django之DRF</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/09/02/Android-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Android-文件系统</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">Android-stetho</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%AB%99%E6%9D%A5%E6%BA%90"><span class="nav-text">学习网站来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%88%90%EF%BC%88%E6%9D%A5%E8%87%AA%E5%AE%98%E7%BD%91%EF%BC%89"><span class="nav-text">集成（来自官网）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stetho-sample"><span class="nav-text">stetho-sample</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81"><span class="nav-text">特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-text">核心代码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#com-facebook-stetho-Stetho-java"><span class="nav-text">com&#x2F;facebook&#x2F;stetho&#x2F;Stetho.java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scripts"><span class="nav-text">scripts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#com-facebook-stetho-dumpapp"><span class="nav-text">com&#x2F;facebook&#x2F;stetho&#x2F;dumpapp&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#com-facebook-stetho-inspector-database"><span class="nav-text">com&#x2F;facebook&#x2F;stetho&#x2F;inspector&#x2F;database&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#com-facebook-stetho-inspector-network"><span class="nav-text">com&#x2F;facebook&#x2F;stetho&#x2F;inspector&#x2F;network</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DumpApp"><span class="nav-text">DumpApp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%B8%A6%E7%9A%84%E5%9B%9B%E4%B8%AADumpApp%EF%BC%9A"><span class="nav-text">自带的四个DumpApp：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E8%A1%8C%E5%AE%9E%E7%8E%B0%E5%87%A0%E4%B8%AADumpApp%EF%BC%9A"><span class="nav-text">自行实现几个DumpApp：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MmkvDumperPlugin%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="nav-text">MmkvDumperPlugin实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%BC%E8%BF%B0"><span class="nav-text">综述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-text">主要代码：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stetho-%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="nav-text">Stetho 通信机制深度解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-text">架构概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E6%B5%81%E7%A8%8B"><span class="nav-text">连接建立流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android%E7%AB%AF%E5%AE%9E%E7%8E%B0%E5%88%86%E6%9E%90"><span class="nav-text">Android端实现分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">rainbowYao</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共 17 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

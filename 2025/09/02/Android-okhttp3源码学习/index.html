@@ -13,24 +13,27 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://yyybbbyyyb.github.io/2024/07/02/os-lab6-思考题/"/>
+    <link rel="canonical" href="https://yyybbbyyyb.github.io/2025/09/02/android-okhttp3源码学习/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="Thinking 6.1 示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？   操作相反即可：父进程关掉写端1，子进程关掉读端0 123456789101112case 0: &#x2F;* 子进程 - 作为管道的写者 *&#x2F;	close(fildes[0]); &#x2F;* 关闭不用的读端 *&#x2F;	write(fildes[1], &quot;Hello wo">
+        <meta name="description" content="整体结构  OkHttpClient：这个是整个OkHttp的核心管理类，所有的内部逻辑和对象归OkHttpClient统一来管理，它通过Builder构造器生成，构造参数和类成员很多。作为用户使用的API，Client的构造器模式提供了许多的可配置选项，如最基础的connectTimeout、readTimeout，以及更深层次的connectionPool、dns、eventListener、">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OS lab6 思考题">
-<meta property="og:url" content="https://yyybbbyyyb.github.io/2024/07/02/OS-lab6-%E6%80%9D%E8%80%83%E9%A2%98/index.html">
+<meta property="og:title" content="Android-okhttp3源码学习">
+<meta property="og:url" content="https://yyybbbyyyb.github.io/2025/09/02/Android-okhttp3%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="rainbowYao&#39;s Blog">
-<meta property="og:description" content="Thinking 6.1 示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？   操作相反即可：父进程关掉写端1，子进程关掉读端0 123456789101112case 0: &#x2F;* 子进程 - 作为管道的写者 *&#x2F;	close(fildes[0]); &#x2F;* 关闭不用的读端 *&#x2F;	write(fildes[1], &quot;Hello wo">
+<meta property="og:description" content="整体结构  OkHttpClient：这个是整个OkHttp的核心管理类，所有的内部逻辑和对象归OkHttpClient统一来管理，它通过Builder构造器生成，构造参数和类成员很多。作为用户使用的API，Client的构造器模式提供了许多的可配置选项，如最基础的connectTimeout、readTimeout，以及更深层次的connectionPool、dns、eventListener、">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/image-20240612100536255.png">
-<meta property="article:published_time" content="2024-07-02T13:25:32.000Z">
-<meta property="article:modified_time" content="2024-09-18T01:28:38.909Z">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/okhttp3%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/okhttp3-interceptor.png">
+<meta property="article:published_time" content="2025-09-02T08:11:06.000Z">
+<meta property="article:modified_time" content="2025-09-02T08:44:07.544Z">
 <meta property="article:author" content="rainbowYao">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="okhttp3">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/image-20240612100536255.png">
+<meta name="twitter:image" content="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/okhttp3%E7%BB%93%E6%9E%84.png">
     
     
         <!-- Google tag (gtag.js) -->
@@ -52,7 +55,7 @@
     
     <title>
         
-            OS lab6 思考题 -
+            Android-okhttp3源码学习 -
         
         rainbowYao&#39;s Blog
     </title>
@@ -521,10 +524,10 @@
             
                 
                 
-                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail11.jpg" alt="OS lab6 思考题" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail18.jpg" alt="Android-okhttp3源码学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
                 
                 <div class="w-full flex items-center absolute bottom-0 justify-start">
-                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">OS lab6 思考题</h1>
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">Android-okhttp3源码学习</h1>
                 </div>
             
             </div>
@@ -545,15 +548,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-07-02 21:25:32</span>
-        <span class="mobile">2024-07-02 21:25:32</span>
+        <span class="desktop">2025-09-02 16:11:06</span>
+        <span class="mobile">2025-09-02 16:11:06</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-09-18 09:28:38</span>
-            <span class="mobile">2024-09-18 09:28:38</span>
+            <span class="desktop">2025-09-02 16:44:07</span>
+            <span class="mobile">2025-09-02 16:44:07</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -567,7 +570,7 @@
                     
                         
                         <li>
-                            <a href="/categories/BUAA-OS/">BUAA-OS</a>&nbsp;
+                            <a href="/categories/%E5%AE%89%E5%8D%93%E7%AC%94%E8%AE%B0/">安卓笔记</a>&nbsp;
                         </li>
                     
                     
@@ -575,6 +578,21 @@
             </ul>
         </span>
     
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/android/">android</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/okhttp3/">okhttp3</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -596,101 +614,140 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h4 id="Thinking-6-1"><a href="#Thinking-6-1" class="headerlink" title="Thinking 6.1"></a>Thinking 6.1</h4><blockquote>
-<p>示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？ </p>
-</blockquote>
-<p>操作相反即可：父进程关掉写端1，子进程关掉读端0</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0</span>: <span class="comment">/* 子进程 - 作为管道的写者 */</span></span><br><span class="line">	close(fildes[<span class="number">0</span>]); <span class="comment">/* 关闭不用的读端 */</span></span><br><span class="line">	write(fildes[<span class="number">1</span>], <span class="string">&quot;Hello world\n&quot;</span>, <span class="number">12</span>); <span class="comment">/* 向管道中写数据 */</span></span><br><span class="line">	close(fildes[<span class="number">1</span>]); <span class="comment">/* 写入结束，关闭写端 */</span></span><br><span class="line">	<span class="built_in">exit</span>(EXIT_SUCCESS);</span><br><span class="line"></span><br><span class="line"><span class="keyword">default</span>: <span class="comment">/* 父进程 - 作为管道的读者 */</span></span><br><span class="line">	close(fildes[<span class="number">1</span>]); <span class="comment">/* 关闭不用的写端 */</span></span><br><span class="line">	read(fildes[<span class="number">0</span>], buf, <span class="number">100</span>); <span class="comment">/* 从管道中读数据 */</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;child-process read:%s&quot;</span>,buf); <span class="comment">/* 打印读到的数据 */</span></span><br><span class="line">	close(fildes[<span class="number">0</span>]); <span class="comment">/* 读取结束，关闭读端 */</span></span><br><span class="line">	<span class="built_in">exit</span>(EXIT_SUCCESS);</span><br></pre></td></tr></table></figure></div>
-
-
-
-<h4 id="Thinking-6-2"><a href="#Thinking-6-2" class="headerlink" title="Thinking 6.2"></a>Thinking 6.2</h4><blockquote>
-<p>上面这种不同步修改 pp_ref 而导致的进程竞争问题在 user&#x2F;lib&#x2F;fd.c 中的 dup 函数中也存在。请结合代码模仿上述情景，分析一下我们的 dup 函数中为什么会出 现预想之外的情况？ </p>
-</blockquote>
-<ul>
-<li>在 <code>dup</code> 函数中，首先复制文件描述符的映射关系，然后，复制文件描述符内文件页的映射关系。</li>
-<li>如果文件描述符指向的是一个管道文件，那么在文件描述符复制之后、文件页映射复制之前，会出现：文件描述符的页引用次数等于管道页的引用次数。</li>
-<li>此时如果进程被中断，就可能导致对引用次数的判断错误。这种错误的判断类似于指导书中的例子。</li>
-</ul>
-<h4 id="Thinking-6-3"><a href="#Thinking-6-3" class="headerlink" title="Thinking 6.3"></a>Thinking 6.3</h4><blockquote>
-<p>阅读上述材料并思考：为什么系统调用一定是原子操作呢？如果你觉得不是所有的系统调用都是原子操作，请给出反例。希望能结合相关代码进行分析说明。</p>
-</blockquote>
-<ul>
-<li>只有 syscall_ 开头的系统调用函数是原子操作，进程切换是通过定时器产生时钟中断，触发时钟中断切换进程。但是syscall跳转到内核态时，CPU将SR寄存其的IEC置位0，关闭了时钟中断，故是原子操作</li>
-<li>而较为复杂的系统调用，如 <code>write</code> 函数，尽管操作系统会尽力保证写操作的一致性，但在某些情况下，<code>write</code> 操作可能并不是完全原子的。例如，当进行大块数据写入时，可能会被分成多个部分来写，每个部分写入之间可能会被中断。</li>
-</ul>
-<h4 id="Thinking-6-4"><a href="#Thinking-6-4" class="headerlink" title="Thinking 6.4"></a>Thinking 6.4</h4><blockquote>
-<p>仔细阅读上面这段话，并思考下列问题 </p>
-<ul>
-<li>按照上述说法控制 pipe_close 中 fd 和 pipe unmap 的顺序，是否可以解决上述场景的进程竞争问题？给出你的分析过程。 </li>
-<li>我们只分析了 close 时的情形，在 fd.c 中有一个 dup 函数，用于复制文件描述符。 试想，如果要复制的文件描述符指向一个管道，那么是否会出现与 close 类似的问题？请模仿上述材料写写你的理解。</li>
-</ul>
-</blockquote>
-<ul>
-<li>可以，之前的原因来自于大数（ref_pipe）先减小而小数（ref_fd）还没减（但是需要减小，只是被中断打断了）导致大数和小数相等，如果调整顺序，可以保证小数先减少，而大数若想和小数相等，只可能是管道⼀端进程关闭</li>
-<li>pipe的引⽤次数总⽐fd要⾼。当dup进⾏到⼀半时，即只增加了fd的映射，还未增加pipe的映射，就会出现pageref(pipe) &#x3D;&#x3D; pageref(fd) 的情况。显然，也可以通过调换顺序解决问题，即先加大数，再加小数</li>
-</ul>
-<h4 id="Thinking-6-5"><a href="#Thinking-6-5" class="headerlink" title="Thinking 6.5"></a>Thinking 6.5</h4><blockquote>
-<p>思考以下三个问题。 </p>
-<ul>
-<li>认真回看 Lab5 文件系统相关代码，弄清打开文件的过程。 </li>
-<li>回顾 Lab1 与 Lab3，思考如何读取并加载 ELF 文件。 </li>
-<li>在 Lab1 中我们介绍了 data text bss 段及它们的含义，data 段存放初始化过的全局变量，bss 段存放未初始化的全局变量。关于 memsize 和 filesize ，我们在 Note 1.3.4中也解释了它们的含义与特点。关于 Note 1.3.4，注意其中关于“bss 段并不在文件中占数据”表述的含义。回顾 Lab3 并思考：elf_load_seg() 和 load_icode_mapper() 函数是如何确保加载 ELF 文件时，bss 段数据被正确加载进虚拟内存空间。bss 段在 ELF 中并不占空间，但 ELF 加载进内存后，bss 段的数据占据了空间，并且初始 值都是 0。请回顾 elf_load_seg() 和 load_icode_mapper() 的实现，思考这一点 是如何实现的？</li>
-</ul>
-<p>下面给出一些对于上述问题的提示，以便大家更好地把握加载内核进程和加载用户进程的 区别与联系，类比完成 spawn 函数。</p>
-<ul>
-<li>关于第一个问题，在 Lab3 中我们创建进程，并且通过 ENV_CREATE(…) 在内核态加 载了初始进程，而我们的 spawn 函数则是通过和文件系统交互，取得文件描述块，进而找 到 ELF 在“硬盘”中的位置，进而读取。 		</li>
-<li>关于第二个问题，各位已经在 Lab3 中填写了 load_icode 函数，实现了 ELF 可执行 文件中读取数据并加载到内存空间，其中通过调用 elf_load_seg 函数来加载各个程序段。在Lab3 中我们要填写 load_icode_mapper 回调函数，在内核态下加载 ELF 数据到内存 空间；相应地，在 Lab6 中 spawn 函数也需要在用户态下使用系统调用为 ELF 数据分配空 间。</li>
-</ul>
-</blockquote>
-<p>（1）打开文件的过程：<code>fd = open(prog, O_RDONLY)</code>，调用lab5实现好的<code>open</code>函数，返回一个文件描述符fd</p>
-<p>（2）加载ELF的部分比较复杂</p>
-<ul>
-<li>先是用<code>readn</code>和<code>elf_from</code>，读出ELF头</li>
-<li>使用宏 <code>ELF_FOREACH_PHDR_OFF</code> 遍历每个程序头（<code>Elf32_Phdr</code>），并判断其类型是否为 <code>PT_LOAD</code>。如果是，则需要加载该段。</li>
-<li>先用 <code>read_map(fd, ph-&gt;p_offset, &amp;bin)</code> 从文件系统中读出程序内容</li>
-<li>再通过 <code>elf_load_seg</code> 函数加载段，并使用回调函数 <code>spawn_mapper</code> 分配内存并映射段。</li>
-</ul>
-<p>（3）</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (i &lt; sgsize) &#123;</span><br><span class="line">	<span class="keyword">if</span> ((r = map_page(data, va + i, <span class="number">0</span>, perm, <span class="literal">NULL</span>, MIN(sgsize - i, PAGE_SIZE))) != <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> r;</span><br><span class="line">	&#125;</span><br><span class="line">	i += PAGE_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p><code>elf_load_seg</code> 函数负责加载一个段，其中会处理 BSS 段的初始化。假设 <code>filesz</code> （i）小于 <code>memsz</code>（sgsize），则需要将额外的部分初始化为 0</p>
-<h4 id="Thinking-6-6"><a href="#Thinking-6-6" class="headerlink" title="Thinking 6.6"></a>Thinking 6.6</h4><blockquote>
-<p>通过阅读代码空白段的注释我们知道，将标准输入或输出定向到文件，需要我们将其 dup 到 0 或 1 号文件描述符（fd）。那么问题来了：在哪步，0 和 1 被“安排”为 标准输入和标准输出？请分析代码执行流程，给出答案。 </p>
-</blockquote>
-<p>通过 <code>opencons()</code> 和 <code>dup()</code> 函数，它们都被指向控制台设备，实现输入和输出的功能。</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//init.c</span></span><br><span class="line">	<span class="comment">// stdin should be 0, because no file descriptors are open yet</span></span><br><span class="line">	<span class="keyword">if</span> ((r = opencons()) != <span class="number">0</span>) &#123;</span><br><span class="line">		user_panic(<span class="string">&quot;opencons: %d&quot;</span>, r);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// stdout</span></span><br><span class="line">	<span class="keyword">if</span> ((r = dup(<span class="number">0</span>, <span class="number">1</span>)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		user_panic(<span class="string">&quot;dup: %d&quot;</span>, r);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//console.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">opencons</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">	<span class="type">int</span> r;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Fd</span> *<span class="title">fd</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((r = fd_alloc(&amp;fd)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> r;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> ((r = syscall_mem_alloc(<span class="number">0</span>, fd, PTE_D | PTE_LIBRARY)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> r;</span><br><span class="line">	&#125;</span><br><span class="line">	fd-&gt;fd_dev_id = devcons.dev_id;</span><br><span class="line">	fd-&gt;fd_omode = O_RDWR;</span><br><span class="line">	<span class="keyword">return</span> fd2num(fd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p><code>opencons</code>之后，文件描述符 0（stdin）已经指向控制台设备；调用 <code>dup(0, 1)</code> 复制文件描述符 0（stdin）到文件描述符 1（stdout），此时，文件描述符 1（stdout）也指向控制台设备。</p>
-<h4 id="Thinking-6-7"><a href="#Thinking-6-7" class="headerlink" title="Thinking 6.7"></a>Thinking 6.7</h4><blockquote>
-<p>在 shell 中执行的命令分为内置命令和外部命令。在执行内置命令时 shell 不需要 fork 一个子 shell，如 Linux 系统中的 cd 命令。在执行外部命令时 shell 需要 fork 一个子 shell，然后子 shell 去执行这条命令。 据此判断，在 MOS 中我们用到的 shell 命令是内置命令还是外部命令？请思考为什么 Linux 的 cd 命令是内部命令而不是外部命令？</p>
-</blockquote>
-<ul>
-<li>shell是外部命令，MOS执行shell依靠<code>spawnl(&quot;sh.b&quot;, &quot;sh&quot;, &quot;-x&quot; , NULL)</code>（位于user&#x2F;init.c）</li>
-<li>cd命令需要改变父进程的状态，即所在的路径，通过fork之后，只改变了子进程，所以需要是内部命令。</li>
-</ul>
-<h4 id="Thinking-6-8"><a href="#Thinking-6-8" class="headerlink" title="Thinking 6.8"></a>Thinking 6.8</h4><blockquote>
-<p>在你的 shell 中输入命令 ls.b | cat.b &gt; motd。 </p>
-<ul>
-<li>请问你可以在你的 shell 中观察到几次 spawn ？分别对应哪个进程？ </li>
-<li>请问你可以在你的 shell 中观察到几次进程销毁？分别对应哪个进程？</li>
-</ul>
-</blockquote>
-<img  
+            <h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/image-20240612100536255.png"
-                      alt="image-20240612100536255" style="zoom:67%;" 
-                >
-
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/okhttp3%E7%BB%93%E6%9E%84.png"
+                      alt="png1"
+                ></p>
 <ul>
-<li>两次spawn，对应<code>ls.b</code>和<code>cat.b</code>两个可执行文件</li>
-<li>四次进程销毁<ul>
-<li>第一个进程是sh.c文件中，fork了一个子进程来处理这一整行命令</li>
-<li>其中有两个进程对应上面spawn的两个可执行文件</li>
-<li>当命令中有管道符号时，命令解释步骤中需要调⽤ fork() ，对管道两边的命令分别处理，此处产生一个进程。</li>
+<li>OkHttpClient：这个是整个OkHttp的核心管理类，所有的内部逻辑和对象归OkHttpClient统一来管理，它通过Builder构造器生成，构造参数和类成员很多。作为用户使用的API，Client的构造器模式提供了许多的可配置选项，如最基础的connectTimeout、readTimeout，以及更深层次的connectionPool、dns、eventListener、cache等等（没列举完全）</li>
+<li>Request和Response：Request是我们发送请求封装类，内部有url，header，method，body等常见的参数，Response是请求的结果，包含code，message，header，body，这两个类的定义是完全符合Http协议所定义的请求内容和响应内容。</li>
+<li>Call：是一个接口，okhttp中实现为RealCall，负责请求的调度（同步的话走当前线程发送请求，异步的话则使用OkHttp内部的线程池进行）；同时负责构造内部逻辑责任链，并执行责任链相关的逻辑，直到获取结果。Callback为异步请求使用的回调API。</li>
+<li>Interceptor：拦截器，采用责任链设计模式，okhttp提供五个默认的拦截器，分别处理重试重定向、处理请求头、缓存、建立连接、发送请求等功能，同时okhttp有较好的可拓展性与用户友好性，支持用户自定义应用拦截器和网络拦截器</li>
+<li>Dispatcher：调度器，okhttp请求支持同步异步调用，异步则是在Dispatcher中使用线程池来进行处理，同时调度器控制最大并发请求数和每个主机最大并发数</li>
+</ul>
+<h2 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h2><h3 id="五个默认拦截器"><a href="#五个默认拦截器" class="headerlink" title="五个默认拦截器"></a>五个默认拦截器</h3><ul>
+<li>RetryAndFollowUpInterceptor: Retry和FollowUp<ul>
+<li>Retry是指：当网络有问题、出错、超时等情况出现而导致错误时，通过再发起一次请求来进行重试</li>
+<li>FollowUp是指：当需要授权、需要重定向、条件GET请求返回等情况发生时，需要接着进行一次请求。(StreamAllocation会在这里构造)。</li>
 </ul>
 </li>
+<li>BridgeInterceptor： 桥接拦截器。主要是在请求前后进行一些Header的处理（主要是Cookie的一些处理）。</li>
+<li>CacheInterceptor： 负责缓存（磁盘缓存和Http缓存策略），核心在CacheStrategy当中。</li>
+<li>ConnectInterceptor： 连接操作。<ul>
+<li>负责线路查找（Route查找，RouteSelector实现）、创建socket、握手、构建“输入&#x2F;输出流”Source和Sink、并创建“解析器”Codec。  </li>
+<li>另一方面，借助于ConnectionPool，实现连接复用，即：连接前，从ConnectionPool中查询是否有可复用的Connection；如果没有，新建的Connection要放入Pool中以被使用。</li>
+</ul>
+</li>
+<li>CallServerInterceptor： 最后一层，进行Http流的读写和解析（也可以认为是序列化和反序列化）。借助于HttpCodec.writeRequestHeaders..等方法和Sink&#x2F;Source实现。</li>
+</ul>
+<h3 id="拦截器的添加"><a href="#拦截器的添加" class="headerlink" title="拦截器的添加"></a>拦截器的添加</h3><p>拦截器的添加在okhttp3&#x2F;RealCall.java的getResponseWithInterceptorChain方法中</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 源码路径: okhttp3/RealCall.java</span></span><br><span class="line">Response <span class="title function_">getResponseWithInterceptorChain</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="comment">// 构建完整的拦截器列表</span></span><br><span class="line">    List&lt;Interceptor&gt; interceptors = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 1. 用户自定义的应用拦截器（最先执行）</span></span><br><span class="line">    interceptors.addAll(client.interceptors());</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. 内置核心拦截器</span></span><br><span class="line">    interceptors.add(<span class="keyword">new</span> <span class="title class_">RetryAndFollowUpInterceptor</span>(client));</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> <span class="title class_">BridgeInterceptor</span>(client.cookieJar()));</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> <span class="title class_">CacheInterceptor</span>(client.internalCache()));</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> <span class="title class_">ConnectInterceptor</span>(client));</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3. 用户自定义的网络拦截器</span></span><br><span class="line">    <span class="keyword">if</span> (!forWebSocket) &#123;</span><br><span class="line">        interceptors.addAll(client.networkInterceptors());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 4. 最终的网络请求拦截器</span></span><br><span class="line">    interceptors.add(<span class="keyword">new</span> <span class="title class_">CallServerInterceptor</span>(forWebSocket));</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建拦截器链</span></span><br><span class="line">    Interceptor.<span class="type">Chain</span> <span class="variable">chain</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RealInterceptorChain</span>(</span><br><span class="line">        interceptors, </span><br><span class="line">        transmitter, </span><br><span class="line">        <span class="literal">null</span>, </span><br><span class="line">        <span class="number">0</span>, </span><br><span class="line">        originalRequest</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 启动责任链</span></span><br><span class="line">    <span class="keyword">return</span> chain.proceed(originalRequest);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>OkHttp把用户的拦截器放在默认拦截器之前</li>
+<li>一旦一个拦截器调用了chain.proceed方法，它之后的拦截器会依次被调用执行，其后它才能拿到被处理过的返回。</li>
+<li>用户的拦截器一般是在网络执行前对request进行操作、在网络执行后对response进行操作</li>
+</ul>
+<h3 id="自定义拦截器"><a href="#自定义拦截器" class="headerlink" title="自定义拦截器"></a>自定义拦截器</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/post/okhttp3-interceptor.png"
+                      alt="png2"
+                ></p>
+<h2 id="请求管理"><a href="#请求管理" class="headerlink" title="请求管理"></a>请求管理</h2><h3 id="请求入口"><a href="#请求入口" class="headerlink" title="请求入口"></a>请求入口</h3><ul>
+<li>同步请求入口：RealCall.execute()</li>
+<li>异步请求入口：RealCall.enqueue()<br>Dispatcher在同步请求和异步请求中的不同作用，同步请求中Dispatcher不控制执行过程，只做状态跟踪，异步请求中Dispatcher实际执行由线程池调度</li>
+</ul>
+<h3 id="Dispatcher"><a href="#Dispatcher" class="headerlink" title="Dispatcher"></a>Dispatcher</h3><ul>
+<li>Dispatcher管理三个队列：<ul>
+<li>runningAsyncCalls：正在执行的异步请求</li>
+<li>readyAsyncCalls：等待执行的异步请求</li>
+<li>runningSyncCalls：正在执行的同步请求e</li>
+</ul>
+</li>
+<li>默认并发策略：<ul>
+<li>最大并发请求数：64</li>
+<li>每个主机最大并发数：5</li>
+</ul>
+</li>
+<li>Dispatcher中的核心方法<ul>
+<li>executorService方法负责创建连接所需的线程池</li>
+<li>promoteAndExecute负责将等待队列中的请求判断是否可以转移到执行队列</li>
+<li>finished方法负责请求后检查是否还有请求，若无回调idleCallback</li>
+</ul>
+</li>
+<li>线程池特点：<ul>
+<li>无核心线程，最大线程数无限，懒加载无边界限制的线程池</li>
+<li>空闲线程60秒后回收</li>
+<li>使用SynchronousQueue（每个任务必须有可用线程立即处理）</li>
+<li>适合大量短生命周期的异步任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="连接复用和连接池"><a href="#连接复用和连接池" class="headerlink" title="连接复用和连接池"></a>连接复用和连接池</h2><h3 id="核心类"><a href="#核心类" class="headerlink" title="核心类"></a>核心类</h3><ul>
+<li><p>StreamAllocation</p>
+<ul>
+<li>newStream方法负责查找或创建一个可用的连接Connection，再从Connection中获得对应的HttpCodec负责request&#x2F;response的序列化和反序列化</li>
+<li>findHealthyConnection负责查找&#x2F;创建一个可用连接，这个方法会先查找连接池中是否具有可复用的连接（ConnectionPool.get()），如果有可以直接返回；如果没有，则需新建，包括线路查找（Route查找，RouteSelector实现）、创建socket、握手、构建“输入&#x2F;输出流”Source和Sink等过程</li>
+</ul>
+</li>
+<li><p>ConnectionPool</p>
+<ul>
+<li>连接池维护TCP连接，减少重复握手开销<ul>
+<li>最大空闲连接数：5</li>
+<li>空闲连接存活时间：5分钟</li>
+<li>自动清理过期连接</li>
+</ul>
+</li>
+<li>值得一提的是这个类中的get和put等私有方法采用门面模式被封装到的Internal类中</li>
+<li>Connection的自动回收由cleanupRunnable负责，大概流程如下：<ul>
+<li>每次put一个Connection时，都检查是否在运行cleanUpRunnable，如果没有运行就放入线程池中执行。这意味着只要ConnectionPool非空，这个runnable就在执行。</li>
+<li>遍历connections，找出其中“没有被使用”的、且空闲的时间最长的Connection，检查它是否满足(空闲socket连接超过5个且keepalive时间大于5分钟)的条件，如果满足就清除、同时立刻重复该操作；如果不满足条件，就等待这个连接的到期时间，也就是过一会儿再进行清除操作；如果都是活跃连接，则5分钟后再次进行清理操作。</li>
+</ul>
+</li>
+<li>基于引用计数法的连接活跃判定：<ul>
+<li>RealConnection中有个allocations成员变量，负责追踪引用着该Connection的StreamAllocation</li>
+<li>当构建一个RealConnection时，这个allocations列表里添加当前的StreamAllocation的弱引用</li>
+<li>当从ConnectionPool中取出一个Connection时，也在列表中添加当前的StreamAllocation的弱引用</li>
+<li>当一个网络请求结束&#x2F;出错&#x2F;需要关闭时，则需要将弱引用清除</li>
+<li>当这个列表为空时，也就是前面所说的“没有在被使用”，那么很快它就需要从连接池中被清除了</li>
+<li>弱引用添加和删除的地方在StreamAllocaion的aquire和release方法中。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h2><h3 id="磁盘缓存"><a href="#磁盘缓存" class="headerlink" title="磁盘缓存"></a>磁盘缓存</h3><p>OkHttp的磁盘缓存主要是通过Cache实现的。主要使用的是DiskLruCache。不过稍微改造了一下：</p>
+<ul>
+<li>使用FileSystem类封装了一些File（文件&#x2F;文件夹）的操作</li>
+<li>文件流的读写接入了Okio。</li>
+</ul>
+<h3 id="Http缓存"><a href="#Http缓存" class="headerlink" title="Http缓存"></a>Http缓存</h3><p>Http的缓存策略主要是通过几个重要的头部实现的，大概包括这样几个步骤：</p>
+<ul>
+<li>客户端根据Response的Header判断是否过期<ul>
+<li>Expire: 文件过期时间</li>
+<li>cache-control: 文件存续时间</li>
+</ul>
+</li>
+<li>若已经过期，判断是否有缓存条件信息，如果有，进行条件GET查询，由服务端进一步决策是否过期<ul>
+<li>Tag和If-None-Match</li>
+<li>Last-Modified和If-Modified-Since</li>
+</ul>
+</li>
+<li>如果服务端判断未过期，还可以进一步使用，则返回304NotModified</li>
+<li>如果过期，正常请求</li>
+</ul>
+<p>其他的缓存控制Header包括：</p>
+<ul>
+<li>no-cache</li>
+<li>only-if-cached</li>
+</ul>
+<p>OkHttp中，关于缓存的实现类是CacheStrategy.Factory。主要是通过实现上述逻辑。在CacheInterceptor中，首先从Cache中获取已经缓存的response，然后将原始的请求request和cacheResponse传递给Factory，它会根据前述的策略（主要是头部解析和处理），判定缓存是否可用：如果可用，则将这里的cacheResponse封装在CacheStrategy中返回；如果不可用，需要请求，则对原始的request进行可能的修改（主要是条件get参数），作为networkRequest封装在CacheStrategy中返回。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/MirrorCitrus/divetrace/blob/master/dive-open-source/%E7%BD%91%E7%BB%9C%E5%BA%93%EF%BC%9AOkHttp3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB.md" >https://github.com/MirrorCitrus/divetrace/blob/master/dive-open-source/网络库：OkHttp3源码阅读.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> </li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/7527884547535896586" >https://juejin.cn/post/7527884547535896586 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> </li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844904102669844493?from=search-suggest" >https://juejin.cn/post/6844904102669844493?from=search-suggest <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
 </ul>
 
         </div>
@@ -699,18 +756,18 @@
             <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> OS lab6 思考题</li>
+        <li><strong>标题:</strong> Android-okhttp3源码学习</li>
         <li><strong>作者:</strong> rainbowYao</li>
         <li><strong>创建于
-                :</strong> 2024-07-02 21:25:32</li>
+                :</strong> 2025-09-02 16:11:06</li>
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-09-18 09:28:38
+                    :</strong> 2025-09-02 16:44:07
             </li>
         
         <li>
-            <strong>链接:</strong> https://redefine.ohevan.com/2024/07/02/OS-lab6-思考题/
+            <strong>链接:</strong> https://redefine.ohevan.com/2025/09/02/Android-okhttp3源码学习/
         </li>
         <li>
             <strong>
@@ -729,6 +786,18 @@
         
 
         
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/android/">#android</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/okhttp3/">#okhttp3</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
 
         
   <div class="recommended-article px-2 sm:px-6 md:px-8">
@@ -736,27 +805,27 @@
     <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
      <i aria-hidden="true"></i><span>推荐阅读</span>
     </div>
-    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/02/OS-Challenge/" title="OS Challenge" rel="bookmark">
-  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail12.jpg" alt="OS Challenge" class="!max-w-none">
-  <span class="title">OS Challenge</span>
-</a><a class="recommended-article-item" href="/2024/07/02/OS-lab4-思考题/" title="OS lab4 思考题" rel="bookmark">
-  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail14.jpg" alt="OS lab4 思考题" class="!max-w-none">
-  <span class="title">OS lab4 思考题</span>
-</a><a class="recommended-article-item" href="/2024/07/02/OS-lab5-思考题/" title="OS lab5 思考题" rel="bookmark">
-  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail5.jpg" alt="OS lab5 思考题" class="!max-w-none">
-  <span class="title">OS lab5 思考题</span>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/09/02/Android-stetho/" title="Android-stetho" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail20.jpg" alt="Android-stetho" class="!max-w-none">
+  <span class="title">Android-stetho</span>
+</a><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第二单元：电梯调度-总结/" title="BUAA_OO 第二单元：电梯调度 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail2.jpg" alt="BUAA_OO 第二单元：电梯调度 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第二单元：电梯调度 总结</span>
+</a><a class="recommended-article-item" href="/2024/08/21/Django之DRF/" title="Django之DRF" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail15.jpg" alt="Django之DRF" class="!max-w-none">
+  <span class="title">Django之DRF</span>
 </a></div>
    </div>
    <div class="recommended-mobile">
    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
      <i aria-hidden="true"></i><span>推荐阅读</span>
    </div>
-   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/07/02/OS-Challenge/" title="OS Challenge" rel="bookmark">
-  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail12.jpg" alt="OS Challenge" class="!max-w-none">
-  <span class="title">OS Challenge</span>
-</a><a class="recommended-article-item" href="/2024/07/02/OS-lab4-思考题/" title="OS lab4 思考题" rel="bookmark">
-  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail14.jpg" alt="OS lab4 思考题" class="!max-w-none">
-  <span class="title">OS lab4 思考题</span>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/09/02/Android-stetho/" title="Android-stetho" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail20.jpg" alt="Android-stetho" class="!max-w-none">
+  <span class="title">Android-stetho</span>
+</a><a class="recommended-article-item" href="/2024/07/03/BUAA-OO-第二单元：电梯调度-总结/" title="BUAA_OO 第二单元：电梯调度 总结" rel="bookmark">
+  <img src="https://blog-yyb.oss-cn-beijing.aliyuncs.com/thumbnail/thumbnail2.jpg" alt="BUAA_OO 第二单元：电梯调度 总结" class="!max-w-none">
+  <span class="title">BUAA_OO 第二单元：电梯调度 总结</span>
 </a></div>
    </div>
   </div>
@@ -767,13 +836,13 @@
                     <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="prev"
                         rel="prev"
-                        href="/2024/07/02/OS-Challenge/"
+                        href="/2025/09/02/Android-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"
                         >
                             <span class="left arrow-icon flex justify-center items-center">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">OS Challenge</span>
+                                <span class="post-nav-title-item">Android-文件系统</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
@@ -783,10 +852,10 @@
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/07/02/OS-lab5-%E6%80%9D%E8%80%83%E9%A2%98/"
+                        href="/2024/09/18/Cpp-X-Macro/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">OS lab5 思考题</span>
+                                <span class="post-nav-title-item">X-Macro</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -807,8 +876,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">OS lab6 思考题</div>
-        
+        <div class="page-title">Android-okhttp3源码学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-text">整体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">拦截器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E4%B8%AA%E9%BB%98%E8%AE%A4%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">五个默认拦截器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E6%B7%BB%E5%8A%A0"><span class="nav-text">拦截器的添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">自定义拦截器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E7%AE%A1%E7%90%86"><span class="nav-text">请求管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%85%A5%E5%8F%A3"><span class="nav-text">请求入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dispatcher"><span class="nav-text">Dispatcher</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%A4%8D%E7%94%A8%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-text">连接复用和连接池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%B1%BB"><span class="nav-text">核心类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5"><span class="nav-text">缓存策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%BC%93%E5%AD%98"><span class="nav-text">磁盘缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Http%E7%BC%93%E5%AD%98"><span class="nav-text">Http缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-text">References</span></a></li></ol>
 
     </div>
 </div>
